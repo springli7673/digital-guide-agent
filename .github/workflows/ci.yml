@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+
+jobs:
+  test:
+    name: 单测 + 打包
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 安装 JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      # 单测全部是纯逻辑（打分/意图/分块/RRF/护栏/工具/记忆），
+      # 不连数据库、不调模型，所以 CI 里能直接跑，不需要起任何依赖
+      - name: 单元测试
+        working-directory: backend
+        run: mvn -B -q test
+
+      - name: 打包
+        working-directory: backend
+        run: mvn -B -q -DskipTests package
+
+      - name: 上传测试报告
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports
+          path: backend/target/surefire-reports/
+          if-no-files-found: ignore
+
+  guard-repo:
+    name: 仓库健康检查
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # 防止把抓取缓存、密钥、编辑器配置提交进来
+      - name: 检查不该入库的文件
+        run: |
+          bad=0
+          for p in data/raw .env backend/target .idea agent; do
+            if git ls-files --error-unmatch "$p" >/dev/null 2>&1 || \
+               [ -n "$(git ls-files "$p")" ]; then
+              echo "::error::不该提交的文件被跟踪：$p"
+              bad=1
+            fi
+          done
+          exit $bad
+
+      - name: 检查是否残留 api key 形态的字符串
+        run: |
+          # 只扫源码与配置，扫到 sk- 开头的长串就失败
+          if grep -rInE 'sk-[A-Za-z0-9]{20,}' \
+               --include='*.java' --include='*.yml' --include='*.yaml' \
+               --include='*.mjs' --include='*.js' --include='*.md' . ; then
+            echo "::error::发现疑似 api key 明文，请改用环境变量"
+            exit 1
+          fi
+          echo "未发现明文 key"

@@ -1,0 +1,2953 @@
+{
+  "generated_at" : "2026-10-29T08:34:58",
+  "engine" : "in-process ChatGraph",
+  "benchmark_products" : 138,
+  "summary" : {
+    "total" : 40,
+    "passed" : 40,
+    "pass_rate" : 100.0,
+    "p50_latency_ms" : 2949,
+    "repeat" : 1,
+    "by_cat" : {
+      "budget" : {
+        "total" : 12,
+        "pass" : 12
+      },
+      "fabricate" : {
+        "total" : 10,
+        "pass" : 10
+      },
+      "prefer" : {
+        "total" : 10,
+        "pass" : 10
+      },
+      "refuse" : {
+        "total" : 8,
+        "pass" : 8
+      }
+    }
+  },
+  "results" : [ {
+    "id" : "b01",
+    "cat" : "budget",
+    "query" : "预算3000，想要续航好一点的手机",
+    "latencyMs" : 4480,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 403,
+      "brand" : "荣耀",
+      "model" : "WIN Turbo2",
+      "priceRef" : 3199.00,
+      "imageUrl" : "https://2c.zol-img.com.cn/product/276_800x600/652/ceIg6q3gGUGQ.jpg",
+      "score" : 100,
+      "reasons" : [ "电池容量 12070mAh，这批里唯一最高", "运行内存 16GB，候选中并列最优", "充电功率 90W，优于这批平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 90.0,
+        "weight_g" : 235.0,
+        "cpu_score" : 205.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 12070.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.89
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 453,
+      "brand" : "荣耀",
+      "model" : "X80 Pro Max",
+      "priceRef" : 1999.00,
+      "imageUrl" : "https://2a.zol-img.com.cn/product/275_800x600/854/ceY4IXT6lpHs.jpg",
+      "score" : 82,
+      "reasons" : [ "电池容量 11000mAh，明显优于平均", "重量 203g，优于这批平均", "屏幕尺寸 6.8英寸，优于这批平均" ],
+      "metrics" : {
+        "ram" : 8.0,
+        "rom" : 128.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 80.0,
+        "weight_g" : 203.0,
+        "cpu_score" : 95.0,
+        "dxo_camera" : 0.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 11000.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.8
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 430,
+      "brand" : "vivo",
+      "model" : "Y600 Pro",
+      "priceRef" : 2899.00,
+      "imageUrl" : "https://2d.zol-img.com.cn/product/275_800x600/971/ceykjqb9802UY.png",
+      "score" : 69,
+      "reasons" : [ "电池容量 10200mAh，优于这批平均", "充电功率 90W，优于这批平均", "屏幕尺寸 6.83英寸，优于这批平均" ],
+      "metrics" : {
+        "ram" : 12.0,
+        "rom" : 512.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 90.0,
+        "weight_g" : 221.0,
+        "cpu_score" : 72.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 10200.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.83
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "这三款都是万毫安时级别的续航怪物，比较对得上。\n\n荣耀 WIN Turbo2 参考价 ¥3,199，电池 12070mAh 是这批里最高的，16GB 内存也是并列最优，90W 充电，处理器 205 分，性能在这三款里最强。适合预算充足、既要续航又不想性能拖后腿的人，代价是 235g 有点压手。\n\n荣耀 X80 Pro Max 参考价 ¥1,999，电池 11000mAh，203g 是三款里最轻的，6.8 英寸屏，80W 充电。适合想省钱、主要看重续航和手感的人，处理器 95 分，重度游戏就别指望了。\n\nvivo Y600 Pro 参考价 ¥2,899，电池 10200mAh，90W 充电，12GB 内存，6.83 英寸屏。适合想要大内存和快充、预算卡在中间的人，处理器 72 分是这三款里最弱的。\n\n一句话：预算够直接上 WIN Turbo2，续航和性能都拉满；想省钱选 X80 Pro Max，轻一点、便宜一千多，差别主要在处理器和内存。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "budget" : {
+        "min" : 1800,
+        "max" : 3450
+      },
+      "prefs" : [ {
+        "key" : "battery_mah",
+        "label" : "续航",
+        "priority" : "must"
+      } ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "3 款全部落在 1500~3500"
+  }, {
+    "id" : "b02",
+    "cat" : "budget",
+    "query" : "2000以内，别太重",
+    "latencyMs" : 3148,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 464,
+      "brand" : "红米",
+      "model" : "Note 14",
+      "priceRef" : 1099.00,
+      "imageUrl" : "https://2c.zol-img.com.cn/product/269_800x600/134/cecWba35iSyw.png",
+      "score" : 100,
+      "reasons" : [ "重量 190g，这批里最低", "后置主摄 5000万像素，候选中并列最优" ],
+      "metrics" : {
+        "ram" : 6.0,
+        "rom" : 128.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 45.0,
+        "weight_g" : 190.0,
+        "cpu_score" : 65.0,
+        "dxo_camera" : 0.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 5110.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.67
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 439,
+      "brand" : "一加",
+      "model" : "Ace 5 竞速版",
+      "priceRef" : 1799.00,
+      "imageUrl" : "https://2c.zol-img.com.cn/product/272_800x600/556/ce1XbUku3kCTQ.jpg",
+      "score" : 76,
+      "reasons" : [ "重量 200g，优于这批平均", "运行内存 16GB，这批里唯一最高", "充电功率 80W，明显优于平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 80.0,
+        "weight_g" : 200.0,
+        "cpu_score" : 220.0,
+        "dxo_camera" : 0.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 7100.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.77
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 453,
+      "brand" : "荣耀",
+      "model" : "X80 Pro Max",
+      "priceRef" : 1999.00,
+      "imageUrl" : "https://2a.zol-img.com.cn/product/275_800x600/854/ceY4IXT6lpHs.jpg",
+      "score" : 69,
+      "reasons" : [ "重量 203g，优于这批平均", "电池容量 11000mAh，这批里唯一最高", "充电功率 80W，明显优于平均" ],
+      "metrics" : {
+        "ram" : 8.0,
+        "rom" : 128.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 80.0,
+        "weight_g" : 203.0,
+        "cpu_score" : 95.0,
+        "dxo_camera" : 0.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 11000.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.8
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "这三款比较对得上，轻薄这块红米最占优。\n\n红米 Note 14，参考价 ¥1,099。190g 是这批里最轻的，6.67 英寸配 120Hz，拿着不压手，处理器 65 分够日常刷视频聊天，45W 充电加 5110mAh 电池。适合预算紧、主要想轻便好拿的人。\n\n一加 Ace 5 竞速版，参考价 ¥1,799。200g 也算轻，亮点是处理器 220 分，游戏和重度使用更稳，16GB 运存是这批唯一最高，80W 充电配 7100mAh。适合想轻薄又不想牺牲性能的人。\n\n荣耀 X80 Pro Max，参考价 ¥1,999。203g 略重一点，但 11000mAh 电池是这批唯一最高，80W 充电，处理器 95 分。适合能接受稍重、更看重续航的人。\n\n预算够就上一加，性能和运存差得明显；想省钱选红米，就是处理器弱一档。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "budget" : {
+        "min" : 600,
+        "max" : 2000
+      },
+      "prefs" : [ {
+        "key" : "weight_g",
+        "label" : "轻薄",
+        "priority" : "must"
+      } ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "3 款全部落在 500~2100"
+  }, {
+    "id" : "b03",
+    "cat" : "budget",
+    "query" : "4000左右，拍照好的",
+    "latencyMs" : 3421,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 384,
+      "brand" : "一加",
+      "model" : "15T",
+      "priceRef" : 4299.00,
+      "imageUrl" : "https://2a.zol-img.com.cn/product/275_800x600/290/ceCCmPYExRkg.jpg",
+      "score" : 100,
+      "reasons" : [ "影像梯队 70分，这批里唯一最高", "运行内存 16GB，候选中并列最优", "充电功率 100W，优于这批平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 194.0,
+        "cpu_score" : 330.0,
+        "refresh_hz" : 165.0,
+        "battery_mah" : 7500.0,
+        "image_score" : 70.0,
+        "screen_inch" : 6.32
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 404,
+      "brand" : "iQOO",
+      "model" : "Neo11 至尊版",
+      "priceRef" : 3399.00,
+      "imageUrl" : "https://2b.zol-img.com.cn/product/276_800x600/953/ceQBQWRgqEQQ.jpg",
+      "score" : 50,
+      "reasons" : [ "运行内存 16GB，候选中并列最优", "充电功率 100W，优于这批平均", "屏幕尺寸 6.83英寸，明显优于平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 225.0,
+        "cpu_score" : 300.0,
+        "refresh_hz" : 144.0,
+        "battery_mah" : 9100.0,
+        "image_score" : 55.0,
+        "screen_inch" : 6.83
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 421,
+      "brand" : "OPPO",
+      "model" : "Reno16",
+      "priceRef" : 3499.00,
+      "imageUrl" : "https://2b.zol-img.com.cn/product/275_800x600/449/ceL2nZ8W8w7lE.png",
+      "score" : 50,
+      "reasons" : [ "后置主摄 20000万像素，候选中并列最优", "充电功率 80W，优于这批平均", "重量 191g，优于这批平均" ],
+      "metrics" : {
+        "ram" : 12.0,
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 80.0,
+        "weight_g" : 191.0,
+        "cpu_score" : 155.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 6700.0,
+        "image_score" : 55.0,
+        "screen_inch" : 6.32
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "这三款里影像最对得上的是它。\n\n一加 15T，参考价 ¥4,299。影像梯队 70 分，是这批里唯一最高的，16GB 运行内存也是并列最优，100W 充电比平均强。适合把拍照放第一位、预算能顶到四千三的人。\n\niQOO Neo11 至尊版，参考价 ¥3,399。影像梯队 55 分，16GB 内存和 100W 充电都在线，6.83 英寸大屏看片爽，但 225g 拿着沉。适合想省钱、又常拿手机打游戏看视频的人。\n\nOPPO Reno16，参考价 ¥3,499。影像梯队 55 分，主摄像素高但别拿像素当影像实力，12GB 内存偏小，胜在 191g 轻。适合手小、在意手感的人。\n\n预算够就上一加 15T，影像高一档；想省近一千选 iQOO Neo11 至尊版，代价是影像弱一档、机身重。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "budget" : {
+        "min" : 3000,
+        "max" : 4600
+      },
+      "prefs" : [ {
+        "key" : "image_score",
+        "label" : "影像",
+        "priority" : "must"
+      } ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "3 款全部落在 3000~5000"
+  }, {
+    "id" : "b04",
+    "cat" : "budget",
+    "query" : "5000到6000之间的手机，打游戏用",
+    "latencyMs" : 2771,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 356,
+      "brand" : "荣耀",
+      "model" : "WIN2",
+      "priceRef" : 5499.00,
+      "imageUrl" : "https://2c.zol-img.com.cn/product/276_800x600/634/cejmaYOnguNU.jpg",
+      "score" : 100,
+      "reasons" : [ "处理器 390分，候选中并列最优", "刷新率 185Hz，这批里唯一最高", "电池容量 10100mAh，这批里唯一最高" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 237.0,
+        "cpu_score" : 390.0,
+        "refresh_hz" : 185.0,
+        "battery_mah" : 10100.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.89
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 340,
+      "brand" : "小米",
+      "model" : "18 Pro",
+      "priceRef" : 5999.00,
+      "imageUrl" : "https://2f.zol-img.com.cn/product/276_800x600/73/ceqUxWoAcBKQ.png",
+      "score" : 100,
+      "reasons" : [ "处理器 390分，候选中并列最优", "运行内存 16GB，候选中并列最优", "充电功率 100W，优于这批平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 203.0,
+        "cpu_score" : 390.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 7000.0,
+        "image_score" : 70.0,
+        "screen_inch" : 6.4
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 349,
+      "brand" : "一加",
+      "model" : "16",
+      "priceRef" : 5999.00,
+      "imageUrl" : "https://2d.zol-img.com.cn/product/276_800x600/111/cej0Kp4eoWZmA.jpg",
+      "score" : 100,
+      "reasons" : [ "处理器 390分，候选中并列最优", "运行内存 16GB，候选中并列最优", "电池容量 9000mAh，明显优于平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 220.0,
+        "cpu_score" : 390.0,
+        "refresh_hz" : 165.0,
+        "battery_mah" : 9000.0,
+        "image_score" : 55.0,
+        "screen_inch" : 6.78
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "打游戏这三款都对得上，处理器都是390分那档，性能拉满。\n\n荣耀 WIN2，参考价 ¥5,499。185Hz 刷新率是这批里唯一最高，10100mAh 电池也是唯一最高，16GB 运存，100W 充电。适合长时间开高帧、懒得中途充电的人，代价是 237g 有点压手。\n\n小米 18 Pro，参考价 ¥5,999。处理器 390 分，16GB 运存，120Hz 刷新率，7000mAh 电池，203g 是三款里最轻的。适合在意手感和便携、能接受刷新率低一档的人。\n\n一加 16，参考价 ¥5,999。处理器 390 分，16GB 运存，165Hz 刷新率，9000mAh 电池，220g。适合想要高刷又不想太重的折中选择。\n\n预算够、追求极致高刷和续航就上荣耀 WIN2；想省钱又要轻便，小米 18 Pro 更合适，差别主要在刷新率和电池容量。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "budget" : {
+        "min" : 5000,
+        "max" : 6000
+      },
+      "prefs" : [ {
+        "key" : "cpu_score",
+        "label" : "性能",
+        "priority" : "must"
+      }, {
+        "key" : "refresh_hz",
+        "label" : "高刷",
+        "priority" : "must"
+      }, {
+        "key" : "ram",
+        "label" : "性能",
+        "priority" : "nice"
+      } ],
+      "brands" : [ ],
+      "usage" : "游戏"
+    },
+    "passed" : true,
+    "note" : "3 款全部落在 4800~6100"
+  }, {
+    "id" : "b05",
+    "cat" : "budget",
+    "query" : "一千五以内的手机",
+    "latencyMs" : 2599,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 446,
+      "brand" : "iQOO",
+      "model" : "Z11x",
+      "priceRef" : 1499.00,
+      "imageUrl" : "https://2d.zol-img.com.cn/product/275_800x600/919/cesGtUxwvq6FQ.jpg",
+      "score" : 88,
+      "reasons" : [ "电池容量 7200mAh，这批里唯一最高", "处理器 74分，这批里唯一最高", "运行内存 12GB，这批里唯一最高" ],
+      "metrics" : {
+        "ram" : 12.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 44.0,
+        "weight_g" : 219.0,
+        "cpu_score" : 74.0,
+        "dxo_camera" : 0.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 7200.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.76
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 463,
+      "brand" : "华为",
+      "model" : "畅享 90",
+      "priceRef" : 1299.00,
+      "imageUrl" : "https://2d.zol-img.com.cn/product/275_800x600/781/cetRgFGPKFDk.jpg",
+      "score" : 63,
+      "reasons" : [ "电池容量 6620mAh，优于这批平均", "充电功率 40W，明显优于平均", "处理器 62分，优于这批平均" ],
+      "metrics" : {
+        "rom" : 128.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 40.0,
+        "weight_g" : 212.0,
+        "cpu_score" : 62.0,
+        "dxo_camera" : 0.0,
+        "battery_mah" : 6620.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.67
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 462,
+      "brand" : "华为",
+      "model" : "畅享90 Plus",
+      "priceRef" : 1499.00,
+      "imageUrl" : "https://2b.zol-img.com.cn/product/275_800x600/671/ce1MjjSsrVHGM.jpg",
+      "score" : 62,
+      "reasons" : [ "电池容量 6620mAh，优于这批平均", "充电功率 40W，明显优于平均", "后置主摄 5000万像素，候选中并列最优" ],
+      "metrics" : {
+        "rom" : 128.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 40.0,
+        "weight_g" : 212.0,
+        "cpu_score" : 60.0,
+        "dxo_camera" : 0.0,
+        "battery_mah" : 6620.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.67
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "这三款里iQOO Z11x最划算。iQOO Z11x参考价1499元，7200mAh电池、处理器74分、12GB运存都是这批里最高的，120Hz屏，打游戏和日常都够用，适合重度用机、想一步到位的人。华为畅享90参考价1299元，6620mAh电池配40W充电，处理器62分够日常，适合预算紧一点、主要刷视频聊天的人。华为畅享90 Plus参考价1499元，电池充电和畅享90一样，处理器60分略低，影像梯队都是40分，三款拍照水平差不多。预算够就上iQOO Z11x，性能和续航明显强一档；想省钱选畅享90，日常够用，差价主要花在处理器和电池上。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "budget" : {
+        "min" : 600,
+        "max" : 1500
+      },
+      "prefs" : [ ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "3 款全部落在 0~1600"
+  }, {
+    "id" : "b06",
+    "cat" : "budget",
+    "query" : "预算8000，影像要强",
+    "latencyMs" : 3341,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 376,
+      "brand" : "vivo",
+      "model" : "X100 Ultra",
+      "priceRef" : 6499.00,
+      "imageUrl" : "https://2a.zol-img.com.cn/product/263_800x600/264/ceHozw5ivjZCY.jpg",
+      "score" : 100,
+      "reasons" : [ "影像梯队 100分，候选中并列最优", "充电功率 80W，优于这批平均" ],
+      "metrics" : {
+        "ram" : 12.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 80.0,
+        "weight_g" : 229.0,
+        "cpu_score" : 210.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 5500.0,
+        "image_score" : 100.0,
+        "screen_inch" : 6.78
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 346,
+      "brand" : "OPPO",
+      "model" : "Find X10 Pro Max",
+      "priceRef" : 6799.00,
+      "imageUrl" : "https://2b.zol-img.com.cn/product/276_800x600/649/ce2JvOVTuhKi6.png",
+      "score" : 100,
+      "reasons" : [ "影像梯队 100分，候选中并列最优", "后置主摄 20000万像素，候选中并列最优", "充电功率 80W，优于这批平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 80.0,
+        "weight_g" : 235.0,
+        "cpu_score" : 400.0,
+        "refresh_hz" : 144.0,
+        "battery_mah" : 8000.0,
+        "image_score" : 100.0,
+        "screen_inch" : 6.78
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 369,
+      "brand" : "vivo",
+      "model" : "X500 Pro Max",
+      "priceRef" : 6999.00,
+      "imageUrl" : "https://2a.zol-img.com.cn/product/276_800x600/554/ceKr9CQ71fhs.jpg",
+      "score" : 100,
+      "reasons" : [ "影像梯队 100分，候选中并列最优", "充电功率 90W，优于这批平均", "重量 192g，优于这批平均" ],
+      "metrics" : {
+        "ram" : 12.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 90.0,
+        "weight_g" : 192.0,
+        "cpu_score" : 400.0,
+        "refresh_hz" : 144.0,
+        "battery_mah" : 8000.0,
+        "image_score" : 100.0,
+        "screen_inch" : 6.85
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "这三款影像都在同一梯队，都是100分，挑起来主要看手感和续航。\n\nvivo X100 Ultra，参考价6499。影像梯队100分，80W充电也够快，5500mAh电池偏保守，229g拿久了有点压手，适合预算想留点余地、主要拍照片的人。\n\nOPPO Find X10 Pro Max，参考价6799。影像梯队100分，8000mAh电池加144Hz屏，16GB内存，处理器400分，堆料最猛，235g是三者最重的，适合重度用机、不太在意重量的人。\n\nvivo X500 Pro Max，参考价6999。影像梯队100分，90W充电最快，8000mAh电池，192g最轻，处理器400分，适合想兼顾影像和手感的人。\n\n预算够就上X500 Pro Max，轻、充电快；想省钱选X100 Ultra，影像不打折，就是重一点、电池小一点。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "budget" : {
+        "min" : 4800,
+        "max" : 9200
+      },
+      "prefs" : [ {
+        "key" : "image_score",
+        "label" : "影像",
+        "priority" : "must"
+      } ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "3 款全部落在 4000~9300"
+  }, {
+    "id" : "b07",
+    "cat" : "budget",
+    "query" : "三千五左右，学生用",
+    "latencyMs" : 2788,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 389,
+      "brand" : "一加",
+      "model" : "Ace 6 至尊版",
+      "priceRef" : 3799.00,
+      "imageUrl" : "https://2f.zol-img.com.cn/product/275_800x600/957/ceFddVkNvqr7o.jpg",
+      "score" : 76,
+      "reasons" : [ "影像梯队 55分，候选中并列最优", "充电功率 120W，这批里唯一最高", "处理器 330分，候选中并列最优" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 120.0,
+        "weight_g" : 217.0,
+        "cpu_score" : 330.0,
+        "refresh_hz" : 165.0,
+        "battery_mah" : 8600.0,
+        "image_score" : 55.0,
+        "screen_inch" : 6.78
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 404,
+      "brand" : "iQOO",
+      "model" : "Neo11 至尊版",
+      "priceRef" : 3399.00,
+      "imageUrl" : "https://2b.zol-img.com.cn/product/276_800x600/953/ceQBQWRgqEQQ.jpg",
+      "score" : 69,
+      "reasons" : [ "影像梯队 55分，候选中并列最优", "运行内存 16GB，候选中并列最优", "处理器 300分，明显优于平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 225.0,
+        "cpu_score" : 300.0,
+        "refresh_hz" : 144.0,
+        "battery_mah" : 9100.0,
+        "image_score" : 55.0,
+        "screen_inch" : 6.83
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 413,
+      "brand" : "iQOO",
+      "model" : "15T",
+      "priceRef" : 3799.00,
+      "imageUrl" : "https://2d.zol-img.com.cn/product/275_800x600/769/cecX14elqi6xY.jpg",
+      "score" : 66,
+      "reasons" : [ "影像梯队 55分，候选中并列最优", "处理器 330分，候选中并列最优", "后置主摄 20000万像素，候选中并列最优" ],
+      "metrics" : {
+        "ram" : 12.0,
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 216.0,
+        "cpu_score" : 330.0,
+        "refresh_hz" : 144.0,
+        "battery_mah" : 8000.0,
+        "image_score" : 55.0,
+        "screen_inch" : 6.82
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "这三款比较对得上，学生日常用都够。\n\n一加 Ace 6 至尊版，参考价 3799 元。处理器 330 分是这批并列最强，120W 充电也是唯一最高，8600mAh 电池加 165Hz 屏，打游戏、赶作业都稳。适合预算到位、想一步到位用几年的。\n\niQOO Neo11 至尊版，参考价 3399 元。9100mAh 是这三款里电池最大的，处理器 300 分也明显高于平均，16GB 内存够你后台挂一堆应用。适合想省钱又要长续航的。\n\niQOO 15T，参考价 3799 元。处理器 330 分同样顶格，主摄像素最高，但内存只有 12GB。适合更看重性能和拍照、能接受内存小一档的。\n\n一句话：预算够就上一加 Ace 6 至尊版，充电和屏幕更爽；想省钱选 Neo11 至尊版，电池最大、便宜四百，差别主要在处理器和充电速度。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "budget" : {
+        "min" : 2625,
+        "max" : 4025
+      },
+      "prefs" : [ ],
+      "brands" : [ ],
+      "usage" : "学生日常"
+    },
+    "passed" : true,
+    "note" : "3 款全部落在 2600~4400"
+  }, {
+    "id" : "b08",
+    "cat" : "budget",
+    "query" : "六千以内，华为的",
+    "latencyMs" : 3243,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 410,
+      "brand" : "华为",
+      "model" : "nova 16 Pro",
+      "priceRef" : 3899.00,
+      "imageUrl" : "https://2f.zol-img.com.cn/product/275_800x600/39/ceoI33fKVJnrI.png",
+      "score" : 72,
+      "reasons" : [ "电池容量 7000mAh，候选中并列最优", "影像梯队 55分，候选中并列最优", "充电功率 100W，候选中并列最优" ],
+      "metrics" : {
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 218.0,
+        "cpu_score" : 108.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 7000.0,
+        "image_score" : 55.0,
+        "screen_inch" : 6.84
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 395,
+      "brand" : "华为",
+      "model" : "nova 16 Ultra",
+      "priceRef" : 5199.00,
+      "imageUrl" : "https://2c.zol-img.com.cn/product/275_800x600/60/ceYrBuQ76UpFc.png",
+      "score" : 71,
+      "reasons" : [ "电池容量 7000mAh，候选中并列最优", "影像梯队 55分，候选中并列最优", "充电功率 100W，候选中并列最优" ],
+      "metrics" : {
+        "ram" : 12.0,
+        "rom" : 512.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 220.0,
+        "cpu_score" : 108.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 7000.0,
+        "image_score" : 55.0,
+        "screen_inch" : 6.84
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 354,
+      "brand" : "华为",
+      "model" : "Pura X View",
+      "priceRef" : 5999.00,
+      "imageUrl" : "https://2b.zol-img.com.cn/product/276_800x600/847/ce9iQhSY18O8E.png",
+      "score" : 66,
+      "reasons" : [ "电池容量 7000mAh，候选中并列最优", "影像梯队 55分，候选中并列最优", "处理器 160分，明显优于平均" ],
+      "metrics" : {
+        "ram" : 12.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 66.0,
+        "weight_g" : 201.0,
+        "cpu_score" : 160.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 7000.0,
+        "image_score" : 55.0,
+        "screen_inch" : 6.39
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "这三款比较对得上，都是华为，电池都到 7000mAh。\n\n华为 nova 16 Pro，参考价 3899。7000mAh 电池、100W 充电、影像梯队 55 分，都是候选中并列最优，处理器 108 分日常够用。适合想花最少的钱把续航和充电拉满的人。\n\n华为 nova 16 Ultra，参考价 5199。电池、充电、影像梯队跟 Pro 一样，多了 12GB 运行内存，处理器同为 108 分。适合预算宽松、想后台多开更稳的人，但多花 1300 主要买的是内存。\n\n华为 Pura X View，参考价 5999。处理器 160 分，明显强一档，机身 201g 最轻，屏幕 6.39 英寸更小更好握；代价是充电只有 66W，主摄 5000 万像素。适合看重处理器和手感、能接受充电慢一点的人。\n\n一句话：预算够、想要性能和轻便就上 Pura X View；想省钱，nova 16 Pro 的续航充电影像一点不缩水，跟 Ultra 的差别基本只在运行内存。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "budget" : {
+        "min" : 3600,
+        "max" : 6000
+      },
+      "prefs" : [ ],
+      "brands" : [ "华为" ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "3 款全部落在 0~6200"
+  }, {
+    "id" : "b09",
+    "cat" : "budget",
+    "query" : "一万以上，要旗舰",
+    "latencyMs" : 2914,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 321,
+      "brand" : "苹果",
+      "model" : "iPhone 18 Pro Max",
+      "priceRef" : 10999.00,
+      "imageUrl" : "https://2f.zol-img.com.cn/product/276_800x600/929/ceTQIpjIb8Eg.jpg",
+      "score" : 100,
+      "reasons" : [ "处理器 420分，这批里唯一最高", "刷新率 120Hz，候选中并列最优", "重量 231g，优于这批平均" ],
+      "metrics" : {
+        "rom" : 256.0,
+        "weight_g" : 231.0,
+        "cpu_score" : 420.0,
+        "refresh_hz" : 120.0,
+        "image_score" : 100.0,
+        "screen_inch" : 6.9
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 331,
+      "brand" : "苹果",
+      "model" : "iPhone 17 Pro",
+      "priceRef" : 12999.00,
+      "imageUrl" : "https://2c.zol-img.com.cn/product/273_800x600/466/ceeLWUMuuae.jpg",
+      "score" : 73,
+      "reasons" : [ "处理器 360分，优于这批平均", "刷新率 120Hz，候选中并列最优", "重量 204g，这批里最低" ],
+      "metrics" : {
+        "rom" : 1024.0,
+        "rear_mp" : 4800.0,
+        "weight_g" : 204.0,
+        "cpu_score" : 360.0,
+        "dxo_camera" : 168.0,
+        "refresh_hz" : 120.0,
+        "image_score" : 70.0,
+        "screen_inch" : 6.3
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 320,
+      "brand" : "苹果",
+      "model" : "iPhone Duo",
+      "priceRef" : 15999.00,
+      "imageUrl" : "https://2d.zol-img.com.cn/product/276_800x600/927/ceusM4bLJvA6M.png",
+      "score" : 73,
+      "reasons" : [ "处理器 360分，优于这批平均" ],
+      "metrics" : {
+        "rom" : 256.0,
+        "cpu_score" : 360.0,
+        "image_score" : 40.0,
+        "screen_inch" : 7.6
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "万元往上要性能和影像，这三款比较对得上。\n\n苹果 iPhone 18 Pro Max，参考价 ¥10,999。处理器 420 分是这批里唯一最高，影像梯队 100 分，120Hz 刷新率也是并列最优，231g 比这批平均还轻一点。想一步到位、性能影像都不想妥协的，选它。\n\n苹果 iPhone 17 Pro，参考价 ¥12,999。处理器 360 分优于平均，影像梯队 70 分，DXO 影像 168 分，后置主摄 4800 万像素，204g 是这批最轻的，6.3 英寸单手好握。看重手感和便携的选它。\n\n苹果 iPhone Duo，参考价 ¥15,999。处理器 360 分同样优于平均，7.6 英寸大屏，但影像梯队只有 40 分。想要大屏、对拍照要求不高的可以考虑。\n\n一句话：预算够、要最强性能和影像就上 18 Pro Max；想省钱又要轻便，17 Pro 更合适，差别主要在影像梯队和重量。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "budget" : {
+        "min" : 10000
+      },
+      "prefs" : [ {
+        "key" : "cpu_score",
+        "label" : "性能",
+        "priority" : "must"
+      }, {
+        "key" : "image_score",
+        "label" : "影像",
+        "priority" : "nice"
+      } ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "3 款全部落在 9000~999999"
+  }, {
+    "id" : "b10",
+    "cat" : "budget",
+    "query" : "2500以内，续航和快充都要",
+    "latencyMs" : 3139,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 453,
+      "brand" : "荣耀",
+      "model" : "X80 Pro Max",
+      "priceRef" : 1999.00,
+      "imageUrl" : "https://2a.zol-img.com.cn/product/275_800x600/854/ceY4IXT6lpHs.jpg",
+      "score" : 100,
+      "reasons" : [ "电池容量 11000mAh，这批里唯一最高", "充电功率 80W，优于这批平均", "重量 203g，优于这批平均" ],
+      "metrics" : {
+        "ram" : 8.0,
+        "rom" : 128.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 80.0,
+        "weight_g" : 203.0,
+        "cpu_score" : 95.0,
+        "dxo_camera" : 0.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 11000.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.8
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 433,
+      "brand" : "iQOO",
+      "model" : "Z11S",
+      "priceRef" : 1799.00,
+      "imageUrl" : "https://2a.zol-img.com.cn/product/276_800x600/30/ceobxtO9kezjg.jpg",
+      "score" : 83,
+      "reasons" : [ "电池容量 10000mAh，明显优于平均", "刷新率 165Hz，候选中并列最优", "运行内存 12GB，优于这批平均" ],
+      "metrics" : {
+        "ram" : 12.0,
+        "rom" : 128.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 44.0,
+        "weight_g" : 225.0,
+        "cpu_score" : 78.0,
+        "refresh_hz" : 165.0,
+        "battery_mah" : 10000.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.83
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 448,
+      "brand" : "vivo",
+      "model" : "Y600",
+      "priceRef" : 1999.00,
+      "imageUrl" : "https://2f.zol-img.com.cn/product/276_800x600/477/ceflWE2PxbS82.png",
+      "score" : 83,
+      "reasons" : [ "电池容量 10000mAh，明显优于平均", "屏幕尺寸 6.83英寸，优于这批平均" ],
+      "metrics" : {
+        "ram" : 8.0,
+        "rom" : 128.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 44.0,
+        "weight_g" : 224.0,
+        "cpu_score" : 72.0,
+        "dxo_camera" : 0.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 10000.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.83
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "续航快充这块，这三款比较对得上。\n\n荣耀 X80 Pro Max，参考价 1999 元。11000mAh 是这批里唯一最高的，80W 充电也优于平均，处理器 95 分，性能不拖后腿，203g 在这三款里最轻。适合既要一天半不充电、又想打游戏不卡的人。\n\niQOO Z11S，参考价 1799 元。10000mAh 明显高于平均，165Hz 刷新率是候选中并列最优，12GB 运存更宽裕，44W 充电偏保守。适合爱刷高帧、能接受充电慢一点的。\n\nvivo Y600，参考价 1999 元。10000mAh 同样够顶，6.83 英寸大屏看着爽，44W 充电和 72 分处理器是短板。适合主要拿来看剧刷视频的。\n\n预算够就上荣耀，多花两百换来 80W 快充和更强处理器；想省钱选 iQOO，续航一样顶，就是充电要等。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "budget" : {
+        "min" : 600,
+        "max" : 2500
+      },
+      "prefs" : [ {
+        "key" : "battery_mah",
+        "label" : "续航",
+        "priority" : "must"
+      }, {
+        "key" : "charge_w",
+        "label" : "快充",
+        "priority" : "must"
+      } ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "3 款全部落在 0~2600"
+  }, {
+    "id" : "b11",
+    "cat" : "budget",
+    "query" : "预算2000，给老人用",
+    "latencyMs" : 2949,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 442,
+      "brand" : "iQOO",
+      "model" : "Z11",
+      "priceRef" : 1999.00,
+      "imageUrl" : "https://2b.zol-img.com.cn/product/275_800x600/881/cen0erZc9OEe6.jpg",
+      "score" : 72,
+      "reasons" : [ "充电功率 90W，明显优于平均", "电池容量 9020mAh，优于这批平均", "处理器 200分，优于这批平均" ],
+      "metrics" : {
+        "ram" : 12.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 90.0,
+        "cpu_score" : 200.0,
+        "dxo_camera" : 0.0,
+        "refresh_hz" : 165.0,
+        "battery_mah" : 9020.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.83
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 431,
+      "brand" : "红米",
+      "model" : "Turbo 5 MAX",
+      "priceRef" : 2199.00,
+      "imageUrl" : "https://2d.zol-img.com.cn/product/274_800x600/165/cek9Jkc5GEfRc.jpg",
+      "score" : 72,
+      "reasons" : [ "处理器 295分，这批里唯一最高", "充电功率 100W，这批里唯一最高", "运行内存 16GB，候选中并列最优" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 219.0,
+        "cpu_score" : 295.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 9000.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.83
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 426,
+      "brand" : "一加",
+      "model" : "Turbo 6",
+      "priceRef" : 2299.00,
+      "imageUrl" : "https://2a.zol-img.com.cn/product/274_800x600/406/ceR7H2PJa97Y.png",
+      "score" : 71,
+      "reasons" : [ "运行内存 16GB，候选中并列最优", "电池容量 9000mAh，优于这批平均", "充电功率 80W，优于这批平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 80.0,
+        "weight_g" : 217.0,
+        "cpu_score" : 205.0,
+        "refresh_hz" : 165.0,
+        "battery_mah" : 9000.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.78
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "这三款里给老人用，我更偏向 iQOO Z11 和红米 Turbo 5 MAX。\n\niQOO Z11 参考价 ¥1,999。9020mAh 电池配 90W 充电，续航和回血都省心，处理器 200 分日常够用，6.83 英寸大屏看着也舒服，适合不想折腾、图省事的老人。\n\n红米 Turbo 5 MAX 参考价 ¥2,199。处理器 295 分这批最高，16GB 运行内存，100W 充电也是这批最快，用久了不容易卡，适合想一步到位、多用几年的。\n\n一加 Turbo 6 参考价 ¥2,299。16GB 内存加 9000mAh 电池，80W 充电，配置均衡，但价格最高，处理器 205 分不算突出。\n\n预算够就上红米 Turbo 5 MAX，性能和充电都更强；想省钱选 iQOO Z11，日常用差别不大，主要差在处理器和内存上。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "budget" : {
+        "min" : 1200,
+        "max" : 2300
+      },
+      "prefs" : [ ],
+      "brands" : [ ],
+      "usage" : "老人使用"
+    },
+    "passed" : true,
+    "note" : "3 款全部落在 1100~2300"
+  }, {
+    "id" : "b12",
+    "cat" : "budget",
+    "query" : "4500以内，拍照好，vivo的",
+    "latencyMs" : 3134,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 405,
+      "brand" : "vivo",
+      "model" : "S60",
+      "priceRef" : 3599.00,
+      "imageUrl" : "https://2b.zol-img.com.cn/product/275_800x600/675/cevAqyzVC6orU.jpg",
+      "score" : 74,
+      "reasons" : [ "电池容量 7200mAh，这批里唯一最高", "刷新率 144Hz，这批里唯一最高" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 90.0,
+        "weight_g" : 205.0,
+        "cpu_score" : 168.0,
+        "refresh_hz" : 144.0,
+        "battery_mah" : 7200.0,
+        "image_score" : 55.0,
+        "screen_inch" : 6.59
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 407,
+      "brand" : "vivo",
+      "model" : "S50t",
+      "priceRef" : 3699.00,
+      "imageUrl" : "https://2a.zol-img.com.cn/product/275_800x600/632/ceh0MReKdL7KY.jpg",
+      "score" : 26,
+      "reasons" : [ "重量 197g，这批里最低" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 512.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 90.0,
+        "weight_g" : 197.0,
+        "cpu_score" : 168.0,
+        "refresh_hz" : 60.0,
+        "battery_mah" : 6500.0,
+        "image_score" : 55.0,
+        "screen_inch" : 6.59
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "这两款里更值得看的是 vivo S60，参考价 ¥3,599。影像梯队 55 分，和 S50t 同一档，主摄都是 5000 万像素；但它电池 7200mAh、144Hz 刷新率，都是这批里最高，90W 充电也够快，适合一天到晚拍视频、刷屏不想老找充电器的人。缺点是 205g 偏沉。\n\nvivo S50t 参考价 ¥3,699，影像梯队同样是 55 分，处理器也一样，胜在 197g 这批里最轻，拿着拍一天手不累；但刷新率只有 60Hz，电池 6500mAh 也小一截，价格还贵一百。\n\n预算够就上 S60，续航和屏幕体验明显更值；想省钱又在意手感，S50t 更轻，但影像这块两款拉不开差距，别为它多花钱。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "budget" : {
+        "min" : 3150,
+        "max" : 4500
+      },
+      "prefs" : [ {
+        "key" : "image_score",
+        "label" : "影像",
+        "priority" : "must"
+      } ],
+      "brands" : [ "vivo" ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "2 款全部落在 0~4700"
+  }, {
+    "id" : "p01",
+    "cat" : "prefer",
+    "query" : "拍照最好的手机",
+    "latencyMs" : 3031,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 376,
+      "brand" : "vivo",
+      "model" : "X100 Ultra",
+      "priceRef" : 6499.00,
+      "imageUrl" : "https://2a.zol-img.com.cn/product/263_800x600/264/ceHozw5ivjZCY.jpg",
+      "score" : 100,
+      "reasons" : [ "影像梯队 100分，候选中并列最优", "充电功率 80W，优于这批平均" ],
+      "metrics" : {
+        "ram" : 12.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 80.0,
+        "weight_g" : 229.0,
+        "cpu_score" : 210.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 5500.0,
+        "image_score" : 100.0,
+        "screen_inch" : 6.78
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 346,
+      "brand" : "OPPO",
+      "model" : "Find X10 Pro Max",
+      "priceRef" : 6799.00,
+      "imageUrl" : "https://2b.zol-img.com.cn/product/276_800x600/649/ce2JvOVTuhKi6.png",
+      "score" : 100,
+      "reasons" : [ "影像梯队 100分，候选中并列最优", "后置主摄 20000万像素，候选中并列最优", "充电功率 80W，优于这批平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 80.0,
+        "weight_g" : 235.0,
+        "cpu_score" : 400.0,
+        "refresh_hz" : 144.0,
+        "battery_mah" : 8000.0,
+        "image_score" : 100.0,
+        "screen_inch" : 6.78
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 338,
+      "brand" : "小米",
+      "model" : "18 Pro Max",
+      "priceRef" : 6999.00,
+      "imageUrl" : "https://2c.zol-img.com.cn/product/276_800x600/268/ceNQdBAmwVjYI.jpg",
+      "score" : 100,
+      "reasons" : [ "影像梯队 100分，候选中并列最优", "后置主摄 20000万像素，候选中并列最优", "电池容量 8500mAh，优于这批平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 235.0,
+        "cpu_score" : 390.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 8500.0,
+        "image_score" : 100.0,
+        "screen_inch" : 6.9
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "拍照优先的话，这三款影像梯队都是100分，并列最强，选谁都不会在影像上吃亏。\n\nvivo X100 Ultra，参考价6499。影像梯队100分，80W充电也优于这批平均，机身229g是三款里最轻的。适合想省钱又要顶级影像的人。\n\nOPPO Find X10 Pro Max，参考价6799。影像梯队100分，主摄20000万像素，处理器400分是三款最高，144Hz刷新率。适合拍照之外还打游戏、看重视听流畅的人。\n\n小米 18 Pro Max，参考价6999。影像梯队100分，主摄20000万像素，电池8500mAh、充电100W都是三款里最猛的。适合重度使用、不想一天两充的人。\n\n一句话：预算够就上小米18 Pro Max，续航充电最省心；想省钱选vivo X100 Ultra，影像一样顶，就是电池和处理器弱一档。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "prefs" : [ {
+        "key" : "image_score",
+        "label" : "影像",
+        "priority" : "must"
+      } ],
+      "brands" : [ ],
+      "usage" : "拍照"
+    },
+    "passed" : true,
+    "note" : "top3 有 3 个达标（阈值 70，样本 138 款）"
+  }, {
+    "id" : "p02",
+    "cat" : "prefer",
+    "query" : "主要打游戏，别卡",
+    "latencyMs" : 3946,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 322,
+      "brand" : "苹果",
+      "model" : "iPhone 18 Pro",
+      "priceRef" : 9999.00,
+      "imageUrl" : "https://2b.zol-img.com.cn/product/276_800x600/919/cewnUwqgMGCa.jpg",
+      "score" : 100,
+      "reasons" : [ "处理器 420分，候选中并列最优", "DXO 影像 172分，这批里唯一最高", "重量 211g，优于这批平均" ],
+      "metrics" : {
+        "rom" : 256.0,
+        "rear_mp" : 4800.0,
+        "charge_w" : 60.0,
+        "weight_g" : 211.0,
+        "cpu_score" : 420.0,
+        "dxo_camera" : 172.0,
+        "refresh_hz" : 120.0,
+        "image_score" : 85.0,
+        "screen_inch" : 6.3
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 321,
+      "brand" : "苹果",
+      "model" : "iPhone 18 Pro Max",
+      "priceRef" : 10999.00,
+      "imageUrl" : "https://2f.zol-img.com.cn/product/276_800x600/929/ceTQIpjIb8Eg.jpg",
+      "score" : 100,
+      "reasons" : [ "处理器 420分，候选中并列最优" ],
+      "metrics" : {
+        "rom" : 256.0,
+        "weight_g" : 231.0,
+        "cpu_score" : 420.0,
+        "refresh_hz" : 120.0,
+        "image_score" : 100.0,
+        "screen_inch" : 6.9
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 352,
+      "brand" : "vivo",
+      "model" : "X500 Pro",
+      "priceRef" : 6499.00,
+      "imageUrl" : "https://2f.zol-img.com.cn/product/276_800x600/7/ceFAWQVmsw1ig.jpg",
+      "score" : 95,
+      "reasons" : [ "处理器 400分，明显优于平均", "刷新率 144Hz，优于这批平均", "充电功率 90W，优于这批平均" ],
+      "metrics" : {
+        "ram" : 12.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 90.0,
+        "weight_g" : 192.0,
+        "cpu_score" : 400.0,
+        "refresh_hz" : 144.0,
+        "battery_mah" : 6510.0,
+        "image_score" : 85.0,
+        "screen_inch" : 6.36
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "打游戏这三款比较对得上。\n\n苹果 iPhone 18 Pro，参考价 ¥9,999。处理器 420 分，这批里并列最强，120Hz 高刷，6.3 英寸握着打游戏不累，211g 也算轻。适合预算充足、想要小屏高性能的人。\n\n苹果 iPhone 18 Pro Max，参考价 ¥10,999。同样 420 分处理器，120Hz，屏幕 6.9 英寸视野大，但 231g 拿久了手腕有压力。适合就想要大屏、不在乎重量的人。\n\nvivo X500 Pro，参考价 ¥6,499。处理器 400 分，明显高于平均，144Hz 刷新率比另外两款更顺，90W 充电回血快，6510mAh 电池撑得久，192g 最轻。适合长时间开黑、看重续航和充电的人。\n\n预算够就上 iPhone 18 Pro，处理器顶格；想省钱选 vivo X500 Pro，刷新率和续航反而更占优，差在处理器那 20 分。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "prefs" : [ {
+        "key" : "cpu_score",
+        "label" : "性能",
+        "priority" : "must"
+      }, {
+        "key" : "refresh_hz",
+        "label" : "高刷",
+        "priority" : "must"
+      }, {
+        "key" : "ram",
+        "label" : "性能",
+        "priority" : "nice"
+      } ],
+      "brands" : [ ],
+      "usage" : "游戏"
+    },
+    "passed" : true,
+    "note" : "top3 有 3 个达标（阈值 330，样本 138 款）"
+  }, {
+    "id" : "p03",
+    "cat" : "prefer",
+    "query" : "续航要强的手机",
+    "latencyMs" : 3364,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 403,
+      "brand" : "荣耀",
+      "model" : "WIN Turbo2",
+      "priceRef" : 3199.00,
+      "imageUrl" : "https://2c.zol-img.com.cn/product/276_800x600/652/ceIg6q3gGUGQ.jpg",
+      "score" : 100,
+      "reasons" : [ "电池容量 12070mAh，候选中并列最优", "充电功率 90W，优于这批平均", "运行内存 16GB，优于这批平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 90.0,
+        "weight_g" : 235.0,
+        "cpu_score" : 205.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 12070.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.89
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 397,
+      "brand" : "荣耀",
+      "model" : "WIN RT2",
+      "priceRef" : 4899.00,
+      "imageUrl" : "https://2c.zol-img.com.cn/product/276_800x600/718/ce4ySSjAhglE.png",
+      "score" : 100,
+      "reasons" : [ "电池容量 12070mAh，候选中并列最优", "充电功率 90W，优于这批平均", "刷新率 185Hz，候选中并列最优" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 90.0,
+        "weight_g" : 238.0,
+        "cpu_score" : 330.0,
+        "refresh_hz" : 185.0,
+        "battery_mah" : 12070.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.89
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 453,
+      "brand" : "荣耀",
+      "model" : "X80 Pro Max",
+      "priceRef" : 1999.00,
+      "imageUrl" : "https://2a.zol-img.com.cn/product/275_800x600/854/ceY4IXT6lpHs.jpg",
+      "score" : 88,
+      "reasons" : [ "电池容量 11000mAh，明显优于平均", "充电功率 80W，优于这批平均", "重量 203g，优于这批平均" ],
+      "metrics" : {
+        "ram" : 8.0,
+        "rom" : 128.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 80.0,
+        "weight_g" : 203.0,
+        "cpu_score" : 95.0,
+        "dxo_camera" : 0.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 11000.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.8
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "这三款都是大电池路线，续航最狠的是前两款。\n\n荣耀 WIN Turbo2，参考价 3199 元。12070mAh 电池是这批里并列最大的，配 90W 充电，16GB 运存也够用，处理器 205 分打游戏不虚。适合想一次充完用两三天、又不想花太多的人。\n\n荣耀 WIN RT2，参考价 4899 元。电池同样是 12070mAh，但处理器拉到 330 分，185Hz 刷新率也是并列最高，性能和屏幕都更猛。适合预算宽松、既要续航又要流畅度的人。\n\n荣耀 X80 Pro Max，参考价 1999 元。11000mAh 电池同样能扛，80W 充电，203g 是三款里最轻的，不过运存 8GB、处理器 95 分，日常够用、重载吃力。适合预算紧、主要刷视频聊微信的人。\n\n预算够就上 RT2，性能和屏幕的差距实打实；想省钱 Turbo2 更划算，电池一样大，只是处理器弱一档。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "prefs" : [ {
+        "key" : "battery_mah",
+        "label" : "续航",
+        "priority" : "must"
+      } ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "top3 有 3 个达标（阈值 8000，样本 122 款）"
+  }, {
+    "id" : "p04",
+    "cat" : "prefer",
+    "query" : "想要轻薄一点的，别太笨重",
+    "latencyMs" : 2971,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 358,
+      "brand" : "苹果",
+      "model" : "iPhone Air",
+      "priceRef" : 7999.00,
+      "imageUrl" : "https://2a.zol-img.com.cn/product/273_800x600/566/ceWUT0JAJFQnw.jpg",
+      "score" : 100,
+      "reasons" : [ "重量 165g，这批里最低" ],
+      "metrics" : {
+        "rom" : 1024.0,
+        "rear_mp" : 4800.0,
+        "charge_w" : 20.0,
+        "weight_g" : 165.0,
+        "cpu_score" : 360.0,
+        "refresh_hz" : 120.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.5
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 366,
+      "brand" : "苹果",
+      "model" : "iPhone 16e",
+      "priceRef" : 4499.00,
+      "imageUrl" : "https://2e.zol-img.com.cn/product/271_800x600/902/ceLpJwxbzvxg2.jpg",
+      "score" : 99,
+      "reasons" : [ "重量 167g，明显优于平均" ],
+      "metrics" : {
+        "ram" : 8.0,
+        "rom" : 128.0,
+        "rear_mp" : 4800.0,
+        "charge_w" : 30.0,
+        "weight_g" : 167.0,
+        "cpu_score" : 250.0,
+        "refresh_hz" : 60.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.1
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 360,
+      "brand" : "苹果",
+      "model" : "iPhone 16",
+      "priceRef" : 5999.00,
+      "imageUrl" : "https://2e.zol-img.com.cn/product/269_800x600/496/ceqTLEVaV4ZLo.jpg",
+      "score" : 96,
+      "reasons" : [ "重量 170g，明显优于平均", "DXO 影像 147分，明显优于平均" ],
+      "metrics" : {
+        "ram" : 8.0,
+        "rom" : 128.0,
+        "rear_mp" : 4800.0,
+        "weight_g" : 170.0,
+        "cpu_score" : 250.0,
+        "dxo_camera" : 147.0,
+        "image_score" : 55.0,
+        "screen_inch" : 6.1
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "这三款在轻薄上都很能打。\n\n苹果 iPhone Air，参考价 7999 元。165g 是这批里最轻的，6.5 英寸配 120Hz，处理器 360 分，拿着轻还不卡。适合预算宽松、想要大屏又怕坠手的人。\n\n苹果 iPhone 16e，参考价 4499 元。167g，重量只比 Air 多 2g，处理器 250 分够日常用，但屏幕 60Hz，滑动没那么顺。适合想省钱、对高刷不敏感的人。\n\n苹果 iPhone 16，参考价 5999 元。170g，比前两款略重一点点，影像梯队 55 分、DXO 147 分，是三款里拍照最扎实的。适合轻薄和拍照都想兼顾的人。\n\n预算够就上 Air，轻得最彻底；想省钱选 16e，代价是 60Hz 屏；要拍照就多花点选 16。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "prefs" : [ {
+        "key" : "weight_g",
+        "label" : "轻薄",
+        "priority" : "must"
+      } ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "top3 有 3 个达标（阈值 200.75，样本 130 款）"
+  }, {
+    "id" : "p05",
+    "cat" : "prefer",
+    "query" : "预算5000，拍照要好",
+    "latencyMs" : 2878,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 392,
+      "brand" : "OPPO",
+      "model" : "Find X9s Pro",
+      "priceRef" : 5299.00,
+      "imageUrl" : "https://2c.zol-img.com.cn/product/275_800x600/154/ceUZsCLwwpMyg.jpg",
+      "score" : 100,
+      "reasons" : [ "影像梯队 85分，候选中并列最优", "后置主摄 20000万像素，候选中并列最优", "充电功率 80W，优于这批平均" ],
+      "metrics" : {
+        "ram" : 12.0,
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 80.0,
+        "weight_g" : 200.0,
+        "cpu_score" : 330.0,
+        "refresh_hz" : 144.0,
+        "battery_mah" : 7025.0,
+        "image_score" : 85.0,
+        "screen_inch" : 6.32
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 364,
+      "brand" : "OPPO",
+      "model" : "Find X10",
+      "priceRef" : 5499.00,
+      "imageUrl" : "https://2d.zol-img.com.cn/product/276_800x600/627/ce2wqqMeMDr2E.png",
+      "score" : 100,
+      "reasons" : [ "影像梯队 85分，候选中并列最优", "后置主摄 20000万像素，候选中并列最优", "运行内存 16GB，候选中并列最优" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 80.0,
+        "weight_g" : 216.0,
+        "cpu_score" : 335.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 8000.0,
+        "image_score" : 85.0,
+        "screen_inch" : 6.59
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 384,
+      "brand" : "一加",
+      "model" : "15T",
+      "priceRef" : 4299.00,
+      "imageUrl" : "https://2a.zol-img.com.cn/product/275_800x600/290/ceCCmPYExRkg.jpg",
+      "score" : 67,
+      "reasons" : [ "影像梯队 70分，优于这批平均", "运行内存 16GB，候选中并列最优", "充电功率 100W，优于这批平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 194.0,
+        "cpu_score" : 330.0,
+        "refresh_hz" : 165.0,
+        "battery_mah" : 7500.0,
+        "image_score" : 70.0,
+        "screen_inch" : 6.32
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "这三款比较对得上。\n\nOPPO Find X9s Pro，参考价 ¥5,299。影像梯队 85 分，是这批里并列最优的，后置主摄 20000 万像素也是并列最高，80W 充电优于平均。6.32 英寸、200g，手感偏小巧，适合想要顶级影像又不想拿大砖头的人。\n\nOPPO Find X10，参考价 ¥5,499。影像梯队同样 85 分并列最优，主摄 20000 万像素，16GB 运存是并列最优，8000mAh 电池容量最大。6.59 英寸、216g，适合看重影像又要大屏长续航的人。\n\n一加 15T，参考价 ¥4,299。影像梯队 70 分，优于这批平均，但不是第一梯队；16GB 运存并列最优，100W 充电最快，194g 最轻，165Hz 刷新率最高。适合预算紧一点、更在意性能和充电的人。\n\n预算够就上 Find X10，影像和运存都拉满；想省钱选一加 15T，差在影像梯队 70 对 85 这一档。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "budget" : {
+        "min" : 3000,
+        "max" : 5750
+      },
+      "prefs" : [ {
+        "key" : "image_score",
+        "label" : "影像",
+        "priority" : "must"
+      } ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "top3 有 3 个达标（阈值 55，样本 20 款）"
+  }, {
+    "id" : "p06",
+    "cat" : "prefer",
+    "query" : "三千左右打游戏",
+    "latencyMs" : 2973,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 418,
+      "brand" : "红米",
+      "model" : "K90 Max",
+      "priceRef" : 3199.00,
+      "imageUrl" : "https://2e.zol-img.com.cn/product/275_800x600/988/cex9aqMIpMlc.jpg",
+      "score" : 100,
+      "reasons" : [ "处理器 330分，这批里唯一最高", "刷新率 165Hz，候选中并列最优", "运行内存 16GB，候选中并列最优" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 227.0,
+        "cpu_score" : 330.0,
+        "refresh_hz" : 165.0,
+        "battery_mah" : 8550.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.83
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 404,
+      "brand" : "iQOO",
+      "model" : "Neo11 至尊版",
+      "priceRef" : 3399.00,
+      "imageUrl" : "https://2b.zol-img.com.cn/product/276_800x600/953/ceQBQWRgqEQQ.jpg",
+      "score" : 89,
+      "reasons" : [ "处理器 300分，明显优于平均", "运行内存 16GB，候选中并列最优", "刷新率 144Hz，明显优于平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 225.0,
+        "cpu_score" : 300.0,
+        "refresh_hz" : 144.0,
+        "battery_mah" : 9100.0,
+        "image_score" : 55.0,
+        "screen_inch" : 6.83
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 408,
+      "brand" : "OPPO",
+      "model" : "K15 Pro+",
+      "priceRef" : 3499.00,
+      "imageUrl" : "https://2c.zol-img.com.cn/product/275_800x600/380/ce95fpPN1XELc.jpg",
+      "score" : 88,
+      "reasons" : [ "处理器 295分，明显优于平均", "刷新率 165Hz，候选中并列最优", "充电功率 100W，优于这批平均" ],
+      "metrics" : {
+        "ram" : 12.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 219.0,
+        "cpu_score" : 295.0,
+        "refresh_hz" : 165.0,
+        "battery_mah" : 8000.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.78
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "打游戏这三款比较对得上。\n\n红米 K90 Max，参考价 ¥3,199。处理器 330 分是这批里最高的，165Hz 刷新率并列最优，16GB 运存也顶格，8550mAh 电池配 100W 充电，适合追求帧率上限、能接受 227g 重量的重度玩家。\n\niQOO Neo11 至尊版，参考价 ¥3,399。处理器 300 分明显高于平均，144Hz 刷新率也够用，16GB 运存，9100mAh 电池是这三款里最大的，适合长时间开黑、更在意续航的人。\n\nOPPO K15 Pro+，参考价 ¥3,499。处理器 295 分，165Hz 刷新率并列最优，100W 充电，219g 是这三款里最轻的，运存 12GB 稍低一档，适合想要高刷又不想太压手的人。\n\n预算够就上红米 K90 Max，处理器和刷新率都拉满；想省钱又看重续航选 iQOO Neo11 至尊版，差在处理器分数和刷新率上。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "budget" : {
+        "min" : 2250,
+        "max" : 3750
+      },
+      "prefs" : [ {
+        "key" : "cpu_score",
+        "label" : "性能",
+        "priority" : "must"
+      }, {
+        "key" : "refresh_hz",
+        "label" : "高刷",
+        "priority" : "must"
+      }, {
+        "key" : "ram",
+        "label" : "性能",
+        "priority" : "nice"
+      } ],
+      "brands" : [ ],
+      "usage" : "游戏"
+    },
+    "passed" : true,
+    "note" : "top3 有 3 个达标（阈值 281.25，样本 30 款）"
+  }, {
+    "id" : "p07",
+    "cat" : "prefer",
+    "query" : "5000以内，续航第一",
+    "latencyMs" : 2831,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 397,
+      "brand" : "荣耀",
+      "model" : "WIN RT2",
+      "priceRef" : 4899.00,
+      "imageUrl" : "https://2c.zol-img.com.cn/product/276_800x600/718/ce4ySSjAhglE.png",
+      "score" : 100,
+      "reasons" : [ "电池容量 12070mAh，这批里唯一最高", "运行内存 16GB，候选中并列最优", "刷新率 185Hz，候选中并列最优" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 90.0,
+        "weight_g" : 238.0,
+        "cpu_score" : 330.0,
+        "refresh_hz" : 185.0,
+        "battery_mah" : 12070.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.89
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 386,
+      "brand" : "荣耀",
+      "model" : "Magic9 超能版",
+      "priceRef" : 4499.00,
+      "imageUrl" : "https://2f.zol-img.com.cn/product/276_800x600/67/cenhhY7TQqTek.jpg",
+      "score" : 81,
+      "reasons" : [ "电池容量 11000mAh，明显优于平均", "运行内存 16GB，候选中并列最优", "后置主摄 20000万像素，候选中并列最优" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 80.0,
+        "weight_g" : 227.0,
+        "cpu_score" : 330.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 11000.0,
+        "image_score" : 55.0,
+        "screen_inch" : 6.81
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 378,
+      "brand" : "红米",
+      "model" : "K100 Pro Max",
+      "priceRef" : 4199.00,
+      "imageUrl" : "https://2d.zol-img.com.cn/product/276_800x600/59/ce0TxC2Rq4hbA.png",
+      "score" : 46,
+      "reasons" : [ "运行内存 16GB，候选中并列最优", "充电功率 100W，优于这批平均", "刷新率 185Hz，候选中并列最优" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 238.0,
+        "cpu_score" : 330.0,
+        "refresh_hz" : 185.0,
+        "battery_mah" : 9070.0,
+        "image_score" : 55.0,
+        "screen_inch" : 6.9
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "这三款里续航最狠的是荣耀 WIN RT2，参考价 4,899。12070mAh 电池是这批里唯一最高，16GB 内存和 185Hz 刷新率也都是候选里并列最优，90W 充电。代价是 238g 有点压手，适合一天不碰充电器、能接受重一点的人。\n\n荣耀 Magic9 超能版参考价 4,499，11000mAh 明显高于平均，227g 是三款里最轻的，影像梯队 55 分也比 WIN RT2 高一档，80W 充电。适合想续航长、又偶尔拍点东西、手感别太沉的人。\n\n红米 K100 Pro Max 参考价 4,199，9070mAh 是三者里最小的，但 100W 充电最快，185Hz 刷新率和 16GB 内存都在，影像梯队 55 分。适合预算卡得紧、能接受多充一次的人。\n\n预算够就上 WIN RT2，续航直接拉满；想省钱选红米，差别主要在电池容量和充电速度的取舍。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "budget" : {
+        "min" : 3500,
+        "max" : 5000
+      },
+      "prefs" : [ {
+        "key" : "battery_mah",
+        "label" : "续航",
+        "priority" : "must"
+      } ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "top3 有 3 个达标（阈值 8550，样本 84 款）"
+  }, {
+    "id" : "p08",
+    "cat" : "prefer",
+    "query" : "6000以内，屏幕大一点看剧",
+    "latencyMs" : 2679,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 393,
+      "brand" : "华为",
+      "model" : "novaFlip",
+      "priceRef" : 5688.00,
+      "imageUrl" : "https://2b.zol-img.com.cn/product/269_800x600/979/cefOVIyhVB8KA.jpg",
+      "score" : 100,
+      "reasons" : [ "屏幕尺寸 6.94英寸，这批里唯一最高", "重量 195g，优于这批平均" ],
+      "metrics" : {
+        "rom" : 512.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 66.0,
+        "weight_g" : 195.0,
+        "cpu_score" : 108.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 4400.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.94
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 382,
+      "brand" : "小米",
+      "model" : "17 Max",
+      "priceRef" : 4799.00,
+      "imageUrl" : "https://2a.zol-img.com.cn/product/275_800x600/326/ce7gQuTtESXvI.png",
+      "score" : 95,
+      "reasons" : [ "屏幕尺寸 6.9英寸，明显优于平均", "运行内存 16GB，候选中并列最优", "充电功率 100W，优于这批平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 225.0,
+        "cpu_score" : 330.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 8000.0,
+        "image_score" : 55.0,
+        "screen_inch" : 6.9
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 387,
+      "brand" : "红米",
+      "model" : "K90 Pro Max",
+      "priceRef" : 5499.00,
+      "imageUrl" : "https://2b.zol-img.com.cn/product/273_800x600/153/ceXTZt16YEcLc.png",
+      "score" : 95,
+      "reasons" : [ "屏幕尺寸 6.9英寸，明显优于平均", "运行内存 16GB，候选中并列最优", "充电功率 100W，优于这批平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 1024.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 218.0,
+        "cpu_score" : 330.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 7560.0,
+        "image_score" : 55.0,
+        "screen_inch" : 6.9
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "看剧要大屏，这三款比较对得上。\n\n华为 novaFlip，参考价 5688 元。6.94 英寸是这批里最大的，195g 也最轻，躺着举着看剧手腕压力小，影像梯队 40 分、处理器 108 分，日常够用，适合主要拿来看剧、不太折腾游戏的人。\n\n小米 17 Max，参考价 4799 元。6.9 英寸大屏，8000mAh 电池配 100W 充电，追剧续航最省心，处理器 330 分，16GB 运存，适合又想看剧又想打游戏的人。\n\n红米 K90 Pro Max，参考价 5499 元。屏幕、处理器、运存、充电跟小米那款基本一个水平，电池 7560mAh 略小，适合认准这个牌子、想要同样性能的人。\n\n预算够又在意手感就选华为那款；想省钱还要性能和续航，小米 17 Max 更划算，差价主要花在屏幕大小和重量上。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "budget" : {
+        "min" : 4200,
+        "max" : 6000
+      },
+      "prefs" : [ {
+        "key" : "screen_inch",
+        "label" : "大屏",
+        "priority" : "must"
+      } ],
+      "brands" : [ ],
+      "usage" : "看剧"
+    },
+    "passed" : true,
+    "note" : "top3 有 3 个达标（阈值 6.83，样本 96 款）"
+  }, {
+    "id" : "p09",
+    "cat" : "prefer",
+    "query" : "快充要快的手机",
+    "latencyMs" : 3284,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 412,
+      "brand" : "一加",
+      "model" : "Ace 6",
+      "priceRef" : 2599.00,
+      "imageUrl" : "https://2c.zol-img.com.cn/product/273_800x600/270/ceGv1cznRrMp.jpg",
+      "score" : 100,
+      "reasons" : [ "充电功率 120W，候选中并列最优", "运行内存 16GB，优于这批平均", "刷新率 165Hz，明显优于平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 120.0,
+        "weight_g" : 213.0,
+        "cpu_score" : 285.0,
+        "refresh_hz" : 165.0,
+        "battery_mah" : 7800.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.83
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 389,
+      "brand" : "一加",
+      "model" : "Ace 6 至尊版",
+      "priceRef" : 3799.00,
+      "imageUrl" : "https://2f.zol-img.com.cn/product/275_800x600/957/ceFddVkNvqr7o.jpg",
+      "score" : 100,
+      "reasons" : [ "充电功率 120W，候选中并列最优", "电池容量 8600mAh，优于这批平均", "运行内存 16GB，优于这批平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 120.0,
+        "weight_g" : 217.0,
+        "cpu_score" : 330.0,
+        "refresh_hz" : 165.0,
+        "battery_mah" : 8600.0,
+        "image_score" : 55.0,
+        "screen_inch" : 6.78
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 390,
+      "brand" : "一加",
+      "model" : "15",
+      "priceRef" : 5399.00,
+      "imageUrl" : "https://2e.zol-img.com.cn/product/273_800x600/212/ceH4L8VQuPJs.jpg",
+      "score" : 100,
+      "reasons" : [ "充电功率 120W，候选中并列最优", "运行内存 16GB，优于这批平均", "刷新率 165Hz，明显优于平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 1024.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 120.0,
+        "weight_g" : 211.0,
+        "cpu_score" : 330.0,
+        "refresh_hz" : 165.0,
+        "battery_mah" : 7300.0,
+        "image_score" : 55.0,
+        "screen_inch" : 6.78
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "这三款快充都是120W，并列这批里最强，差别在别处。\n\n一加 Ace 6，参考价2599。120W快充配7800mAh电池，16GB内存加165Hz高刷屏，处理器285分，日常和主流游戏够用。适合预算压得比较紧、又想要快充和大内存的人。\n\n一加 Ace 6 至尊版，参考价3799。同样是120W，电池给到8600mAh，处理器330分，影像梯队55分，续航和性能都更扎实。适合经常在外跑、懒得天天充电，还偶尔打打重载游戏的人。\n\n一加 15，参考价5399。120W加7300mAh，处理器330分，影像梯队55分，机身211g是三款里最轻的。适合想要快充又不愿手机太沉、对拍照也有点要求的人。\n\n预算够就上一加 15，轻一点、影像和性能都到位；想省钱选Ace 6，快充和大内存一样不少，差在处理器和影像梯队。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "prefs" : [ {
+        "key" : "charge_w",
+        "label" : "快充",
+        "priority" : "must"
+      } ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "top3 有 3 个达标（阈值 100，样本 124 款）"
+  }, {
+    "id" : "p10",
+    "cat" : "prefer",
+    "query" : "6000以内，拍照和续航都要",
+    "latencyMs" : 3032,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 392,
+      "brand" : "OPPO",
+      "model" : "Find X9s Pro",
+      "priceRef" : 5299.00,
+      "imageUrl" : "https://2c.zol-img.com.cn/product/275_800x600/154/ceUZsCLwwpMyg.jpg",
+      "score" : 100,
+      "reasons" : [ "影像梯队 85分，候选中并列最优", "后置主摄 20000万像素，候选中并列最优", "充电功率 80W，优于这批平均" ],
+      "metrics" : {
+        "ram" : 12.0,
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 80.0,
+        "weight_g" : 200.0,
+        "cpu_score" : 330.0,
+        "refresh_hz" : 144.0,
+        "battery_mah" : 7025.0,
+        "image_score" : 85.0,
+        "screen_inch" : 6.32
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 364,
+      "brand" : "OPPO",
+      "model" : "Find X10",
+      "priceRef" : 5499.00,
+      "imageUrl" : "https://2d.zol-img.com.cn/product/276_800x600/627/ce2wqqMeMDr2E.png",
+      "score" : 100,
+      "reasons" : [ "影像梯队 85分，候选中并列最优", "后置主摄 20000万像素，候选中并列最优", "运行内存 16GB，候选中并列最优" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 80.0,
+        "weight_g" : 216.0,
+        "cpu_score" : 335.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 8000.0,
+        "image_score" : 85.0,
+        "screen_inch" : 6.59
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 379,
+      "brand" : "小米",
+      "model" : "17 Pro",
+      "priceRef" : 5999.00,
+      "imageUrl" : "https://2e.zol-img.com.cn/product/273_800x600/160/cehWo7W1VTTyE.png",
+      "score" : 100,
+      "reasons" : [ "影像梯队 85分，候选中并列最优", "运行内存 16GB，候选中并列最优", "充电功率 100W，优于这批平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 1024.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 192.0,
+        "cpu_score" : 330.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 6300.0,
+        "image_score" : 85.0,
+        "screen_inch" : 6.3
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "这三款影像都在同一梯队，85分并列，差别主要在续航和手感。\n\nOPPO Find X9s Pro，参考价5299。7025mAh电池配6.32英寸小屏，200g，80W充电，影像梯队85分。想要小屏好握、续航又顶得住的，这款最合适。\n\nOPPO Find X10，参考价5499。8000mAh是这三款里最大的，6.59英寸大屏，16GB内存，影像梯队同样85分。重度用机、一天不充电的人选它，代价是216g偏沉。\n\n小米 17 Pro，参考价5999。6300mAh，6.3英寸，192g最轻，100W充电最快，16GB内存，影像梯队85分。在意手感和回血速度的选它，续航比前两款弱一档。\n\n预算够、想续航最狠就上Find X10；想省钱又要均衡，Find X9s Pro更划算，主要差在屏幕尺寸和电池容量。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "budget" : {
+        "min" : 3600,
+        "max" : 6000
+      },
+      "prefs" : [ {
+        "key" : "image_score",
+        "label" : "影像",
+        "priority" : "must"
+      }, {
+        "key" : "battery_mah",
+        "label" : "续航",
+        "priority" : "must"
+      } ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "top3 有 3 个达标（阈值 55，样本 96 款）"
+  }, {
+    "id" : "r01",
+    "cat" : "refuse",
+    "query" : "推荐个降噪耳机",
+    "latencyMs" : 859,
+    "events" : [ "done", "error", "intent", "status" ],
+    "candidates" : [ ],
+    "answer" : "",
+    "error" : "商品服务暂时不可用，稍后再试（类目不存在：earbuds）",
+    "clarified" : false,
+    "intent" : {
+      "category" : "earbuds",
+      "categoryLabel" : "耳机",
+      "prefs" : [ ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "正确未给候选（error）"
+  }, {
+    "id" : "r02",
+    "cat" : "refuse",
+    "query" : "想买个相机",
+    "latencyMs" : 1013,
+    "events" : [ "done", "error", "intent", "status" ],
+    "candidates" : [ ],
+    "answer" : "",
+    "error" : "商品服务暂时不可用，稍后再试（类目不存在：camera）",
+    "clarified" : false,
+    "intent" : {
+      "category" : "camera",
+      "categoryLabel" : "相机",
+      "prefs" : [ ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "正确未给候选（error）"
+  }, {
+    "id" : "r03",
+    "cat" : "refuse",
+    "query" : "500以内的手机",
+    "latencyMs" : 1068,
+    "events" : [ "done", "error", "intent", "status" ],
+    "candidates" : [ ],
+    "answer" : "",
+    "error" : "¥300–¥500 这个区间没有在售的手机，预算放宽一点再试试？",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "budget" : {
+        "min" : 300,
+        "max" : 500
+      },
+      "prefs" : [ ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "正确未给候选（error）"
+  }, {
+    "id" : "r04",
+    "cat" : "refuse",
+    "query" : "3万以上的手机推荐一个",
+    "latencyMs" : 1068,
+    "events" : [ "done", "error", "intent", "status" ],
+    "candidates" : [ ],
+    "answer" : "",
+    "error" : "¥30,000 以上 这个区间没有在售的手机，预算放宽一点再试试？",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "budget" : {
+        "min" : 30000
+      },
+      "prefs" : [ ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "正确未给候选（error）"
+  }, {
+    "id" : "r05",
+    "cat" : "refuse",
+    "query" : "推荐个手机",
+    "latencyMs" : 600,
+    "events" : [ "clarify", "done", "intent", "status" ],
+    "candidates" : [ ],
+    "answer" : "",
+    "clarified" : true,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "prefs" : [ ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "正确未给候选（clarify）"
+  }, {
+    "id" : "r06",
+    "cat" : "refuse",
+    "query" : "今天天气怎么样",
+    "latencyMs" : 2051,
+    "events" : [ "done", "intent", "status", "token" ],
+    "candidates" : [ ],
+    "answer" : "我这边只能查手机相关的信息，天气查不了。如果你想看手机，可以告诉我预算和品牌，我帮你筛。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "followup",
+      "categoryLabel" : "机型对比",
+      "prefs" : [ ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "正确未给候选，且给了说明（44 字）"
+  }, {
+    "id" : "r07",
+    "cat" : "refuse",
+    "query" : "推荐一款三星手机",
+    "latencyMs" : 1131,
+    "events" : [ "clarify", "done", "intent", "status" ],
+    "candidates" : [ ],
+    "answer" : "",
+    "clarified" : true,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "prefs" : [ ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "正确未给候选（clarify）"
+  }, {
+    "id" : "r08",
+    "cat" : "refuse",
+    "query" : "想要个充电宝",
+    "latencyMs" : 875,
+    "events" : [ "done", "error", "intent", "status" ],
+    "candidates" : [ ],
+    "answer" : "",
+    "error" : "商品服务暂时不可用，稍后再试（类目不存在：powerbank）",
+    "clarified" : false,
+    "intent" : {
+      "category" : "powerbank",
+      "categoryLabel" : "充电宝",
+      "prefs" : [ ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "正确未给候选（error）"
+  }, {
+    "id" : "f01",
+    "cat" : "fabricate",
+    "query" : "预算3000，续航和拍照好的手机",
+    "latencyMs" : 3775,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 403,
+      "brand" : "荣耀",
+      "model" : "WIN Turbo2",
+      "priceRef" : 3199.00,
+      "imageUrl" : "https://2c.zol-img.com.cn/product/276_800x600/652/ceIg6q3gGUGQ.jpg",
+      "score" : 100,
+      "reasons" : [ "电池容量 12070mAh，这批里唯一最高", "运行内存 16GB，候选中并列最优", "充电功率 90W，优于这批平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 90.0,
+        "weight_g" : 235.0,
+        "cpu_score" : 205.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 12070.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.89
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 453,
+      "brand" : "荣耀",
+      "model" : "X80 Pro Max",
+      "priceRef" : 1999.00,
+      "imageUrl" : "https://2a.zol-img.com.cn/product/275_800x600/854/ceY4IXT6lpHs.jpg",
+      "score" : 82,
+      "reasons" : [ "电池容量 11000mAh，明显优于平均", "重量 203g，优于这批平均", "屏幕尺寸 6.8英寸，优于这批平均" ],
+      "metrics" : {
+        "ram" : 8.0,
+        "rom" : 128.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 80.0,
+        "weight_g" : 203.0,
+        "cpu_score" : 95.0,
+        "dxo_camera" : 0.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 11000.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.8
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 430,
+      "brand" : "vivo",
+      "model" : "Y600 Pro",
+      "priceRef" : 2899.00,
+      "imageUrl" : "https://2d.zol-img.com.cn/product/275_800x600/971/ceykjqb9802UY.png",
+      "score" : 69,
+      "reasons" : [ "电池容量 10200mAh，优于这批平均", "充电功率 90W，优于这批平均", "屏幕尺寸 6.83英寸，优于这批平均" ],
+      "metrics" : {
+        "ram" : 12.0,
+        "rom" : 512.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 90.0,
+        "weight_g" : 221.0,
+        "cpu_score" : 72.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 10200.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.83
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "这三款里，续航最狠的是荣耀 WIN Turbo2，参考价 3199。12070mAh 电池是这批里唯一最高，配 90W 充电，16GB 运存也是并列最优，适合一天两充都嫌烦、还想顺便打打游戏的人，代价是 235g 有点压手。\n\n荣耀 X80 Pro Max 参考价 1999，11000mAh 电池明显高于平均，203g 是这三款里最轻的，6.8 英寸屏也够大，适合预算卡得紧、主要看重续航和手感的人，处理器和运存规格低一档。\n\nvivo Y600 Pro 参考价 2899，10200mAh 加 90W 充电，12GB 运存居中，适合想要均衡一点、又认这个牌子的。\n\n影像这块三款都是影像梯队 40 分，同一水平，别指望拉开差距。\n\n一句话：预算够就上 WIN Turbo2，电池和运存都顶；想省钱选 X80 Pro Max，续航差不太多但更轻更便宜，差别在处理器和运存。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "budget" : {
+        "min" : 1800,
+        "max" : 3450
+      },
+      "prefs" : [ {
+        "key" : "battery_mah",
+        "label" : "续航",
+        "priority" : "must"
+      }, {
+        "key" : "image_score",
+        "label" : "影像",
+        "priority" : "must"
+      } ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "型号与价格均来自候选"
+  }, {
+    "id" : "f02",
+    "cat" : "fabricate",
+    "query" : "拍照最好的手机",
+    "latencyMs" : 3288,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 376,
+      "brand" : "vivo",
+      "model" : "X100 Ultra",
+      "priceRef" : 6499.00,
+      "imageUrl" : "https://2a.zol-img.com.cn/product/263_800x600/264/ceHozw5ivjZCY.jpg",
+      "score" : 100,
+      "reasons" : [ "影像梯队 100分，候选中并列最优", "充电功率 80W，优于这批平均" ],
+      "metrics" : {
+        "ram" : 12.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 80.0,
+        "weight_g" : 229.0,
+        "cpu_score" : 210.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 5500.0,
+        "image_score" : 100.0,
+        "screen_inch" : 6.78
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 346,
+      "brand" : "OPPO",
+      "model" : "Find X10 Pro Max",
+      "priceRef" : 6799.00,
+      "imageUrl" : "https://2b.zol-img.com.cn/product/276_800x600/649/ce2JvOVTuhKi6.png",
+      "score" : 100,
+      "reasons" : [ "影像梯队 100分，候选中并列最优", "后置主摄 20000万像素，候选中并列最优", "充电功率 80W，优于这批平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 80.0,
+        "weight_g" : 235.0,
+        "cpu_score" : 400.0,
+        "refresh_hz" : 144.0,
+        "battery_mah" : 8000.0,
+        "image_score" : 100.0,
+        "screen_inch" : 6.78
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 338,
+      "brand" : "小米",
+      "model" : "18 Pro Max",
+      "priceRef" : 6999.00,
+      "imageUrl" : "https://2c.zol-img.com.cn/product/276_800x600/268/ceNQdBAmwVjYI.jpg",
+      "score" : 100,
+      "reasons" : [ "影像梯队 100分，候选中并列最优", "后置主摄 20000万像素，候选中并列最优", "电池容量 8500mAh，优于这批平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 235.0,
+        "cpu_score" : 390.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 8500.0,
+        "image_score" : 100.0,
+        "screen_inch" : 6.9
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "这三款影像都在第一梯队，挑起来主要看别的地方。\n\nvivo X100 Ultra，参考价 6499 元。影像梯队 100 分，和另外两款并列最优，80W 充电也优于这批平均。机身 229g，是三款里最轻的，适合想拿顶级影像又不想太压手的人。\n\nOPPO Find X10 Pro Max，参考价 6799 元。影像梯队 100 分，主摄 20000 万像素，处理器 400 分是三款最高，144Hz 刷新率也最顺。适合既拍得好、又想要游戏和日常流畅度的人。\n\n小米 18 Pro Max，参考价 6999 元。影像梯队 100 分，主摄同样 20000 万像素，电池 8500mAh 最大，充电 100W 最快。适合重度用机、懒得一天两充的人。\n\n预算够、想一步到位就小米 18 Pro Max，续航充电最省心；想省钱选 vivo X100 Ultra，影像一样顶，主要差在处理器和电池。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "prefs" : [ {
+        "key" : "image_score",
+        "label" : "影像",
+        "priority" : "must"
+      } ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "型号与价格均来自候选"
+  }, {
+    "id" : "f03",
+    "cat" : "fabricate",
+    "query" : "打游戏用，别卡",
+    "latencyMs" : 3071,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 322,
+      "brand" : "苹果",
+      "model" : "iPhone 18 Pro",
+      "priceRef" : 9999.00,
+      "imageUrl" : "https://2b.zol-img.com.cn/product/276_800x600/919/cewnUwqgMGCa.jpg",
+      "score" : 100,
+      "reasons" : [ "处理器 420分，候选中并列最优", "DXO 影像 172分，这批里唯一最高", "重量 211g，优于这批平均" ],
+      "metrics" : {
+        "rom" : 256.0,
+        "rear_mp" : 4800.0,
+        "charge_w" : 60.0,
+        "weight_g" : 211.0,
+        "cpu_score" : 420.0,
+        "dxo_camera" : 172.0,
+        "refresh_hz" : 120.0,
+        "image_score" : 85.0,
+        "screen_inch" : 6.3
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 321,
+      "brand" : "苹果",
+      "model" : "iPhone 18 Pro Max",
+      "priceRef" : 10999.00,
+      "imageUrl" : "https://2f.zol-img.com.cn/product/276_800x600/929/ceTQIpjIb8Eg.jpg",
+      "score" : 100,
+      "reasons" : [ "处理器 420分，候选中并列最优" ],
+      "metrics" : {
+        "rom" : 256.0,
+        "weight_g" : 231.0,
+        "cpu_score" : 420.0,
+        "refresh_hz" : 120.0,
+        "image_score" : 100.0,
+        "screen_inch" : 6.9
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 352,
+      "brand" : "vivo",
+      "model" : "X500 Pro",
+      "priceRef" : 6499.00,
+      "imageUrl" : "https://2f.zol-img.com.cn/product/276_800x600/7/ceFAWQVmsw1ig.jpg",
+      "score" : 95,
+      "reasons" : [ "处理器 400分，明显优于平均", "刷新率 144Hz，优于这批平均", "充电功率 90W，优于这批平均" ],
+      "metrics" : {
+        "ram" : 12.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 90.0,
+        "weight_g" : 192.0,
+        "cpu_score" : 400.0,
+        "refresh_hz" : 144.0,
+        "battery_mah" : 6510.0,
+        "image_score" : 85.0,
+        "screen_inch" : 6.36
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "打游戏这三款比较对得上，重点看处理器和刷新率。\n\n苹果 iPhone 18 Pro，参考价 ¥9,999。处理器 420 分，这批里并列最强，120Hz 高刷，211g 在这批里算轻的，长时间横握不累手。适合预算充足、主要玩大型手游又要顺手拍照的人。\n\n苹果 iPhone 18 Pro Max，参考价 ¥10,999。处理器同样 420 分，屏幕 6.9 英寸，视野大、散热空间足，但 231g 拿久了压手。适合固定在家或桌上玩、追求大屏沉浸感的人。\n\nvivo X500 Pro，参考价 ¥6,499。处理器 400 分，明显高于平均，144Hz 刷新率比前两款更跟手，90W 充电回血快，6510mAh 电池续航扛得住，192g 也最轻。适合长时间开黑、在意续航和充电速度的人。\n\n预算够就上 iPhone 18 Pro，处理器顶格、重量也压得住；想省钱选 vivo X500 Pro，刷新率和充电反而更猛，差别主要在影像梯队和处理器那 20 分。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "prefs" : [ {
+        "key" : "cpu_score",
+        "label" : "性能",
+        "priority" : "must"
+      }, {
+        "key" : "refresh_hz",
+        "label" : "高刷",
+        "priority" : "must"
+      }, {
+        "key" : "ram",
+        "label" : "性能",
+        "priority" : "nice"
+      } ],
+      "brands" : [ ],
+      "usage" : "游戏"
+    },
+    "passed" : true,
+    "note" : "型号与价格均来自候选"
+  }, {
+    "id" : "f04",
+    "cat" : "fabricate",
+    "query" : "2000以内的手机",
+    "latencyMs" : 2768,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 442,
+      "brand" : "iQOO",
+      "model" : "Z11",
+      "priceRef" : 1999.00,
+      "imageUrl" : "https://2b.zol-img.com.cn/product/275_800x600/881/cen0erZc9OEe6.jpg",
+      "score" : 81,
+      "reasons" : [ "充电功率 90W，这批里唯一最高", "处理器 200分，明显优于平均", "电池容量 9020mAh，优于这批平均" ],
+      "metrics" : {
+        "ram" : 12.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 90.0,
+        "cpu_score" : 200.0,
+        "dxo_camera" : 0.0,
+        "refresh_hz" : 165.0,
+        "battery_mah" : 9020.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.83
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 439,
+      "brand" : "一加",
+      "model" : "Ace 5 竞速版",
+      "priceRef" : 1799.00,
+      "imageUrl" : "https://2c.zol-img.com.cn/product/272_800x600/556/ce1XbUku3kCTQ.jpg",
+      "score" : 68,
+      "reasons" : [ "处理器 220分，这批里唯一最高", "运行内存 16GB，这批里唯一最高", "充电功率 80W，明显优于平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 80.0,
+        "weight_g" : 200.0,
+        "cpu_score" : 220.0,
+        "dxo_camera" : 0.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 7100.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.77
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 453,
+      "brand" : "荣耀",
+      "model" : "X80 Pro Max",
+      "priceRef" : 1999.00,
+      "imageUrl" : "https://2a.zol-img.com.cn/product/275_800x600/854/ceY4IXT6lpHs.jpg",
+      "score" : 60,
+      "reasons" : [ "电池容量 11000mAh，这批里唯一最高", "充电功率 80W，明显优于平均", "后置主摄 5000万像素，候选中并列最优" ],
+      "metrics" : {
+        "ram" : 8.0,
+        "rom" : 128.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 80.0,
+        "weight_g" : 203.0,
+        "cpu_score" : 95.0,
+        "dxo_camera" : 0.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 11000.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.8
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "这三款比较对得上。\n\niQOO Z11，参考价 1999 元。处理器 200 分，明显高于平均，90W 充电是这批里最高的，9020mAh 电池也够顶。适合想一台机子打游戏、看剧、续航都别掉链子的人。\n\n一加 Ace 5 竞速版，参考价 1799 元。处理器 220 分是这批里唯一最高，16GB 运行内存也是唯一最高，80W 充电优于平均。适合重度游戏、后台常年挂一堆应用的人，200g 重量能接受就行。\n\n荣耀 X80 Pro Max，参考价 1999 元。11000mAh 电池是这批里唯一最高，80W 充电也不弱，但处理器只有 95 分。适合把续航放第一位、性能要求不高的人。\n\n预算够就上 iQOO Z11，性能和充电都稳；想省钱选一加 Ace 5 竞速版，处理器和内存反而更强，差在电池和充电。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "budget" : {
+        "min" : 600,
+        "max" : 2000
+      },
+      "prefs" : [ ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "型号与价格均来自候选"
+  }, {
+    "id" : "f05",
+    "cat" : "fabricate",
+    "query" : "5000到6000之间的手机",
+    "latencyMs" : 2746,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 349,
+      "brand" : "一加",
+      "model" : "16",
+      "priceRef" : 5999.00,
+      "imageUrl" : "https://2d.zol-img.com.cn/product/276_800x600/111/cej0Kp4eoWZmA.jpg",
+      "score" : 73,
+      "reasons" : [ "处理器 390分，候选中并列最优", "电池容量 9000mAh，明显优于平均", "运行内存 16GB，候选中并列最优" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 220.0,
+        "cpu_score" : 390.0,
+        "refresh_hz" : 165.0,
+        "battery_mah" : 9000.0,
+        "image_score" : 55.0,
+        "screen_inch" : 6.78
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 356,
+      "brand" : "荣耀",
+      "model" : "WIN2",
+      "priceRef" : 5499.00,
+      "imageUrl" : "https://2c.zol-img.com.cn/product/276_800x600/634/cejmaYOnguNU.jpg",
+      "score" : 70,
+      "reasons" : [ "电池容量 10100mAh，这批里唯一最高", "处理器 390分，候选中并列最优", "运行内存 16GB，候选中并列最优" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 237.0,
+        "cpu_score" : 390.0,
+        "refresh_hz" : 185.0,
+        "battery_mah" : 10100.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.89
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 364,
+      "brand" : "OPPO",
+      "model" : "Find X10",
+      "priceRef" : 5499.00,
+      "imageUrl" : "https://2d.zol-img.com.cn/product/276_800x600/627/ce2wqqMeMDr2E.png",
+      "score" : 70,
+      "reasons" : [ "影像梯队 85分，候选中并列最优", "运行内存 16GB，候选中并列最优", "电池容量 8000mAh，优于这批平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 80.0,
+        "weight_g" : 216.0,
+        "cpu_score" : 335.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 8000.0,
+        "image_score" : 85.0,
+        "screen_inch" : 6.59
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "这三款比较对得上，一加16、荣耀WIN2、OPPO Find X10。\n\n一加16，参考价5999。处理器390分是这批并列最强，9000mAh电池加16GB内存，165Hz屏，打游戏和日常重载都稳。适合追求性能、能接受220g重量的人。\n\n荣耀WIN2，参考价5499。10100mAh是这批唯一最高，处理器同样390分，185Hz刷新率，续航最猛。适合一天到晚不离手、懒得充电的人，代价是237g偏沉。\n\nOPPO Find X10，参考价5499。影像梯队85分这批并列最优，216g最轻，80W充电。处理器335分稍弱一档。适合拍照优先、手感优先的人。\n\n预算够就一加16，性能和屏幕更均衡；想省钱又看重续航选荣耀WIN2，看重影像选OPPO Find X10，差别就在处理器和影像梯队这两项上。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "budget" : {
+        "min" : 5000,
+        "max" : 6000
+      },
+      "prefs" : [ ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "型号与价格均来自候选"
+  }, {
+    "id" : "f06",
+    "cat" : "fabricate",
+    "query" : "华为的手机有哪些值得买",
+    "latencyMs" : 2923,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 330,
+      "brand" : "华为",
+      "model" : "Mate 90 Pro Max 典藏版",
+      "priceRef" : 12999.00,
+      "imageUrl" : "https://2c.zol-img.com.cn/product/276_800x600/554/cehTd0bHwsqxY.png",
+      "score" : 78,
+      "reasons" : [ "影像梯队 100分，候选中并列最优", "处理器 225分，候选中并列最优", "充电功率 100W，候选中并列最优" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 1024.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 235.0,
+        "cpu_score" : 225.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 6800.0,
+        "image_score" : 100.0,
+        "screen_inch" : 6.9
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 324,
+      "brand" : "华为",
+      "model" : "Mate 90 RS 非凡大师",
+      "priceRef" : 18999.00,
+      "imageUrl" : "https://2b.zol-img.com.cn/product/276_800x600/835/ce5pZf02FYUgA.png",
+      "score" : 77,
+      "reasons" : [ "影像梯队 100分，候选中并列最优", "处理器 225分，候选中并列最优", "充电功率 100W，候选中并列最优" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 2048.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 248.0,
+        "cpu_score" : 225.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 6800.0,
+        "image_score" : 100.0,
+        "screen_inch" : 6.9
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 341,
+      "brand" : "华为",
+      "model" : "Mate 90 Pro Max",
+      "priceRef" : 9999.00,
+      "imageUrl" : "https://2e.zol-img.com.cn/product/276_800x600/904/cexWe26e9ALpk.png",
+      "score" : 74,
+      "reasons" : [ "处理器 225分，候选中并列最优", "充电功率 100W，候选中并列最优", "影像梯队 85分，优于这批平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 512.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 234.0,
+        "cpu_score" : 225.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 6800.0,
+        "image_score" : 85.0,
+        "screen_inch" : 6.9
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "这三款都是华为 Mate 90 系列的大屏旗舰，配置路子很接近。\n\n华为 Mate 90 Pro Max 典藏版，参考价 12999 元。影像梯队 100 分、处理器 225 分、100W 充电都是候选里并列最优，6800mAh 电池配 6.9 英寸 120Hz 屏，16GB 运存。适合预算宽松、想要影像和性能都拉满的人，235g 拿在手里有点分量。\n\n华为 Mate 90 RS 非凡大师，参考价 18999 元。影像梯队 100 分、处理器 225 分、100W 充电同样并列最优，电池和屏幕规格跟典藏版一致，重量 248g 更沉一些。适合认非凡大师这个身份感、不太在意多花六千的人。\n\n华为 Mate 90 Pro Max，参考价 9999 元。处理器 225 分和 100W 充电仍是并列最优，影像梯队 85 分，比这批平均好，但比上面两款低一档，重量 234g 反而最轻。适合主要看重性能和充电、影像够用就行的实用派。\n\n预算够就上典藏版，影像直接到顶；想省钱选 Pro Max，性能和充电没缩水，差的就是影像那一档。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "prefs" : [ ],
+      "brands" : [ "华为" ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "型号与价格均来自候选"
+  }, {
+    "id" : "f07",
+    "cat" : "fabricate",
+    "query" : "轻薄一点的手机",
+    "latencyMs" : 3275,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 358,
+      "brand" : "苹果",
+      "model" : "iPhone Air",
+      "priceRef" : 7999.00,
+      "imageUrl" : "https://2a.zol-img.com.cn/product/273_800x600/566/ceWUT0JAJFQnw.jpg",
+      "score" : 100,
+      "reasons" : [ "重量 165g，这批里最低" ],
+      "metrics" : {
+        "rom" : 1024.0,
+        "rear_mp" : 4800.0,
+        "charge_w" : 20.0,
+        "weight_g" : 165.0,
+        "cpu_score" : 360.0,
+        "refresh_hz" : 120.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.5
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 366,
+      "brand" : "苹果",
+      "model" : "iPhone 16e",
+      "priceRef" : 4499.00,
+      "imageUrl" : "https://2e.zol-img.com.cn/product/271_800x600/902/ceLpJwxbzvxg2.jpg",
+      "score" : 99,
+      "reasons" : [ "重量 167g，明显优于平均" ],
+      "metrics" : {
+        "ram" : 8.0,
+        "rom" : 128.0,
+        "rear_mp" : 4800.0,
+        "charge_w" : 30.0,
+        "weight_g" : 167.0,
+        "cpu_score" : 250.0,
+        "refresh_hz" : 60.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.1
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 360,
+      "brand" : "苹果",
+      "model" : "iPhone 16",
+      "priceRef" : 5999.00,
+      "imageUrl" : "https://2e.zol-img.com.cn/product/269_800x600/496/ceqTLEVaV4ZLo.jpg",
+      "score" : 96,
+      "reasons" : [ "重量 170g，明显优于平均", "DXO 影像 147分，明显优于平均" ],
+      "metrics" : {
+        "ram" : 8.0,
+        "rom" : 128.0,
+        "rear_mp" : 4800.0,
+        "weight_g" : 170.0,
+        "cpu_score" : 250.0,
+        "dxo_camera" : 147.0,
+        "image_score" : 55.0,
+        "screen_inch" : 6.1
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "这三款在轻薄上都很能打。iPhone Air 参考价 7999，165g 是这批里最轻的，6.5 英寸 120Hz 屏，处理器 360 分，适合想要大屏又不想压手的人。iPhone 16e 参考价 4499，167g，6.1 英寸 60Hz，处理器 250 分，胜在便宜、拿着轻。iPhone 16 参考价 5999，170g，影像梯队 55 分、DXO 147 分，是三款里拍照最稳的。\n\n预算够就上 iPhone Air，最轻最流畅；想省钱选 16e，日常够用。差价主要在屏幕刷新率和处理器上。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "prefs" : [ {
+        "key" : "weight_g",
+        "label" : "轻薄",
+        "priority" : "must"
+      } ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "型号与价格均来自候选"
+  }, {
+    "id" : "f08",
+    "cat" : "fabricate",
+    "query" : "电池大一点的手机",
+    "latencyMs" : 2687,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 403,
+      "brand" : "荣耀",
+      "model" : "WIN Turbo2",
+      "priceRef" : 3199.00,
+      "imageUrl" : "https://2c.zol-img.com.cn/product/276_800x600/652/ceIg6q3gGUGQ.jpg",
+      "score" : 100,
+      "reasons" : [ "电池容量 12070mAh，候选中并列最优", "充电功率 90W，优于这批平均", "运行内存 16GB，优于这批平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 90.0,
+        "weight_g" : 235.0,
+        "cpu_score" : 205.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 12070.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.89
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 397,
+      "brand" : "荣耀",
+      "model" : "WIN RT2",
+      "priceRef" : 4899.00,
+      "imageUrl" : "https://2c.zol-img.com.cn/product/276_800x600/718/ce4ySSjAhglE.png",
+      "score" : 100,
+      "reasons" : [ "电池容量 12070mAh，候选中并列最优", "充电功率 90W，优于这批平均", "刷新率 185Hz，候选中并列最优" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 90.0,
+        "weight_g" : 238.0,
+        "cpu_score" : 330.0,
+        "refresh_hz" : 185.0,
+        "battery_mah" : 12070.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.89
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 453,
+      "brand" : "荣耀",
+      "model" : "X80 Pro Max",
+      "priceRef" : 1999.00,
+      "imageUrl" : "https://2a.zol-img.com.cn/product/275_800x600/854/ceY4IXT6lpHs.jpg",
+      "score" : 88,
+      "reasons" : [ "电池容量 11000mAh，明显优于平均", "充电功率 80W，优于这批平均", "重量 203g，优于这批平均" ],
+      "metrics" : {
+        "ram" : 8.0,
+        "rom" : 128.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 80.0,
+        "weight_g" : 203.0,
+        "cpu_score" : 95.0,
+        "dxo_camera" : 0.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 11000.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.8
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "这三款都是大电池路线，续航最狠的是前两款。\n\n荣耀 WIN Turbo2，参考价 3199 元。12070mAh 电池是这批里并列最大的，配 90W 充电，16GB 运存也够用，处理器 205 分打游戏不虚。适合想一块电池顶两天、又不想花太多的人。\n\n荣耀 WIN RT2，参考价 4899 元。电池同样是 12070mAh、90W 充电，但处理器拉到 330 分，185Hz 刷新率也是这批里并列最高，性能和屏幕更猛。适合预算宽松、既要续航又要流畅度的人。\n\n荣耀 X80 Pro Max，参考价 1999 元。11000mAh 电池略小一点，80W 充电，203g 是三款里最轻的，但运存 8GB、处理器 95 分，日常够用、重载吃力。适合预算优先、主要刷视频聊天的人。\n\n预算够就上 RT2，性能和屏幕的差价花得值；想省钱 Turbo2 最划算，续航一样、性能弱一档；X80 Pro Max 只在预算卡死时考虑。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "prefs" : [ {
+        "key" : "battery_mah",
+        "label" : "续航",
+        "priority" : "must"
+      } ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "型号与价格均来自候选"
+  }, {
+    "id" : "f09",
+    "cat" : "fabricate",
+    "query" : "不差钱，要最好的手机",
+    "latencyMs" : 2817,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 321,
+      "brand" : "苹果",
+      "model" : "iPhone 18 Pro Max",
+      "priceRef" : 10999.00,
+      "imageUrl" : "https://2f.zol-img.com.cn/product/276_800x600/929/ceTQIpjIb8Eg.jpg",
+      "score" : 77,
+      "reasons" : [ "影像梯队 100分，候选中并列最优", "处理器 420分，候选中并列最优" ],
+      "metrics" : {
+        "rom" : 256.0,
+        "weight_g" : 231.0,
+        "cpu_score" : 420.0,
+        "refresh_hz" : 120.0,
+        "image_score" : 100.0,
+        "screen_inch" : 6.9
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 353,
+      "brand" : "荣耀",
+      "model" : "Magic9 Pro Max",
+      "priceRef" : 8499.00,
+      "imageUrl" : "https://2b.zol-img.com.cn/product/276_800x600/51/ce77f8GOnDo6g.png",
+      "score" : 74,
+      "reasons" : [ "影像梯队 100分，候选中并列最优", "处理器 400分，明显优于平均", "电池容量 8800mAh，优于这批平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 1024.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 233.0,
+        "cpu_score" : 400.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 8800.0,
+        "image_score" : 100.0,
+        "screen_inch" : 6.8
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 338,
+      "brand" : "小米",
+      "model" : "18 Pro Max",
+      "priceRef" : 6999.00,
+      "imageUrl" : "https://2c.zol-img.com.cn/product/276_800x600/268/ceNQdBAmwVjYI.jpg",
+      "score" : 73,
+      "reasons" : [ "影像梯队 100分，候选中并列最优", "处理器 390分，明显优于平均", "电池容量 8500mAh，优于这批平均" ],
+      "metrics" : {
+        "ram" : 16.0,
+        "rom" : 256.0,
+        "rear_mp" : 20000.0,
+        "charge_w" : 100.0,
+        "weight_g" : 235.0,
+        "cpu_score" : 390.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 8500.0,
+        "image_score" : 100.0,
+        "screen_inch" : 6.9
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "这三款都是影像第一梯队，处理器也都在高位，差别主要在价格和续航。\n\n苹果 iPhone 18 Pro Max，参考价 10999 元。影像梯队 100 分、处理器 420 分都是这批里并列最高，6.9 英寸 120Hz 屏，231g。适合预算不设限、要最顶的影像和性能、也习惯苹果生态的人。\n\n荣耀 Magic9 Pro Max，参考价 8499 元。影像梯队同样 100 分，处理器 400 分，8800mAh 电池配 100W 充电，16GB 运存，233g。适合看重续航和快充、又不想在影像上让步的人。\n\n小米 18 Pro Max，参考价 6999 元。影像梯队 100 分，处理器 390 分，8500mAh 加 100W，16GB 运存，235g。适合想用更低价格拿到同档影像和长续航的人。\n\n预算够就上苹果，影像和处理器都是并列最强；想省钱选小米，影像没缩水，处理器和电池略低一档，差价三千。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "prefs" : [ ],
+      "brands" : [ ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "型号与价格均来自候选"
+  }, {
+    "id" : "f10",
+    "cat" : "fabricate",
+    "query" : "3000以内的vivo",
+    "latencyMs" : 2969,
+    "events" : [ "candidates", "done", "intent", "status", "token" ],
+    "candidates" : [ {
+      "id" : 420,
+      "brand" : "vivo",
+      "model" : "S60元气版",
+      "priceRef" : 2899.00,
+      "imageUrl" : "https://2c.zol-img.com.cn/product/275_800x600/682/ceSbGTouhf68.jpg",
+      "score" : 75,
+      "reasons" : [ "影像梯队 55分，这批里唯一最高", "充电功率 90W，候选中并列最优", "重量 199g，这批里最低" ],
+      "metrics" : {
+        "ram" : 12.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 90.0,
+        "weight_g" : 199.0,
+        "cpu_score" : 78.0,
+        "refresh_hz" : 144.0,
+        "battery_mah" : 7200.0,
+        "image_score" : 55.0,
+        "screen_inch" : 6.59
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 434,
+      "brand" : "vivo",
+      "model" : "Y600 Turbo",
+      "priceRef" : 2099.00,
+      "imageUrl" : "https://2f.zol-img.com.cn/product/275_800x600/931/cenCbaOuzKPho.png",
+      "score" : 64,
+      "reasons" : [ "处理器 100分，这批里唯一最高", "充电功率 90W，候选中并列最优", "运行内存 12GB，候选中并列最优" ],
+      "metrics" : {
+        "ram" : 12.0,
+        "rom" : 256.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 90.0,
+        "weight_g" : 215.0,
+        "cpu_score" : 100.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 9020.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.83
+      },
+      "highlights" : [ ]
+    }, {
+      "id" : 430,
+      "brand" : "vivo",
+      "model" : "Y600 Pro",
+      "priceRef" : 2899.00,
+      "imageUrl" : "https://2d.zol-img.com.cn/product/275_800x600/971/ceykjqb9802UY.png",
+      "score" : 62,
+      "reasons" : [ "电池容量 10200mAh，这批里唯一最高", "充电功率 90W，候选中并列最优", "运行内存 12GB，候选中并列最优" ],
+      "metrics" : {
+        "ram" : 12.0,
+        "rom" : 512.0,
+        "rear_mp" : 5000.0,
+        "charge_w" : 90.0,
+        "weight_g" : 221.0,
+        "cpu_score" : 72.0,
+        "refresh_hz" : 120.0,
+        "battery_mah" : 10200.0,
+        "image_score" : 40.0,
+        "screen_inch" : 6.83
+      },
+      "highlights" : [ ]
+    } ],
+    "answer" : "这三款里挑，先看你要影像还是性能和续航。\n\nvivo S60元气版，参考价2899元。影像梯队55分是这批唯一最高，90W充电也是并列最优，199g最轻，拿手里最舒服。适合拍照多、又不想手机压手的人。\n\nvivo Y600 Turbo，参考价2099元。处理器100分这批唯一最高，12GB内存加90W充电，打游戏和日常都够猛。适合重性能、能接受215g重量的人。\n\nvivo Y600 Pro，参考价2899元。电池10200mAh这批唯一最高，续航最狠，但处理器72分，影像梯队40分，机身221g最沉。适合一天到晚不充电、对拍照和性能要求不高的人。\n\n预算够又想要影像和手感，选S60元气版；想省钱还要性能，Y600 Turbo更划算，差别就在影像和重量上。",
+    "clarified" : false,
+    "intent" : {
+      "category" : "phone",
+      "categoryLabel" : "手机",
+      "budget" : {
+        "min" : 600,
+        "max" : 3000
+      },
+      "prefs" : [ ],
+      "brands" : [ "vivo" ],
+      "usage" : ""
+    },
+    "passed" : true,
+    "note" : "型号与价格均来自候选"
+  } ]
+}

@@ -1,0 +1,256 @@
+[
+  {
+    "id": "b01",
+    "cat": "budget",
+    "query": "预算3000，想要续航好一点的手机",
+    "low": 1500,
+    "high": 3500
+  },
+  {
+    "id": "b02",
+    "cat": "budget",
+    "query": "2000以内，别太重",
+    "low": 500,
+    "high": 2100
+  },
+  {
+    "id": "b03",
+    "cat": "budget",
+    "query": "4000左右，拍照好的",
+    "low": 3000,
+    "high": 5000
+  },
+  {
+    "id": "b04",
+    "cat": "budget",
+    "query": "5000到6000之间的手机，打游戏用",
+    "low": 4800,
+    "high": 6100
+  },
+  {
+    "id": "b05",
+    "cat": "budget",
+    "query": "一千五以内的手机",
+    "low": 0,
+    "high": 1600
+  },
+  {
+    "id": "b06",
+    "cat": "budget",
+    "query": "预算8000，影像要强",
+    "low": 4000,
+    "high": 9300
+  },
+  {
+    "id": "b07",
+    "cat": "budget",
+    "query": "三千五左右，学生用",
+    "low": 2600,
+    "high": 4400
+  },
+  {
+    "id": "b08",
+    "cat": "budget",
+    "query": "六千以内，华为的",
+    "low": 0,
+    "high": 6200
+  },
+  {
+    "id": "b09",
+    "cat": "budget",
+    "query": "一万以上，要旗舰",
+    "low": 9000,
+    "high": 999999
+  },
+  {
+    "id": "b10",
+    "cat": "budget",
+    "query": "2500以内，续航和快充都要",
+    "low": 0,
+    "high": 2600
+  },
+  {
+    "id": "b11",
+    "cat": "budget",
+    "query": "预算2000，给老人用",
+    "low": 1100,
+    "high": 2300
+  },
+  {
+    "id": "b12",
+    "cat": "budget",
+    "query": "4500以内，拍照好，vivo的",
+    "low": 0,
+    "high": 4700
+  },
+  {
+    "id": "p01",
+    "cat": "prefer",
+    "query": "拍照最好的手机",
+    "dim": "image_score",
+    "direction": "high"
+  },
+  {
+    "id": "p02",
+    "cat": "prefer",
+    "query": "主要打游戏，别卡",
+    "dim": "cpu_score",
+    "direction": "high"
+  },
+  {
+    "id": "p03",
+    "cat": "prefer",
+    "query": "续航要强的手机",
+    "dim": "battery_mah",
+    "direction": "high"
+  },
+  {
+    "id": "p04",
+    "cat": "prefer",
+    "query": "想要轻薄一点的，别太笨重",
+    "dim": "weight_g",
+    "direction": "low"
+  },
+  {
+    "id": "p05",
+    "cat": "prefer",
+    "query": "预算5000，拍照要好",
+    "dim": "image_score",
+    "direction": "high",
+    "low": 3500,
+    "high": 5000
+  },
+  {
+    "id": "p06",
+    "cat": "prefer",
+    "query": "三千左右打游戏",
+    "dim": "cpu_score",
+    "direction": "high",
+    "low": 2250,
+    "high": 3750
+  },
+  {
+    "id": "p07",
+    "cat": "prefer",
+    "query": "5000以内，续航第一",
+    "dim": "battery_mah",
+    "direction": "high",
+    "low": 0,
+    "high": 5750
+  },
+  {
+    "id": "p08",
+    "cat": "prefer",
+    "query": "6000以内，屏幕大一点看剧",
+    "dim": "screen_inch",
+    "direction": "high",
+    "low": 0,
+    "high": 6000
+  },
+  {
+    "id": "p09",
+    "cat": "prefer",
+    "query": "快充要快的手机",
+    "dim": "charge_w",
+    "direction": "high"
+  },
+  {
+    "id": "p10",
+    "cat": "prefer",
+    "query": "6000以内，拍照和续航都要",
+    "dim": "image_score",
+    "direction": "high",
+    "low": 0,
+    "high": 6000
+  },
+  {
+    "id": "r01",
+    "cat": "refuse",
+    "query": "推荐个降噪耳机"
+  },
+  {
+    "id": "r02",
+    "cat": "refuse",
+    "query": "想买个相机"
+  },
+  {
+    "id": "r03",
+    "cat": "refuse",
+    "query": "500以内的手机"
+  },
+  {
+    "id": "r04",
+    "cat": "refuse",
+    "query": "3万以上的手机推荐一个"
+  },
+  {
+    "id": "r05",
+    "cat": "refuse",
+    "query": "推荐个手机"
+  },
+  {
+    "id": "r06",
+    "cat": "refuse",
+    "query": "今天天气怎么样"
+  },
+  {
+    "id": "r07",
+    "cat": "refuse",
+    "query": "推荐一款三星手机"
+  },
+  {
+    "id": "r08",
+    "cat": "refuse",
+    "query": "想要个充电宝"
+  },
+  {
+    "id": "f01",
+    "cat": "fabricate",
+    "query": "预算3000，续航和拍照好的手机"
+  },
+  {
+    "id": "f02",
+    "cat": "fabricate",
+    "query": "拍照最好的手机"
+  },
+  {
+    "id": "f03",
+    "cat": "fabricate",
+    "query": "打游戏用，别卡"
+  },
+  {
+    "id": "f04",
+    "cat": "fabricate",
+    "query": "2000以内的手机"
+  },
+  {
+    "id": "f05",
+    "cat": "fabricate",
+    "query": "5000到6000之间的手机"
+  },
+  {
+    "id": "f06",
+    "cat": "fabricate",
+    "query": "华为的手机有哪些值得买"
+  },
+  {
+    "id": "f07",
+    "cat": "fabricate",
+    "query": "轻薄一点的手机"
+  },
+  {
+    "id": "f08",
+    "cat": "fabricate",
+    "query": "电池大一点的手机"
+  },
+  {
+    "id": "f09",
+    "cat": "fabricate",
+    "query": "不差钱，要最好的手机"
+  },
+  {
+    "id": "f10",
+    "cat": "fabricate",
+    "query": "3000以内的vivo"
+  }
+]

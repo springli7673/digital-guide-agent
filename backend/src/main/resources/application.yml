@@ -1,0 +1,75 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: digital-guide-backend
+  datasource:
+    # stringtype=unspecified 让 jsonb 列可以直接写入字符串
+    url: jdbc:postgresql://127.0.0.1:5432/digital_guide?stringtype=unspecified
+    username: postgres
+    password: 123456
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      timeout: 3s
+  jackson:
+    time-zone: Asia/Shanghai
+    default-property-inclusion: non_null
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+
+# ---------------------------------------------------------------------------
+# 推荐 Agent（进程内，不再有独立的 Python 服务）
+#
+# provider 决定走哪一端：deepseek 用云端，ollama 用本机。
+# 两个端点都是 OpenAI 兼容协议，切换只改这一行 / 一个环境变量。
+# ---------------------------------------------------------------------------
+ai:
+  llm:
+    provider: ${AI_PROVIDER:deepseek}
+    deepseek:
+      base-url: https://api.deepseek.com
+      # 不要把 key 写进仓库：用环境变量 DEEPSEEK_API_KEY
+      api-key: ${DEEPSEEK_API_KEY:}
+      chat-model: deepseek-chat
+      json-mode: true
+    ollama:
+      base-url: http://127.0.0.1:11434
+      api-key: ""
+      chat-model: qwen3:8b
+      json-mode: true
+    router-temperature: 0.0
+    router-max-tokens: 700
+    answer-temperature: 0.3
+    answer-max-tokens: 900
+    connect-timeout-seconds: 10
+    read-timeout-seconds: 90
+
+  # 向量化单独一组：DeepSeek 没有 embedding 接口，只能走本地 Ollama 的 bge-m3
+  embedding:
+    base-url: http://127.0.0.1:11434
+    api-key: ""
+    model: bge-m3
+    dimensions: 1024          # 改维度要同步改 db/migration_rag.sql 里的 vector(1024)
+
+  # RAG：三段预算 + RRF + 精排 + 证据闸门
+  rag:
+    recall-budget: 20          # ① 每路召回条数
+    rerank-candidate-limit: 40 # ② 融合后送精排的池子上限
+    top-k: 5                   # ③ 最终进提示词的条数
+    rrf-k: 20                  # 候选池只有几十条，k=60 会过度平滑名次
+    rerank-enabled: true
+    min-rerank-score: 0.2      # 证据闸门：最高精排分低于它就整批丢弃
+    chunk-size: 420
+    chunk-overlap: 80
+
+logging:
+  level:
+    com.digitalguide: info
