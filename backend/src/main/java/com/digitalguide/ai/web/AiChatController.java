@@ -1,5 +1,7 @@
 package com.digitalguide.ai.web;
 
+import com.digitalguide.ai.cache.ChatRateLimiter;
+import com.digitalguide.ai.cache.SessionLock;
 import com.digitalguide.ai.graph.ChatGraph;
 import com.digitalguide.ai.graph.ChatState;
 import com.digitalguide.ai.graph.EventSink;
@@ -51,6 +53,9 @@ public class AiChatController {
     private final DataSource dataSource;
     private final com.digitalguide.ai.trace.TraceService traceService;
     private final com.digitalguide.ai.memory.MemoryService memoryService;
+    private final ChatRateLimiter rateLimiter;
+    private final SessionLock sessionLock;
+    private final org.springframework.data.redis.core.StringRedisTemplate redis;
 
     /**
      * 有界队列 + CallerRuns：队列满时把活压回 Tomcat 线程，
@@ -64,7 +69,10 @@ public class AiChatController {
                             LlmProperties llmProperties,
                             DataSource dataSource,
                             com.digitalguide.ai.trace.TraceService traceService,
-                            com.digitalguide.ai.memory.MemoryService memoryService) {
+                            com.digitalguide.ai.memory.MemoryService memoryService,
+                            ChatRateLimiter rateLimiter,
+                            SessionLock sessionLock,
+                            org.springframework.data.redis.core.StringRedisTemplate redis) {
         this.chatGraph = chatGraph;
         this.objectMapper = objectMapper;
         this.llmClient = llmClient;
@@ -72,6 +80,9 @@ public class AiChatController {
         this.dataSource = dataSource;
         this.traceService = traceService;
         this.memoryService = memoryService;
+        this.rateLimiter = rateLimiter;
+        this.sessionLock = sessionLock;
+        this.redis = redis;
 
         AtomicInteger counter = new AtomicInteger();
         this.chatPool = new ThreadPoolExecutor(
@@ -97,10 +108,22 @@ public class AiChatController {
      * 浏览器用 TextDecoder 默认按 UTF-8 解，所以前端看不出来，只有调试工具会中招。
      */
     @PostMapping(value = "/v1/chat", produces = "text/event-stream;charset=UTF-8")
-    public SseEmitter chat(@RequestBody ChatRequest request) {
+    public SseEmitter chat(@RequestBody ChatRequest request,
+                           jakarta.servlet.http.HttpServletRequest httpRequest) {
         String message = request.message() == null ? "" : request.message().trim();
         if (message.isEmpty()) {
             throw new BizException(400, "message 不能为空");
+        }
+
+        /*
+         * 入口限流：按会话计次，没有会话就按 IP。
+         * 放在建 emitter 之前——被限的请求连流都不开，省下一条 SSE 连接和一个工作线程。
+         */
+        String scope = request.sessionId() == null || request.sessionId().isBlank()
+                ? "ip:" + clientIp(httpRequest)
+                : request.sessionId();
+        if (!rateLimiter.tryAcquire(scope)) {
+            throw new BizException(429, "问得太快了，歇一分钟再试");
         }
 
         SseEmitter emitter = new SseEmitter(SSE_TIMEOUT_MS);
@@ -116,16 +139,31 @@ public class AiChatController {
         state.setAnchor(memory.anchor());
 
         Runnable task = () -> {
+            String lockToken = null;
             try {
+                /*
+                 * 同一会话串行化。连点两次"发送"时，第二次最多等 800ms 就能排上；
+                 * 排不上说明上一轮真在生成，就明确告诉用户，
+                 * 而不是让两个请求各读一份历史、各写一次摘要，把上下文搞乱。
+                 */
+                lockToken = sessionLock.acquire(request.sessionId());
+                if (lockToken == null) {
+                    send(emitter, clientGone, "error",
+                            Map.of("msg", "这个会话上一轮还没生成完，等它说完再发"));
+                    return;
+                }
                 chatGraph.run(state, sink);
             } catch (Exception e) {
                 log.error("对话执行失败", e);
                 send(emitter, clientGone, "error", Map.of("msg", "服务内部错误：" + e.getMessage()));
             } finally {
-                // 埋点放在图跑完之后：此时各节点耗时、护栏结果、错误都已就绪
-                traceService.record(state);
-                // 记忆落库：两条消息 + 更新槽位锚点，必要时触发摘要压缩
-                memoryService.append(request.sessionId(), message, state.getAnswer(), state.getIntent());
+                // 没拿到锁就退出时，这一轮什么都没跑，不该写埋点也不该写记忆
+                if (lockToken != null) {
+                    traceService.record(state);
+                    memoryService.append(request.sessionId(), message, state.getAnswer(),
+                            state.getIntent(), memory);
+                }
+                sessionLock.release(request.sessionId(), lockToken);
                 try {
                     emitter.complete();
                 } catch (Exception ignored) {
@@ -145,14 +183,27 @@ public class AiChatController {
     @GetMapping("/healthz")
     public Map<String, Object> health() {
         boolean dbOk = checkDb();
+        boolean redisOk = checkRedis();
         boolean llmOk = llmClient.healthy();
         Map<String, Object> payload = new LinkedHashMap<>();
         payload.put("status", dbOk && llmOk ? "ok" : "degraded");
         payload.put("db", dbOk);
+        // Redis 挂了不影响对话（缓存/限流/会话锁全是 fail-open），
+        // 但少了缓存和限流就是隐患，所以这里单独暴露出来
+        payload.put("redis", redisOk);
         payload.put("llm", llmOk);
         payload.put("provider", llmProperties.getProvider());
         payload.put("chatModel", llmClient.modelName());
         return payload;
+    }
+
+    private boolean checkRedis() {
+        try (org.springframework.data.redis.connection.RedisConnection connection =
+                     redis.getConnectionFactory().getConnection()) {
+            return "PONG".equalsIgnoreCase(connection.ping());
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private boolean checkDb() {
@@ -161,6 +212,15 @@ public class AiChatController {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    /** 取客户端 IP。刻意不解析 X-Forwarded-For：前面没有网关时它可被客户端伪造 */
+    private static String clientIp(jakarta.servlet.http.HttpServletRequest request) {
+        if (request == null) {
+            return "unknown";
+        }
+        String remote = request.getRemoteAddr();
+        return remote == null || remote.isBlank() ? "unknown" : remote;
     }
 
     /** 写一个 SSE 事件；客户端断了就置标记，后面的事件直接丢弃 */

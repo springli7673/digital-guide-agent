@@ -134,12 +134,22 @@ class ChatGraphTest {
     private ChatGraph graph(LlmClient llm, ProductService productService) {
         return new ChatGraph(
                 new ParseNode(llm, llmProperties, prompts, objectMapper),
-                new RetrieveNode(productService),
+                new RetrieveNode(productService, cacheOff()),
                 new ScoreNode(new ScoringService(), new SpecSchemaProvider(new FailingCategoryService(), objectMapper)),
                 // 知识 / 工具路径在这几条用例里不会被走到（category 都是 phone），传 null 即可
                 new KnowledgeNode(null, null, new com.digitalguide.ai.rag.RagProperties()),
                 null,
                 new AnswerNode(llm, llmProperties, prompts));
+    }
+
+    /**
+     * 关掉缓存的 CandidateCache：get/put 都不碰 Redis，
+     * 所以这里可以放心传 null 的 StringRedisTemplate——单测不该依赖 Redis 起没起。
+     */
+    private static com.digitalguide.ai.cache.CandidateCache cacheOff() {
+        com.digitalguide.ai.cache.CacheProperties properties = new com.digitalguide.ai.cache.CacheProperties();
+        properties.setEnabled(false);
+        return new com.digitalguide.ai.cache.CandidateCache(null, new ObjectMapper(), properties);
     }
 
     private static Map<String, Object> product(String brand, String model, int price, Map<String, Object> metrics) {

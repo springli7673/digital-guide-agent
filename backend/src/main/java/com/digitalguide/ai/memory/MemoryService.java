@@ -39,14 +39,22 @@ public class MemoryService {
     private final LlmProperties llmProperties;
     private final PromptLoader prompts;
     private final MemoryProperties properties;
+    private final RedisMemoryStore redisMemory;
 
     /**
      * 装载记忆。库里没有会话时退回前端传来的 history——
      * 这样"第一次对话"和"库挂了"两种情况都能工作。
+     *
+     * <p>顺序：Redis 热存 → PostgreSQL（拿到就回填 Redis）。
+     * 连续追问是最常见的用法，热存命中时这一轮完全不碰数据库。
      */
     public MemoryContext load(String sessionId, List<ChatMessage> fallbackHistory) {
         if (!properties.isEnabled() || sessionId == null || sessionId.isBlank()) {
             return new MemoryContext("", MemoryWindow.last(fallbackHistory, properties.getWindowSize()), Map.of());
+        }
+        MemoryContext hot = redisMemory.load(sessionId);
+        if (hot != null) {
+            return hot;
         }
         try {
             List<Map<String, Object>> sessions = jdbc.queryForList(
@@ -66,7 +74,10 @@ public class MemoryService {
             if (recent.isEmpty()) {
                 recent = MemoryWindow.last(fallbackHistory, properties.getWindowSize());
             }
-            return new MemoryContext(summary, recent, anchor);
+            MemoryContext context = new MemoryContext(summary, recent, anchor);
+            // 回填热存：下一轮追问直接命中，省掉这一轮的两次查询
+            redisMemory.save(sessionId, context);
+            return context;
         } catch (Exception e) {
             log.debug("记忆装载失败，退回前端 history：{}", e.getMessage());
             return new MemoryContext("", MemoryWindow.last(fallbackHistory, properties.getWindowSize()), Map.of());
@@ -75,6 +86,17 @@ public class MemoryService {
 
     /** 一轮对话结束后落库：两条消息 + 更新槽位锚点，必要时触发压缩 */
     public void append(String sessionId, String question, String answer, Intent intent) {
+        append(sessionId, question, answer, intent, null);
+    }
+
+    /**
+     * 同上，但带着"本轮开始时装载出来的那份上下文"。
+     *
+     * <p>为什么要多传一个参数：写穿热存需要知道压缩后的新窗口，
+     * 而那份窗口 = 旧窗口 + 本轮两条消息。有了 base 就不用再查一次库，
+     * 否则每轮多两次 SELECT，热存省的 IO 又被自己吃回去。
+     */
+    public void append(String sessionId, String question, String answer, Intent intent, MemoryContext base) {
         if (!properties.isEnabled() || sessionId == null || sessionId.isBlank()) {
             return;
         }
@@ -92,24 +114,47 @@ public class MemoryService {
                             SET slots = EXCLUDED.slots, turns = ai.chat_session.turns + 1, updated_at = now()
                             """,
                     sessionId, objectMapper.writeValueAsString(slotPayload(intent)));
-            maybeSummarize(sessionId);
+            String summary = maybeSummarize(sessionId);
+            // 写穿热存：PG 是权威，Redis 跟着更新，两边不会漂
+            redisMemory.save(sessionId, new MemoryContext(summary,
+                    nextWindow(base, question, answer), slotPayload(intent)));
         } catch (Exception e) {
             log.debug("记忆写入失败（不影响本轮回答）：{}", e.getMessage());
         }
     }
 
+    /** 旧窗口 + 本轮问答，再裁到窗口大小——和 PG 里实际留下的那几条保持一致 */
+    private List<ChatMessage> nextWindow(MemoryContext base, String question, String answer) {
+        List<ChatMessage> merged = new ArrayList<>();
+        if (base != null && base.recent() != null) {
+            merged.addAll(base.recent());
+        }
+        merged.add(new ChatMessage("user", truncate(question, 2000)));
+        if (answer != null && !answer.isBlank()) {
+            merged.add(new ChatMessage("assistant", truncate(answer, 4000)));
+        }
+        return MemoryWindow.last(merged, properties.getWindowSize());
+    }
+
     // ------------------------------------------------------------------ 压缩
 
-    private void maybeSummarize(String sessionId) {
+    /**
+     * 需要就压一次，并<b>返回压缩后的最新摘要</b>（不需要压就返回库里现有的）。
+     *
+     * <p>返回值是为写穿热存服务的：调用方拿到它就能一次把 Redis 写对，
+     * 不必再补一次 SELECT。
+     */
+    private String maybeSummarize(String sessionId) {
+        String current = readSummary(sessionId);
         try {
             Integer total = jdbc.queryForObject(
                     "SELECT count(*) FROM ai.chat_message WHERE session_id = ?", Integer.class, sessionId);
             if (total == null || !MemoryWindow.shouldSummarize(total, properties)) {
-                return;
+                return current;
             }
             int compressCount = total - properties.getWindowSize();
             if (compressCount <= 0) {
-                return;
+                return current;
             }
 
             List<Map<String, Object>> rows = jdbc.queryForList("""
@@ -117,7 +162,7 @@ public class MemoryService {
                     WHERE session_id = ? ORDER BY id ASC LIMIT ?
                     """, sessionId, compressCount);
             if (rows.isEmpty()) {
-                return;
+                return current;
             }
             List<ChatMessage> messages = new ArrayList<>();
             long maxId = 0;
@@ -126,9 +171,8 @@ public class MemoryService {
                 maxId = Math.max(maxId, ((Number) row.get("id")).longValue());
             }
 
-            String previous = jdbc.query("SELECT summary FROM ai.chat_session WHERE session_id = ?",
-                    rs -> rs.next() ? asString(rs.getString(1)) : "", sessionId);
-            String input = MemoryWindow.mergeSummary(previous, MemoryWindow.render(messages, SUMMARY_INPUT_PER_MESSAGE), 0);
+            String input = MemoryWindow.mergeSummary(current,
+                    MemoryWindow.render(messages, SUMMARY_INPUT_PER_MESSAGE), 0);
 
             String fresh;
             try {
@@ -136,19 +180,31 @@ public class MemoryService {
             } catch (Exception e) {
                 // 摘要失败就保留原始消息，下轮再试；不要删了再失败
                 log.warn("摘要生成失败，保留原始历史：{}", e.getMessage());
-                return;
+                return current;
             }
             if (fresh == null || fresh.isBlank()) {
-                return;
+                return current;
             }
 
-            String merged = MemoryWindow.mergeSummary(previous, fresh, properties.getSummaryMaxChars());
+            String merged = MemoryWindow.mergeSummary(current, fresh, properties.getSummaryMaxChars());
             jdbc.update("UPDATE ai.chat_session SET summary = ?, updated_at = now() WHERE session_id = ?",
                     merged, sessionId);
             jdbc.update("DELETE FROM ai.chat_message WHERE session_id = ? AND id <= ?", sessionId, maxId);
             log.info("记忆压缩完成：{} 条消息 → 摘要 {} 字", messages.size(), merged.length());
+            return merged;
         } catch (Exception e) {
             log.debug("记忆压缩失败：{}", e.getMessage());
+            return current;
+        }
+    }
+
+    private String readSummary(String sessionId) {
+        try {
+            String summary = jdbc.query("SELECT summary FROM ai.chat_session WHERE session_id = ?",
+                    rs -> rs.next() ? asString(rs.getString(1)) : "", sessionId);
+            return summary == null ? "" : summary;
+        } catch (Exception e) {
+            return "";
         }
     }
 

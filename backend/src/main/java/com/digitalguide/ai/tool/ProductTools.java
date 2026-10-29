@@ -1,6 +1,7 @@
 package com.digitalguide.ai.tool;
 
 import com.digitalguide.ai.intent.Intents;
+import com.digitalguide.ai.mcp.McpToolTarget;
 import com.digitalguide.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,11 +33,15 @@ import java.util.Map;
  *
  * <p>工具内部全部走已有的 {@link ProductService}，不新开查询路径——
  * 工具层只是"把手伸出去让模型能调用"，不应该自己再实现一套业务。
+ *
+ * <p>同时实现 {@link McpToolTarget}：同一份实现既作为进程内 {@code @Tool} 暴露给本地模型，
+ * 也能被 {@code McpServer} 包成跨进程 MCP 工具给外部 Agent 用。
+ * 两条路径共用一套逻辑，不存在"两处实现慢慢漂移"的问题。
  */
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class ProductTools {
+public class ProductTools implements McpToolTarget {
 
     /** 工具返回里最多列几款，太多会挤占模型的上下文 */
     private static final int MAX_ROWS = 5;

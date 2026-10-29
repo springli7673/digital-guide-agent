@@ -1,5 +1,7 @@
 package com.digitalguide.ai.graph;
 
+import com.digitalguide.ai.cache.CacheKeys;
+import com.digitalguide.ai.cache.CandidateCache;
 import com.digitalguide.ai.intent.Intent;
 import com.digitalguide.ai.intent.Intents;
 import com.digitalguide.service.ProductService;
@@ -30,22 +32,33 @@ public class RetrieveNode {
     private static final int CANDIDATE_LIMIT = 500;
 
     private final ProductService productService;
+    private final CandidateCache candidateCache;
 
     public void run(ChatState state, EventSink sink) {
         Intent intent = state.getIntent();
+        String cacheKey = CacheKeys.candidates(intent.category(),
+                money(intent.budgetMin()), money(intent.budgetMax()), intent.brands());
+
+        // 先看缓存：同品类同预算同品牌的过滤结果在 10 分钟内是稳定的
+        List<Map<String, Object>> candidates = candidateCache.get(cacheKey);
+        boolean cached = candidates != null;
+
         sink.emit("status", Map.of("stage", "searching",
                 "text", "在商品库中按「" + intent.categoryLabel() + " · "
-                        + Intents.priceRangeText(intent) + "」做硬过滤…"));
+                        + Intents.priceRangeText(intent) + "」做硬过滤…"
+                        + (cached ? "（命中缓存）" : "")));
 
-        List<Map<String, Object>> candidates;
-        try {
-            candidates = search(intent);
-        } catch (Exception e) {
-            String msg = "商品服务暂时不可用，稍后再试（" + e.getMessage() + "）";
-            log.error("候选检索失败", e);
-            sink.emit("error", Map.of("msg", msg));
-            state.setError(msg);
-            return;
+        if (!cached) {
+            try {
+                candidates = search(intent);
+            } catch (Exception e) {
+                String msg = "商品服务暂时不可用，稍后再试（" + e.getMessage() + "）";
+                log.error("候选检索失败", e);
+                sink.emit("error", Map.of("msg", msg));
+                state.setError(msg);
+                return;
+            }
+            candidateCache.put(cacheKey, candidates);
         }
 
         if (candidates.isEmpty()) {
@@ -57,15 +70,19 @@ public class RetrieveNode {
         }
 
         state.setCandidates(candidates);
-        log.info("检索完成：品类={} 预算={} 品牌={} 命中={}", intent.category(),
-                Intents.priceRangeText(intent), intent.brands(), candidates.size());
+        log.info("检索完成：品类={} 预算={} 品牌={} 命中={} 来源={}", intent.category(),
+                Intents.priceRangeText(intent), intent.brands(), candidates.size(),
+                cached ? "cache" : "db");
     }
 
     private List<Map<String, Object>> search(Intent intent) {
-        BigDecimal min = intent.budgetMin() == null ? null : BigDecimal.valueOf(intent.budgetMin());
-        BigDecimal max = intent.budgetMax() == null ? null : BigDecimal.valueOf(intent.budgetMax());
-        List<String> brands = intent.brands().isEmpty() ? null : intent.brands();
-        return productService.searchForAgent(intent.category(), min, max, brands, CANDIDATE_LIMIT);
+        return productService.searchForAgent(intent.category(),
+                money(intent.budgetMin()), money(intent.budgetMax()),
+                intent.brands().isEmpty() ? null : intent.brands(), CANDIDATE_LIMIT);
+    }
+
+    private static BigDecimal money(Integer value) {
+        return value == null ? null : BigDecimal.valueOf(value);
     }
 
     /** 库里空了的时候，先探一下这个品类到底有没有货，再决定说什么 */

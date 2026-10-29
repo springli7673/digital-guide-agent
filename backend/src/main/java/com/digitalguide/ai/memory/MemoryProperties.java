@@ -31,4 +31,15 @@ public class MemoryProperties {
     private int summaryMaxChars = 400;
     /** 关掉就不落库，纯粹靠前端传的 history（本地调试用） */
     private boolean enabled = true;
+
+    /**
+     * 是否把上下文缓到 Redis。
+     *
+     * <p>关掉只是每次都回源 PG，功能不受影响——所以这个开合可以随时动，
+     * 不会构成"配置改错就白屏"的风险。
+     */
+    private boolean redisEnabled = true;
+
+    /** 热存存活时间：略长于"一次会话的自然间隔"即可，太长会让冷数据长期占内存 */
+    private int redisTtlMinutes = 30;
 }

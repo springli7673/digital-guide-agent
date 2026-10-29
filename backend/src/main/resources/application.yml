@@ -16,6 +16,10 @@ spring:
     redis:
       host: 127.0.0.1
       port: 6379
+      # 本机 Redis 现在是带密码的（无密码会 ERR Client sent AUTH）。
+      # 用环境变量注入，默认留空以兼容"没设密码"的机器；
+      # 配错不会白屏——所有 Redis 用法都是 fail-open，但 /healthz 的 redis 字段会变 false。
+      password: ${REDIS_PASSWORD:}
       timeout: 3s
   jackson:
     time-zone: Asia/Shanghai
@@ -69,6 +73,23 @@ ai:
     min-rerank-score: 0.2      # 证据闸门：最高精排分低于它就整批丢弃
     chunk-size: 420
     chunk-overlap: 80
+
+  # 会话记忆：PG 是权威，Redis 是热存
+  memory:
+    window-size: 8             # 滑动窗口保留最近几条消息
+    summarize-after: 16        # 超过多少条触发摘要压缩
+    summary-max-chars: 400
+    enabled: true
+    redis-enabled: true
+    redis-ttl-minutes: 30      # 连续追问时命中，整轮不碰 PG
+
+  # Redis 侧的防打穿设施。三个都遵循"Redis 挂了就放行"，不阻断对话
+  cache:
+    enabled: true
+    candidates-ttl-minutes: 10 # 候选集缓存：同品类+预算+品牌 10 分钟内复用
+    rate-limit-per-minute: 20  # 单会话每分钟请求上限
+    session-lock-seconds: 30   # 会话锁过期时间（进程被 kill 也不会永久占锁）
+    session-lock-wait-ms: 800  # 连点两次发送时，第二次最多等这么久
 
 logging:
   level:
