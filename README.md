@@ -33,7 +33,7 @@ Spring Boot :8080  ────────────────────�
 | 后端 | Java 17 · Spring Boot 3.5 · MyBatis-Plus 3.5 |
 | AI | **Spring AI 1.1**（`ChatClient`）· DeepSeek `deepseek-chat`（可切本地 Ollama `qwen3:8b`） |
 | 存储 | PostgreSQL 16（pgvector 已装，RAG 待接）· Redis |
-| 前端 | Vue 3 全局构建，零 npm 依赖，`node server.mjs` 起静态服务 + 反向代理 |
+| 前端 | **TypeScript** + Vue 3 全局构建；零 npm 依赖构建（Node 22+ 内置类型剥离） |
 | 测试 | JUnit 5 + AssertJ，29 条单测（打分 / 意图 / 图链路 / 评测判定） |
 
 ## 目录
@@ -55,7 +55,7 @@ db/        建表脚本（含 3 个 migration）+ 商品种子数据
 data/      数据管道产物（raw 抓取缓存 / normalized 清单 / reference 参考分表）
 tools/     抓取 → 清洗 → 参考分 → 导出 SQL 的脚本链
 eval/      40 条评测 case
-web/       免构建前端
+web/       TypeScript + Vue 3（`src/*.ts` → `node build.mjs` → `public/*.js`）
 ```
 
 ## 快速开始

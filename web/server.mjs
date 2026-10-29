@@ -10,12 +10,17 @@
  */
 
 import http from 'node:http'
-import { createReadStream } from 'node:fs'
+import { createReadStream, existsSync } from 'node:fs'
 import { stat } from 'node:fs/promises'
 import { extname, join, normalize, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = fileURLToPath(new URL('.', import.meta.url))
+// 源码是 src/*.ts，页面加载 public/ 下的产物；忘了构建时给一条明确提示
+if (!existsSync(join(ROOT, 'public', 'main.js'))) {
+  console.error('[web] 缺少 public/main.js，先跑 node build.mjs（或 node build.mjs --watch）')
+}
+
 const PORT = Number(process.env.PORT || 5173)
 const JAVA = process.env.JAVA_BASE || 'http://127.0.0.1:8080'
 // 默认空：/v1 与 /healthz 跟 /api 一样走 Java。

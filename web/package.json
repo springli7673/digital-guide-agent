@@ -1,0 +1,17 @@
+{
+  "name": "digital-guide-web",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "数码导购 Agent 前端：Vue 3 全局构建 + TypeScript（零依赖构建）",
+  "scripts": {
+    "build": "node build.mjs",
+    "watch": "node build.mjs --watch",
+    "start": "node build.mjs && node server.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0"
+  },
+  "comment": "构建不需要任何依赖（用 Node 内置的类型剥离）；devDependencies 只在 `npm run typecheck` 做真类型检查时需要，网络不通时可以跳过。"
+}

@@ -65,5 +65,9 @@ eval: ## 跑评测（全量 40 条；需要服务和 key 都在）
 	cd $(BACKEND) && $(MVN) -q exec:java -Dexec.mainClass=com.digitalguide.ai.eval.EvalMain
 
 .PHONY: web
-web: ## 起前端（:5173）
-	cd web && node server.mjs
+web: ## 起前端（先构建 TS，再起 :5173）
+	cd web && node build.mjs && node server.mjs
+
+.PHONY: web-build
+web-build: ## 只构建前端（src/*.ts → public/）
+	cd web && node build.mjs

@@ -12,6 +12,9 @@ application-local.yaml
 *.local.yml
 .env
 
+# 前端构建产物（node build.mjs 生成，不提交）
+web/public/
+
 # 运行产物
 logs/
 .DS_Store

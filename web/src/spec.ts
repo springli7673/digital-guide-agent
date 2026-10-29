@@ -1,5 +1,7 @@
 /** 手机类目的评分维度，与 biz.category.spec_schema 保持一致；对比表按这个顺序出列 */
-export const SPEC_SCHEMA = [
+import type { SpecDim } from './types.js'
+
+export const SPEC_SCHEMA: SpecDim[] = [
   { key: 'battery_mah', label: '电池容量', unit: 'mAh', better: 'higher', weight: 1.0 },
   { key: 'charge_w', label: '充电功率', unit: 'W', better: 'higher', weight: 0.7 },
   { key: 'image_score', label: '影像梯队', unit: '分', better: 'higher', weight: 1.0 },
