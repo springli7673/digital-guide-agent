@@ -1,5 +1,11 @@
 # 一键起依赖：PostgreSQL(pgvector) + Redis + Ollama
 #
+# 默认映射到 15432 / 16379 / 21434，**故意避开常用端口**：
+# 你机器上可能已经有 pg(5432)、redis(6379)、ollama(11434) 在跑，
+# 直接用默认端口会 conflict。想用标准端口就设环境变量：
+#   $env:PG_PORT="5432"  (等等)
+# 应用侧要跟着改 application.yml 里的连接地址，或者把端口再映射回标准端口。
+#
 #   docker compose up -d          起全部
 #   docker compose ps             看状态
 #   docker compose down           停（数据保留在卷里）
@@ -20,7 +26,7 @@ services:
       # 中文排序/比较用 C 排序规则，避免镜像 locale 差异导致 order by 结果不一致
       LANG: C.UTF-8
     ports:
-      - "5432:5432"
+      - "${PG_PORT:-15432}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
       # 容器**首次**初始化时按文件名顺序执行；表结构都在这里，不用再手工跑 psql
@@ -40,7 +46,7 @@ services:
     image: redis:7-alpine
     container_name: digital-guide-redis
     ports:
-      - "6379:6379"
+      - "${REDIS_PORT:-16379}:6379"
     # 本机 Redis 无密码，配置里也别写 password，否则报 ERR Client sent AUTH
     command: ["redis-server", "--save", "60", "1", "--appendonly", "no"]
     healthcheck:
@@ -53,7 +59,7 @@ services:
     image: ollama/ollama:latest
     container_name: digital-guide-ollama
     ports:
-      - "11434:11434"
+      - "${OLLAMA_PORT:-21434}:11434"
     volumes:
       - ollama:/root/.ollama
     # 首次启动后要手动拉模型（见 README）：docker compose exec ollama ollama pull bge-m3

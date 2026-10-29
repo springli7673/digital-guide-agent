@@ -71,11 +71,11 @@ public class EvalRunner {
             }
             EvalResult merged = best == null
                     ? new EvalResult(evalCase.id(), evalCase.cat(), evalCase.query(), 0,
-                    List.of(), List.of(), "", "未执行", false, Map.of(), false, "未执行")
+                    List.of(), List.of(), "", "未执行", false, Map.of(), List.of(), false, "未执行")
                     : new EvalResult(best.id(), best.cat(), best.query(),
                     Math.round((double) totalLatency / options.repeat()),
                     best.events(), best.candidates(), best.answer(), best.error(),
-                    best.clarified(), best.intent(), best.passed(),
+                    best.clarified(), best.intent(), best.sourceLabels(), best.passed(),
                     options.repeat() > 1 ? best.note() + "｜" + String.join(",", notes) : best.note());
             results.add(merged);
 
@@ -112,7 +112,7 @@ public class EvalRunner {
         EvalResult raw = new EvalResult(
                 evalCase.id(), evalCase.cat(), evalCase.query(), latencyMs,
                 sink.sortedEvents(), sink.candidates, sink.answer.toString(),
-                sink.error, sink.clarified, sink.intent, false, "");
+                sink.error, sink.clarified, sink.intent, sink.sources, false, "");
         EvalJudge.Verdict verdict = EvalJudge.judge(evalCase, raw, thresholds);
         return raw.withVerdict(verdict.passed(), verdict.note());
     }
@@ -216,6 +216,7 @@ public class EvalRunner {
 
         private final List<String> events = new ArrayList<>();
         private List<Map<String, Object>> candidates = List.of();
+        private List<String> sources = List.of();
         private final StringBuilder answer = new StringBuilder();
         private String error;
         private Map<String, Object> intent = Map.of();
@@ -238,6 +239,20 @@ public class EvalRunner {
                     Object items = map.get("items");
                     if (items instanceof List<?> list) {
                         candidates = (List<Map<String, Object>>) list;
+                    }
+                }
+                case "done" -> {
+                    // 知识型问题的引用来源在 done 里回来，记下来给 judgeKnowledge 用
+                    Object raw = map.get("sources");
+                    if (raw instanceof List<?> list) {
+                        List<String> labels = new ArrayList<>();
+                        for (Object item : list) {
+                            if (item instanceof Map<?, ?> source) {
+                                Object label = source.get("label");
+                                labels.add(label == null ? "" : String.valueOf(label));
+                            }
+                        }
+                        sources = labels;
                     }
                 }
                 case "error" -> error = String.valueOf(map.get("msg"));

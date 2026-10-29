@@ -15,12 +15,14 @@ public record EvalResult(
         String error,
         boolean clarified,
         Map<String, Object> intent,
+        /** done 事件里带回来的引用来源（知识型问题才有） */
+        List<String> sourceLabels,
         boolean passed,
         String note
 ) {
 
     public EvalResult withVerdict(boolean passed, String note) {
         return new EvalResult(id, cat, query, latencyMs, events, candidates, answer,
-                error, clarified, intent, passed, note);
+                error, clarified, intent, sourceLabels, passed, note);
     }
 }

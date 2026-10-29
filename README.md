@@ -9,18 +9,35 @@
 
 单进程，一个 Java 服务同时提供业务接口和 Agent：
 
-```
-Vue 3 前端（免构建）
-  │  POST /v1/chat (SSE)              GET /api/products
-  ▼                                        ▼
-Spring Boot :8080  ──────────────────────────────────────
-  ├─ 业务层  品牌 / 类目 / 商品 / SKU 的 CRUD、硬条件过滤（SQL）
-  └─ Agent  parse → retrieve → score → answer
-               │        │        │        │
-               │        │        │        └─ 流式话术（只引用候选）
-               │        │        └─ 归一化加权打分（读类目权重）
-               │        └─ ProductService 进程内检索（硬过滤）
-               └─ 需求解析（自然语言 → 结构化偏好 + 预算换算）
+```mermaid
+flowchart LR
+    U["浏览器<br/>Vue 3 + TypeScript"] -->|"POST /v1/chat SSE"| API
+
+    subgraph APP["Spring Boot 单体 :8080"]
+        direction TB
+        API["AiChatController<br/>SseEmitter"]
+        G["ChatGraph<br/>parse 后按意图分流"]
+        R1["商品链路<br/>SQL 硬过滤 → 归一化打分"]
+        R2["知识链路 RAG<br/>双路召回 → RRF → 精排 → 证据闸门"]
+        R3["工具链路<br/>3 个 Tool"]
+        GD["AnswerGuard<br/>型号与价格必须属于候选"]
+        API --> G
+        G --> R1
+        G --> R2
+        G --> R3
+        R1 --> GD
+        R2 --> GD
+        R3 --> GD
+    end
+
+    R1 --> PG[("PostgreSQL 16")]
+    R2 --> PG
+    PG --- VEC["pgvector 1024 维 HNSW"]
+    PG --- TRGM["pg_trgm 关键词召回"]
+    APP --> DS["DeepSeek deepseek-chat"]
+    R2 --> OL["Ollama bge-m3"]
+    APP --> RD[("Redis")]
+    APP --> TR[("ai.trace 埋点")]
 ```
 
 **为什么不让模型做过滤**：价格区间、型号集合这些必须可验证。放在 SQL 和程序里，
@@ -33,7 +50,7 @@ Spring Boot :8080  ────────────────────�
 | 后端 | Java 17 · Spring Boot 3.5 · MyBatis-Plus 3.5 |
 | AI | **Spring AI 1.1**（`ChatClient`）· DeepSeek `deepseek-chat`（可切本地 Ollama `qwen3:8b`） |
 | 存储 | PostgreSQL 16（pgvector 已装，RAG 待接）· Redis |
-| 前端 | **TypeScript** + Vue 3 全局构建；零 npm 依赖构建（Node 22+ 内置类型剥离） |
+| 前端 | **TypeScript** + Vue 3 全局构建；零 npm 依赖构建（Node 22+ 内置类型剥离），`node server.mjs` 起静态服务 + 反向代理 |
 | 测试 | JUnit 5 + AssertJ，29 条单测（打分 / 意图 / 图链路 / 评测判定） |
 
 ## 目录
@@ -54,7 +71,7 @@ backend/   Spring Boot 单体：业务 + Agent（com.digitalguide.ai）
 db/        建表脚本（含 3 个 migration）+ 商品种子数据
 data/      数据管道产物（raw 抓取缓存 / normalized 清单 / reference 参考分表）
 tools/     抓取 → 清洗 → 参考分 → 导出 SQL 的脚本链
-eval/      40 条评测 case
+eval/      58 条评测 case（6 类断言）
 web/       TypeScript + Vue 3（`src/*.ts` → `node build.mjs` → `public/*.js`）
 ```
 
@@ -92,7 +109,7 @@ psql -U postgres -d digital_guide -f db/seed_products.sql   # 可选：商品数
 
 ## 评测
 
-`eval/` 下 40 条 case，四类断言，**全部程序判定**（不调模型当裁判，保证可复现）：
+`eval/` 下 58 条 case，六类断言，**全部程序判定**（不调模型当裁判，保证可复现）：
 
 | 类别 | 条数 | 断言 |
 |---|---|---|
@@ -100,6 +117,8 @@ psql -U postgres -d digital_guide -f db/seed_products.sql   # 可选：商品数
 | prefer | 10 | 点名维度上 top3 至少 2 个达到分位数（有预算则用预算内分位） |
 | refuse | 8 | 库内没有的品类/区间 → 必须报错或追问，且不能给候选 |
 | fabricate | 10 | 回答里出现的型号与价格必须来自候选集 |
+| adversarial | 8 | 提示注入 / 越权 / 缺信息 / 超长：不许被诱导编造，也不许越权写库 |
+| knowledge | 10 | 命中资料必须带 `[1]` 引用；没命中必须承认没有资料 |
 
 ### 实测结果（2026-10-29，`deepseek-chat`）
 

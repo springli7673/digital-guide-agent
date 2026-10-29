@@ -29,10 +29,17 @@ public final class EvalMain {
     public static void main(String[] args) throws Exception {
         Path projectRoot = locateProjectRoot(args);
 
+        // --no-rag：把 topK 设成 0，知识型问题就永远检索不到资料。
+        // 这是 RAG 消融的对照组，用法：同一批 knowledge case 跑两次，对比通过率。
+        boolean noRag = java.util.Arrays.asList(args).contains("--no-rag");
+
         // 不把 CLI 参数交给 Spring：--only / --repeat 不是 Spring 的属性
-        ConfigurableApplicationContext context = new SpringApplicationBuilder(DigitalGuideApplication.class)
-                .web(WebApplicationType.NONE)
-                .run();
+        SpringApplicationBuilder builder = new SpringApplicationBuilder(DigitalGuideApplication.class)
+                .web(WebApplicationType.NONE);
+        if (noRag) {
+            builder.properties("ai.rag.top-k=0", "ai.rag.rerank-enabled=false");
+        }
+        ConfigurableApplicationContext context = builder.run();
 
         int exitCode;
         try {

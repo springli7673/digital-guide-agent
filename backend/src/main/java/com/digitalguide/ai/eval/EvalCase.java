@@ -17,6 +17,8 @@ public record EvalCase(
         Integer low,
         Integer high,
         String dim,
-        String direction
+        String direction,
+        /** 知识型 case 期望命中的文档标题（子串匹配），其他类型为 null */
+        String expect
 ) {
 }
