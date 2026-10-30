@@ -5,7 +5,7 @@
  * 「待确认下单」横幅放在这里而不是聊天页：agent 提议后用户可能已经切到别的路由，
  * 放在外壳上才不会丢。
  */
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { ChatDotRound, Iphone, ShoppingCart } from '@element-plus/icons-vue'
@@ -15,6 +15,20 @@ import { useShopStore } from '@/stores/shopStore'
 const route = useRoute()
 const shop = useShopStore()
 const chat = useChatStore()
+
+/**
+ * 左上角 Logo（阿里云 OSS）。
+ *
+ * 放在外部存储上意味着：网络不通 / 对象被删 / 桶权限改成私有，图就没了。
+ * 所以下面加了 fallback —— 加载失败时退回原来的「DG」色块，
+ * 界面不会出现一个破图标。
+ *
+ * OSS 地址里没有扩展名是正常的（object key 就叫「数码导购logo」）；
+ * 如果哪天上传时带了后缀，把这里改成 .../数码导购logo.png 即可。记得 URL 编码。
+ */
+const LOGO_URL =
+  'https://digital-guide-20261030.oss-cn-beijing.aliyuncs.com/%E6%95%B0%E7%A0%81%E5%AF%BC%E8%B4%ADlogo'
+const logoBroken = ref(false)
 
 const menus = [
   { path: '/mall', label: '手机商城', icon: Iphone },
@@ -39,7 +53,15 @@ async function onConfirm(): Promise<void> {
   <el-container class="app-shell">
     <el-aside width="220px" class="side">
       <div class="brand">
-        <div class="brand-logo">DG</div>
+        <img
+          v-if="!logoBroken"
+          class="brand-logo brand-logo-img"
+          :src="LOGO_URL"
+          alt="数码导购"
+          referrerpolicy="no-referrer"
+          @error="logoBroken = true"
+        />
+        <div v-else class="brand-logo">DG</div>
         <div class="brand-text">
           <b>数码导购</b>
           <span>digital guide</span>

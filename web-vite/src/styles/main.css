@@ -94,6 +94,14 @@ body {
   font-size: 15px;
 }
 
+/* Logo 图片版：尺寸和原来的 DG 色块一致，避免布局跳动。
+   背景设成透明——图本身自带底色，再叠一层橙色会从透明边缘渗出来。 */
+.brand-logo-img {
+  background: transparent;
+  object-fit: contain;
+  display: block;
+}
+
 .brand-text span {
   font-size: 11px;
   color: var(--dg-text-3);
