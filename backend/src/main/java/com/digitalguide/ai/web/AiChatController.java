@@ -153,6 +153,15 @@ public class AiChatController {
 
         Runnable task = () -> {
             String lockToken = null;
+            /*
+             * 把身份带进工作线程。
+             *
+             * ThreadLocal 不会跟着 Runnable 过去——chatPool 是新线程，UserContext 在这里是空的，
+             * 而工具（加购物车/看购物车/准备下单）全靠它取 userId。不设就是"永远未登录"。
+             *
+             * finally 里必须 clear：线程池会复用线程，不清就是把上一个用户的身份带给了下一个请求。
+             */
+            com.digitalguide.common.UserContext.set(userId);
             try {
                 /*
                  * 同一会话串行化。连点两次"发送"时，第二次最多等 800ms 就能排上；
@@ -177,6 +186,8 @@ public class AiChatController {
                             state.getIntent(), memory);
                 }
                 sessionLock.release(conversationKey, lockToken);
+                // 必须清：线程池复用线程，留着就是把上一个用户的身份带给下一个请求
+                com.digitalguide.common.UserContext.clear();
                 try {
                     emitter.complete();
                 } catch (Exception ignored) {

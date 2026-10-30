@@ -4,6 +4,7 @@ import com.digitalguide.ai.graph.ChatState;
 import com.digitalguide.ai.graph.EventSink;
 import com.digitalguide.ai.prompt.PromptLoader;
 import com.digitalguide.ai.tool.ProductTools;
+import com.digitalguide.ai.tool.ShopTools;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
@@ -38,6 +39,7 @@ public class ToolAgent {
 
     private final ChatClient chatClient;
     private final ProductTools productTools;
+    private final ShopTools shopTools;
     private final PromptLoader prompts;
 
     public void run(ChatState state, EventSink sink) {
@@ -48,7 +50,12 @@ public class ToolAgent {
             chatClient.prompt()
                     .system(prompts.load("answer_tools"))
                     .user(state.getMessage())
-                    .tools(productTools)
+                    /*
+                     * 两组工具一起给模型：只读的（查商品/详情/对比）+ 购物车相关的
+                     * （加购/看车/推荐/准备下单）。合计 7 个——超过这个数模型选错概率明显上升，
+                     * 再加功能应该改成"按链路分组注册"，而不是继续往这个列表里塞。
+                     */
+                    .tools(productTools, shopTools)
                     .stream()
                     .content()
                     .toIterable()
