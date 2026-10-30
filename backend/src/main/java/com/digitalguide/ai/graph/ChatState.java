@@ -51,6 +51,23 @@ public class ChatState {
     /** 槽位锚点：上一轮确认过的预算/偏好/品牌，历史被压缩也不会丢 */
     private Map<String, Object> anchor = Map.of();
 
+    /**
+     * 当前登录用户（匿名时为 null）。
+     *
+     * <p>身份放在状态里<b>而不是 ThreadLocal</b>：工具调用是在 Spring AI 的流式链路里执行的，
+     * 可能跑在 Reactor 的线程上，ThreadLocal 带不过去（实测工具里拿到的是 null，
+     * 于是"购物车查不了，请先登录"）。把身份当数据往下传，跟线程无关，才可靠。
+     */
+    private Long userId;
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public String getSummary() {
         return summary;
     }

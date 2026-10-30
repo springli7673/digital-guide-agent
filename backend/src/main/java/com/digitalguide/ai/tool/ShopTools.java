@@ -4,19 +4,15 @@ import com.digitalguide.ai.scoring.ScoringService;
 import com.digitalguide.ai.scoring.SpecSchema;
 import com.digitalguide.ai.scoring.SpecSchemaProvider;
 import com.digitalguide.common.BizException;
-import com.digitalguide.common.UserContext;
 import com.digitalguide.dto.CartView;
 import com.digitalguide.dto.PendingActionView;
 import com.digitalguide.service.CartService;
 import com.digitalguide.service.PendingActionService;
 import com.digitalguide.service.ProductService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
-import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -31,19 +27,35 @@ import java.util.stream.Collectors;
  * {@code prepareOrder} 只生成一个待确认凭证，真正的执行要用户在前端点确认。
  * 模型可以"提议"，但不能"执行"——这是整套写路径的安全边界。
  *
- * <p>身份从 {@link UserContext} 取（工作线程里已由 controller 注入），
- * <b>绝不让模型传 userId</b>：它可能传错，甚至传别人的。
+ * <p><b>为什么不是单例 Bean</b>：工具执行发生在 Spring AI 的流式链路里，
+ * 可能跑在 Reactor 的线程上，{@code UserContext}（ThreadLocal）在那里是空的——
+ * 实测现象就是"购物车查不了，请先登录"。
+ * 所以这里改成<b>每轮对话 new 一个</b>，userId 作为构造参数固定下来：
+ * 身份是数据，不是线程状态。
  */
 @Slf4j
-@Component
-@RequiredArgsConstructor
 public class ShopTools {
 
+    private final Long userId;
     private final CartService cartService;
     private final ProductService productService;
     private final PendingActionService pendingActions;
     private final ScoringService scoringService;
     private final SpecSchemaProvider schemaProvider;
+
+    public ShopTools(Long userId,
+                     CartService cartService,
+                     ProductService productService,
+                     PendingActionService pendingActions,
+                     ScoringService scoringService,
+                     SpecSchemaProvider schemaProvider) {
+        this.userId = userId;
+        this.cartService = cartService;
+        this.productService = productService;
+        this.pendingActions = pendingActions;
+        this.scoringService = scoringService;
+        this.schemaProvider = schemaProvider;
+    }
 
     @Tool(description = """
             把某款手机加入当前用户的购物车。型号必须来自检索结果，不要自己编。
@@ -51,7 +63,6 @@ public class ShopTools {
     public String addToCart(
             @ToolParam(description = "机型名，如「Redmi K80」") String model,
             @ToolParam(description = "数量，不传就传 1") int qty) {
-        Long userId = UserContext.get();
         if (userId == null) {
             return "加购物车需要先登录，请让用户登录后再试。";
         }
@@ -71,7 +82,6 @@ public class ShopTools {
 
     @Tool(description = "查看当前用户购物车里的商品、数量和合计金额。")
     public String viewCart() {
-        Long userId = UserContext.get();
         if (userId == null) {
             return "查看购物车需要先登录。";
         }
@@ -105,7 +115,6 @@ public class ShopTools {
             对购物车里的商品做横向比较，给出最推荐的一款并说明理由。
             用户问"购物车里哪个最值""这几款里推荐哪个"时用这个工具。""")
     public String recommendFromCart() {
-        Long userId = UserContext.get();
         if (userId == null) {
             return "查看购物车需要先登录。";
         }
@@ -153,13 +162,12 @@ public class ShopTools {
      * 生成"待确认下单"。
      *
      * <p><b>不做任何写操作</b>：只把购物车快照成一个待确认动作，
-     * 返回给模型一句提示。真正的 ORDER 由用户点确认后走 REST 接口执行。
+     * 返回给模型一句提示。真正的订单由用户点确认后走 REST 接口执行。
      */
     @Tool(description = """
             准备下单：把购物车结算成一个待确认订单，但不会真的下单。
             用户说"帮我下单""结算""买单"时用这个工具；用户必须在前端点击确认才算完成。""")
     public String prepareOrder() {
-        Long userId = UserContext.get();
         if (userId == null) {
             return "下单需要先登录。";
         }
@@ -170,7 +178,7 @@ public class ShopTools {
         String summary = cart.items().stream()
                 .map(line -> line.brand() + " " + line.model() + " ×" + line.qty())
                 .collect(Collectors.joining("；"));
-        PendingActionView action = null;
+        PendingActionView action;
         try {
             String confirmId = pendingActions.create(userId, "CHECKOUT", summary, cart.total(), cart.totalQty());
             action = new PendingActionView(confirmId, "CHECKOUT", summary, cart.total(), cart.totalQty());
@@ -178,7 +186,6 @@ public class ShopTools {
             log.warn("生成待确认动作失败：{}", e.getMessage());
             return "生成确认凭证失败，请稍后重试。";
         }
-        // 只回一句"已准备好"，把confirmId 交给前端接口去取，不塞进模型上下文
         return "已准备好订单：" + summary + "，合计 ¥" + action.total()
                 + "。请让用户在前端点「确认下单」完成支付，未确认前不会扣款也不会扣库存。";
     }
@@ -206,10 +213,5 @@ public class ShopTools {
 
     private static long asLong(Object value) {
         return value instanceof Number number ? number.longValue() : Long.parseLong(String.valueOf(value));
-    }
-
-    /** 供日志/调试 */
-    static String moneyText(Object price) {
-        return price instanceof BigDecimal big ? "¥" + big : String.valueOf(price);
     }
 }

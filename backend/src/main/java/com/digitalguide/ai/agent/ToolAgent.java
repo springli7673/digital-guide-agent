@@ -1,7 +1,6 @@
 package com.digitalguide.ai.agent;
 
-import com.digitalguide.ai.graph.ChatState;
-import com.digitalguide.ai.graph.EventSink;
+import com.digitalguide.ai.graph.ChatState;import com.digitalguide.ai.graph.EventSink;
 import com.digitalguide.ai.prompt.PromptLoader;
 import com.digitalguide.ai.tool.ProductTools;
 import com.digitalguide.ai.tool.ShopTools;
@@ -39,11 +38,24 @@ public class ToolAgent {
 
     private final ChatClient chatClient;
     private final ProductTools productTools;
-    private final ShopTools shopTools;
+    private final com.digitalguide.service.CartService cartService;
+    private final com.digitalguide.service.ProductService productService;
+    private final com.digitalguide.service.PendingActionService pendingActions;
+    private final com.digitalguide.ai.scoring.ScoringService scoringService;
+    private final com.digitalguide.ai.scoring.SpecSchemaProvider schemaProvider;
     private final PromptLoader prompts;
 
     public void run(ChatState state, EventSink sink) {
         sink.emit("status", Map.of("stage", "tooling", "text", "正在查库、对比参数…"));
+
+        /*
+         * 每轮 new 一个 ShopTools，把 userId 钉在实例上。
+         * 不用单例 + ThreadLocal 的原因见 ShopTools 的类注释：
+         * 工具可能跑在 Reactor 线程上，ThreadLocal 在那里是空的。
+         */
+        ShopTools shopTools = new ShopTools(state.getUserId(), cartService, productService,
+                pendingActions, scoringService, schemaProvider);
+        log.debug("工具模式：userId={}", state.getUserId());
 
         StringBuilder answer = new StringBuilder();
         try {

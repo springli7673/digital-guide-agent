@@ -76,7 +76,6 @@ const SideMenu = {
           <span class="dot" :class="javaOnline ? 'ok' : 'bad'"></span>
           {{ javaOnline ? total + ' 款在售' : '后端未连接' }}
         </div>
-        <p>型号与价格来自数据库<br />模型只做解释，不编造</p>
       </div>
     </aside>
   `,
