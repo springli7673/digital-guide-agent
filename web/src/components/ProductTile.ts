@@ -1,5 +1,7 @@
 /** 商城里的一张商品卡片：主图、品牌型号、存储、关键参数、参考价（淘宝式：图在上） */
 import { computed, ref } from '../vue.js'
+import { addToCart, shop } from '../shopState.js'
+import { setView } from '../store.js'
 
 const ProductTile = {
   name: 'ProductTile',
@@ -34,8 +36,16 @@ const ProductTile = {
       return out
     })
 
-    return { broken, thumb, showImage, priceText, storage, chips }
-  },
+    /**
+     * 立即购买：先加购，再跳到购物车结算。
+     * 不在卡片上直接下单——购物车才是一致性关口，也避免误触就扣了库存。
+     */
+    function buyNow(productId: number) {
+      addToCart(productId, 1)
+      setView('cart')
+    }
+
+    return { broken, thumb, showImage, priceText, storage, chips, shop, addToCart, buyNow }  },
   template: `
     <article class="tile">
       <div class="tile-img">
@@ -56,6 +66,12 @@ const ProductTile = {
       <div class="tile-foot">
         <span class="tile-price">{{ priceText }}</span>
         <small>参考价</small>
+      </div>
+
+      <!-- 操作区独立一行：两个按钮各占一半，点击区域够大 -->
+      <div class="tile-actions">
+        <button class="btn-cart" type="button" @click.stop="addToCart(item.id, 1)">加入购物车</button>
+        <button class="btn-buy" type="button" @click.stop="buyNow(item.id)">立即购买</button>
       </div>
     </article>
   `,

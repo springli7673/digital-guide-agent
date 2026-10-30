@@ -8,6 +8,7 @@
  * 注意不能用 EventSource：它只支持 GET，而我们是 POST + JSON body。
  */
 import type { ChatEventName, ChatEventPayload } from './types.js'
+import { getToken } from './api.js'
 
 export interface HistoryItem {
   role: string
@@ -32,9 +33,16 @@ export async function runRealChat(
 
   let resp: Response
   try {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      Accept: 'text/event-stream',
+    }
+    // 带登录态：后端据此把记忆归到 u:{userId}，工具也才能拿到用户身份
+    const token = getToken()
+    if (token) headers['Authorization'] = 'Bearer ' + token
     resp = await fetch('/v1/chat', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'text/event-stream' },
+      headers,
       body: JSON.stringify({ message: text, sessionId, history, clarifyCount }),
       signal,
     })

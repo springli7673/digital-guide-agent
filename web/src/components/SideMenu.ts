@@ -1,4 +1,7 @@
-/** 左侧目录：手机商城 / 智能客服。样式照 Element Plus 的 menu 做（激活项蓝色左边条） */
+/** 左侧目录：手机商城 / 购物车 / 智能客服 / 登录。样式照 Element Plus 的 menu 做（激活项蓝色左边条） */
+import { computed } from '../vue.js'
+import { doLogout, shop } from '../shopState.js'
+
 const SideMenu = {
   name: 'SideMenu',
   props: {
@@ -7,6 +10,15 @@ const SideMenu = {
     javaOnline: { type: Boolean, default: false },
   },
   emits: ['select'],
+  setup() {
+    const cartCount = computed(() => (shop.cart ? shop.cart.totalQty : 0))
+    const userText = computed(() => (shop.user ? shop.user.nickname || shop.user.username : ''))
+    const loggedIn = computed(() => shop.user !== null)
+    function logout() {
+      doLogout()
+    }
+    return { shop, cartCount, userText, loggedIn, logout }
+  },
   template: `
     <aside class="sidebar">
       <div class="side-brand">
@@ -25,6 +37,17 @@ const SideMenu = {
           </svg>
           <span>手机商城</span>
         </button>
+
+        <button class="menu-item" :class="{ active: current === 'cart' }" @click="$emit('select', 'cart')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L20.5 7H6" />
+            <circle cx="9.5" cy="19" r="1.4" />
+            <circle cx="17" cy="19" r="1.4" />
+          </svg>
+          <span>购物车</span>
+          <em class="menu-badge" v-if="cartCount > 0">{{ cartCount }}</em>
+        </button>
+
         <button class="menu-item" :class="{ active: current === 'chat' }" @click="$emit('select', 'chat')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 5h16v10.5H9.5L4 19.5V5z" />
@@ -32,7 +55,21 @@ const SideMenu = {
           </svg>
           <span>智能客服</span>
         </button>
+
+        <button v-if="!loggedIn" class="menu-item" :class="{ active: current === 'login' }" @click="$emit('select', 'login')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 4h4v16h-4" />
+            <path d="M10 8l4 4-4 4" />
+            <path d="M3 12h11" />
+          </svg>
+          <span>登录 / 注册</span>
+        </button>
       </nav>
+
+      <div class="side-user" v-if="loggedIn">
+        <span>已登录：<b>{{ userText }}</b></span>
+        <button @click="logout">退出</button>
+      </div>
 
       <div class="side-foot">
         <div class="side-stat">

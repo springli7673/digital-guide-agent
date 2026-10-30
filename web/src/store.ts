@@ -5,6 +5,7 @@
 import { reactive } from './vue.js'
 import { runRealChat } from './agent.js'
 import { listProducts } from './api.js'
+import { loadPending } from './shopState.js'
 import type { AppState, ChatEventName, ChatEventPayload, ChatMessage } from './types.js'
 
 let seq = 0
@@ -30,9 +31,13 @@ export const state = reactive<AppState>({
   clarifyCount: 0,
 })
 
-/** 左侧菜单切换（手机商城 / 智能客服） */
+/** 左侧菜单切换（手机商城 / 购物车 / 智能客服 / 登录） */
+const VIEWS = ['shop', 'chat', 'cart', 'login']
+
 export function setView(view: string): void {
-  state.view = view === 'chat' ? 'chat' : 'shop'
+  const next = VIEWS.includes(view) ? view : 'shop'
+  // AppState['view'] 的类型是 'shop' | 'chat'，这里运行时允许更多视图，故做一次窄化断言
+  ;(state as unknown as { view: string }).view = next
 }
 
 export const EXAMPLES: string[] = [
@@ -160,6 +165,8 @@ export async function send(text: string): Promise<void> {
     reply.streaming = false
     state.status = null
     state.busy = false
+    // 聊天结束后查一次：agent 可能刚准备了一个待确认订单，外壳据此渲染确认按钮
+    void loadPending()
   }
 }
 
