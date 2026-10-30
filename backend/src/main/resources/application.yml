@@ -16,10 +16,11 @@ spring:
     redis:
       host: 127.0.0.1
       port: 6379
-      # 本机 Redis 现在是带密码的（无密码会 ERR Client sent AUTH）。
-      # 用环境变量注入，默认留空以兼容"没设密码"的机器；
-      # 配错不会白屏——所有 Redis 用法都是 fail-open，但 /healthz 的 redis 字段会变 false。
-      password: ${REDIS_PASSWORD:}
+      # 本机 Redis 是带密码的（不带密码会 ERR Client sent AUTH）。
+      # 默认填本机密码，是为了"拉下来就能跑"；换机器用 REDIS_PASSWORD 覆盖。
+      # 注意：登录/注册**不是** fail-open —— Redis 连不上就登不进去，
+      # 启动时 StartupCheck 会打一条显眼的 error 日志。
+      password: ${REDIS_PASSWORD:123456}
       timeout: 3s
   jackson:
     time-zone: Asia/Shanghai
