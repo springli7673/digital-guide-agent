@@ -44,7 +44,7 @@ export const EXAMPLES: string[] = [
   '预算 3000，想要续航好、拍照好的手机',
   '两千以内，学生用，别太重',
   '5000 左右，打游戏为主',
-  '想要 300 元的降噪耳机',
+  'Redmi K80 和 iQOO Neo10 哪个更值得买',
 ]
 
 export function init(): void {
