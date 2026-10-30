@@ -1,0 +1,219 @@
+/**
+ * 全局样式：简约浅色数码电商风（小米式）。
+ *
+ * 三件事：
+ *  1. 覆写 Element Plus 的主题变量，让主色变成小米橙；
+ *  2. 统一的卡片/阴影/圆角/过渡；
+ *  3. 少量布局类，页面里只写业务结构，不写颜色。
+ */
+
+:root {
+  --dg-primary: #ff6900;
+  --dg-primary-dark: #e35f00;
+  --dg-text: #1f2430;
+  --dg-text-2: #6b7280;
+  --dg-text-3: #9aa0ad;
+  --dg-bg: #f5f5f7;
+  --dg-card: #ffffff;
+  --dg-border: #eef0f4;
+  --dg-radius: 14px;
+  --dg-shadow: 0 2px 12px rgba(20, 30, 60, 0.06);
+  --dg-shadow-hover: 0 10px 26px rgba(20, 30, 60, 0.12);
+  --dg-transition: 220ms cubic-bezier(0.2, 0.7, 0.3, 1);
+
+  /* Element Plus 主题色跟着走 */
+  --el-color-primary: #ff6900;
+  --el-color-primary-light-3: #ff944d;
+  --el-color-primary-light-5: #ffb27f;
+  --el-color-primary-light-7: #ffd0b3;
+  --el-color-primary-light-9: #fff2e8;
+  --el-color-primary-dark-2: #e35f00;
+  --el-border-radius-base: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--dg-bg);
+  color: var(--dg-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------------------------------------------------------------- 外壳 */
+
+.app-shell {
+  height: 100%;
+}
+
+.side {
+  background: var(--dg-card);
+  border-right: 1px solid var(--dg-border);
+  display: flex;
+  flex-direction: column;
+  padding: 18px 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 18px 20px;
+}
+
+.brand-logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--dg-primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.brand-text b {
+  font-size: 15px;
+}
+
+.brand-text span {
+  font-size: 11px;
+  color: var(--dg-text-3);
+  letter-spacing: 0.4px;
+}
+
+.side-menu {
+  border-right: none;
+  flex: 1;
+}
+
+.side-menu .el-menu-item {
+  height: 44px;
+  margin: 2px 10px;
+  border-radius: 10px;
+  color: var(--dg-text-2);
+  transition: background var(--dg-transition), color var(--dg-transition);
+}
+
+.side-menu .el-menu-item:hover {
+  background: #f7f8fa;
+  color: var(--dg-text);
+}
+
+.side-menu .el-menu-item.is-active {
+  background: var(--el-color-primary-light-9);
+  color: var(--dg-primary);
+  font-weight: 600;
+}
+
+.menu-badge {
+  margin-left: auto;
+}
+
+.side-user {
+  padding: 10px 18px 0;
+  border-top: 1px solid var(--dg-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--dg-text-3);
+}
+
+.side-user-name {
+  color: var(--dg-text);
+  font-weight: 600;
+}
+
+.main {
+  padding: 24px 28px;
+  overflow-y: auto;
+}
+
+.pending {
+  margin-bottom: 16px;
+}
+
+.pending-body {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.pending-actions {
+  margin-left: auto;
+}
+
+/* ---------------------------------------------------------------- 通用块 */
+
+.page-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.page-head h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.muted {
+  color: var(--dg-text-3);
+  font-size: 12px;
+}
+
+.note {
+  color: var(--dg-text-3);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.panel-soft {
+  background: var(--dg-card);
+  border: 1px solid var(--dg-border);
+  border-radius: var(--dg-radius);
+  box-shadow: var(--dg-shadow);
+  padding: 18px 20px;
+}
+
+/* 卡片统一过渡：上浮 + 阴影加深 */
+.hover-lift {
+  transition: transform var(--dg-transition), box-shadow var(--dg-transition),
+    border-color var(--dg-transition);
+}
+
+.hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--dg-shadow-hover);
+}
+
+/* 品牌标签：颜色由内联样式给，这里只管形态 */
+.brand-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 18px;
+}
