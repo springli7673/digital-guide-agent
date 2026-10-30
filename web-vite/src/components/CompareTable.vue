@@ -20,8 +20,10 @@ interface Row {
 }
 
 function valueOf(item: Candidate, key: string): number | null {
-  // 参考价不在 metrics 里，单独取
-  const raw = key === 'priceRef' ? item.priceRef : item.metrics?.[key]
+  // 参考价不在 metrics 里，单独取。
+  // 用 unknown 接住：后端可能返回空串，这里要按"缺失"处理，
+  // 但 TS 会把 number 与 '' 的比较判成不可能发生（TS2367）。
+  const raw: unknown = key === 'priceRef' ? item.priceRef : item.metrics?.[key]
   if (raw === undefined || raw === null || raw === '') return null
   const n = Number(raw)
   return Number.isFinite(n) ? n : null
