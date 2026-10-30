@@ -61,11 +61,18 @@ async function load(): Promise<void> {
   }
 }
 
-function pick(name: string): void {
-  if (brand.value === name) return
-  brand.value = name
+/**
+ * 切换品牌。
+ *
+ * 注意：这里**不能**再判断 `brand.value === name` 然后提前 return ——
+ * `v-model` 已经把 brand 更新成新值了，再比一次永远相等，于是永远不重新请求。
+ * （之前的 bug 就是这么来的：高亮变了，列表没变。）
+ * `@change` 本身只在新旧值不同时触发，不需要额外的去重判断。
+ */
+function onBrandChange(name: string | number | boolean | undefined): void {
+  brand.value = String(name ?? '全部')
   pageNo.value = 1
-  load()
+  void load()
 }
 
 function go(page: number): void {
@@ -91,7 +98,7 @@ onMounted(load)
 
 <template>
   <div class="mall">
-    <el-radio-group v-model="brand" class="brandbar" @change="pick(brand)">
+    <el-radio-group v-model="brand" class="brandbar" @change="onBrandChange">
       <el-radio-button v-for="b in BRANDS" :key="b" :value="b">{{ b }}</el-radio-button>
     </el-radio-group>
 

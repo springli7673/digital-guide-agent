@@ -25,3 +25,8 @@ data/images/
 # 抓下来的原始页面（dxomark_camera.json 是要提交的，raw 不是）
 data/reference/dxo_raw.html
 data/reference/dxo_paste.txt
+
+# Vite 工程：依赖与产物绝不入库
+web-vite/node_modules/
+web-vite/dist/
+web-vite/.vite/
