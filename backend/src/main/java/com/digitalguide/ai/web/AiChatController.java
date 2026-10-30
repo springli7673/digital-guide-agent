@@ -56,6 +56,7 @@ public class AiChatController {
     private final ChatRateLimiter rateLimiter;
     private final SessionLock sessionLock;
     private final org.springframework.data.redis.core.StringRedisTemplate redis;
+    private final com.digitalguide.auth.TokenService tokenService;
 
     /**
      * 有界队列 + CallerRuns：队列满时把活压回 Tomcat 线程，
@@ -72,7 +73,8 @@ public class AiChatController {
                             com.digitalguide.ai.memory.MemoryService memoryService,
                             ChatRateLimiter rateLimiter,
                             SessionLock sessionLock,
-                            org.springframework.data.redis.core.StringRedisTemplate redis) {
+                            org.springframework.data.redis.core.StringRedisTemplate redis,
+                            com.digitalguide.auth.TokenService tokenService) {
         this.chatGraph = chatGraph;
         this.objectMapper = objectMapper;
         this.llmClient = llmClient;
@@ -83,6 +85,7 @@ public class AiChatController {
         this.rateLimiter = rateLimiter;
         this.sessionLock = sessionLock;
         this.redis = redis;
+        this.tokenService = tokenService;
 
         AtomicInteger counter = new AtomicInteger();
         this.chatPool = new ThreadPoolExecutor(
@@ -116,12 +119,22 @@ public class AiChatController {
         }
 
         /*
-         * 入口限流：按会话计次，没有会话就按 IP。
+         * 身份是"可选"的：带 Bearer 就认出用户，没带就按匿名跑。
+         * 聊天接口不强制登录——但一旦登录了，记忆就要归到这个人名下，
+         * 否则换个设备/清个 localStorage 就什么都不记得了。
+         */
+        Long userId = resolveUserId(httpRequest);
+        String conversationKey = conversationKey(userId, request.sessionId());
+
+        /*
+         * 入口限流：登录用户按用户计次，匿名按会话，再没有就按 IP。
          * 放在建 emitter 之前——被限的请求连流都不开，省下一条 SSE 连接和一个工作线程。
          */
-        String scope = request.sessionId() == null || request.sessionId().isBlank()
-                ? "ip:" + clientIp(httpRequest)
-                : request.sessionId();
+        String scope = userId != null
+                ? "u:" + userId
+                : (request.sessionId() == null || request.sessionId().isBlank()
+                        ? "ip:" + clientIp(httpRequest)
+                        : request.sessionId());
         if (!rateLimiter.tryAcquire(scope)) {
             throw new BizException(429, "问得太快了，歇一分钟再试");
         }
@@ -132,8 +145,8 @@ public class AiChatController {
 
         // 记忆优先用库里的（滑动窗口 + 摘要 + 槽位锚点），库不可用时退回前端传的 history
         com.digitalguide.ai.memory.MemoryContext memory =
-                memoryService.load(request.sessionId(), request.history());
-        ChatState state = new ChatState(message, request.sessionId(),
+                memoryService.load(conversationKey, request.history());
+        ChatState state = new ChatState(message, conversationKey,
                 memory.recent(), request.clarifyCountOrDefault());
         state.setSummary(memory.summary());
         state.setAnchor(memory.anchor());
@@ -146,7 +159,7 @@ public class AiChatController {
                  * 排不上说明上一轮真在生成，就明确告诉用户，
                  * 而不是让两个请求各读一份历史、各写一次摘要，把上下文搞乱。
                  */
-                lockToken = sessionLock.acquire(request.sessionId());
+                lockToken = sessionLock.acquire(conversationKey);
                 if (lockToken == null) {
                     send(emitter, clientGone, "error",
                             Map.of("msg", "这个会话上一轮还没生成完，等它说完再发"));
@@ -160,10 +173,10 @@ public class AiChatController {
                 // 没拿到锁就退出时，这一轮什么都没跑，不该写埋点也不该写记忆
                 if (lockToken != null) {
                     traceService.record(state);
-                    memoryService.append(request.sessionId(), message, state.getAnswer(),
+                    memoryService.append(conversationKey, message, state.getAnswer(),
                             state.getIntent(), memory);
                 }
-                sessionLock.release(request.sessionId(), lockToken);
+                sessionLock.release(conversationKey, lockToken);
                 try {
                     emitter.complete();
                 } catch (Exception ignored) {
@@ -212,6 +225,42 @@ public class AiChatController {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    /**
+     * 可选身份：带 Bearer 就解析，解析不出来也当匿名，绝不因此报错。
+     *
+     * <p>这里没有走 {@code AuthInterceptor}，是因为那个拦截器只管 {@code /api/**} 且强制 401；
+     * 聊天接口对匿名是友好的（游客也能问），要的是"认得出就认，认不出也行"。
+     */
+    private Long resolveUserId(jakarta.servlet.http.HttpServletRequest request) {
+        if (request == null) {
+            return null;
+        }
+        String auth = request.getHeader("Authorization");
+        if (auth == null || !auth.startsWith("Bearer ")) {
+            return null;
+        }
+        try {
+            return tokenService.resolve(auth.substring(7));
+        } catch (Exception e) {
+            log.debug("token 解析失败，按匿名处理：{}", e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 会话键：登录用户按 {@code u:{userId}} 归档，匿名走 {@code a:{sessionId}}。
+     *
+     * <p>为什么登录后不用前端的 sessionId：那个 id 存在 localStorage 里，
+     * 换设备或清缓存就没了；而 userId 在服务端，记忆才能真正"跟着人走"。
+     * 代价是同一用户多标签页共享一份记忆——这对导购场景反而是想要的。
+     */
+    static String conversationKey(Long userId, String sessionId) {
+        if (userId != null) {
+            return "u:" + userId;
+        }
+        return "a:" + (sessionId == null || sessionId.isBlank() ? "anonymous" : sessionId);
     }
 
     /** 取客户端 IP。刻意不解析 X-Forwarded-For：前面没有网关时它可被客户端伪造 */

@@ -17,7 +17,12 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authInterceptor)
                 .addPathPatterns("/api/**")
-                .excludePathPatterns("/api/auth/**", "/api/products/**");
+                /*
+                 * 只放行真正匿名的两个：登录和注册。
+                 * 不要图省事写 "/api/auth/**" —— 那样 /api/auth/me 和 /logout 也会匿名可达，
+                 * 而它们恰恰依赖 UserContext 里的用户身份。
+                 */
+                .excludePathPatterns("/api/auth/login", "/api/auth/register", "/api/products/**");
     }
 
     @Override

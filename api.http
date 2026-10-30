@@ -1,6 +1,42 @@
-### 健康检查（db / llm 都为 true 才算通）
+### 健康检查（db / redis / llm 都为 true 才算通）
 # llm=true 同时说明 DeepSeek 的 key 有效：/healthz 会带 Authorization 去要 /models，无效 key 是 401
+# redis=false 不会白屏（缓存/限流/会话锁全是 fail-open），但意味着这三样都退化了
 GET http://127.0.0.1:8080/healthz
+
+### 注册（成功直接返回 token，省掉再登录一次）
+POST http://127.0.0.1:8080/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "demo_user",
+  "password": "secret123",
+  "nickname": "演示账号"
+}
+
+### 登录
+POST http://127.0.0.1:8080/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "demo_user",
+  "password": "secret123"
+}
+
+### 当前用户（把上一步返回的 token 填进来）
+GET http://127.0.0.1:8080/api/auth/me
+Authorization: Bearer {{token}}
+
+### 带 token 聊天：记忆会归到 u:{userId} 名下，换设备也不丢
+# 不带 Authorization 则按 a:{sessionId} 归档，清 localStorage 就没了
+POST http://127.0.0.1:8080/v1/chat
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "message": "预算3000，续航好点",
+  "history": [],
+  "clarifyCount": 0
+}
 
 ### 最近 20 轮链路埋点（各节点耗时 / 检索命中 / 护栏是否拦截）
 GET http://127.0.0.1:8080/admin/trace?limit=20
