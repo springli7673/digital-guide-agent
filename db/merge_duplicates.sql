@@ -1,7 +1,7 @@
 -- 合并重复机型：保留最低配版本，删除其余
 -- 由 tools/merge_duplicates.py 生成，可重复执行（幂等）
 --
--- biz.product_sku / biz.review 都是 ON DELETE CASCADE，删商品会连带删掉，不用手工清理。
+-- biz.product_sku 是 ON DELETE CASCADE，删商品会连带删掉，不用手工清理。
 --
 -- ⚠️ 顺序很重要：必须先 DELETE 再 UPDATE。biz.product 上有唯一约束
 --    (brand_id, model)，先改名会和待删除的那条撞上，整批回滚。
