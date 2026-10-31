@@ -69,6 +69,10 @@ eval: ## 跑评测（全量 58 条；需要服务和 key 都在）
 
 # ---------------------------------------------------------------- 前端（Vite）
 # 旧的零依赖前端（web/）已删除，现在只有 web-vite。
+.PHONY: images
+images: ## 下载商品图到 web-vite/public/img/products/（需要联网 + Pillow）
+	python tools/fetch_images.py
+
 .PHONY: web
 web: ## 起前端开发服务器（:5174，代理 /api /v1 /healthz → :8080）
 	cd web-vite && npm run dev

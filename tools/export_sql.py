@@ -5,6 +5,10 @@
 产物：
     db/seed_products.sql
 
+图片走本地：`image_url` 和 `specs.image_thumb` 都写成 `/img/products/{source_id}.webp`，
+文件由 `tools/fetch_images.py` 下到 `web-vite/public/img/products/`。
+不再写 ZOL 的 `zol-img.com.cn` 外链——那家图床会防盗链、也会删图。
+
 脚本会先清空 biz.product_sku / biz.product / biz.brand 再全量写入，
 保证数据库内容与 products.json 完全一致（类目和演示用户保留）。
 """
@@ -17,6 +21,18 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "data" / "normalized" / "products.json"
 OUT = ROOT / "db" / "seed_products.sql"
+
+# 商品图在仓库内的公开路径（Vite 把 public/ 挂到根目录）
+IMAGE_BASE = "/img/products"
+
+
+def local_image(p: dict) -> str | None:
+    """商品图的本地路径；拿不到 source_id 就退回原始外链。"""
+    sid = str(p.get("source_id") or "").strip()
+    if sid:
+        return f"{IMAGE_BASE}/{sid}.webp"
+    return p.get("image_url")
+
 
 WHITELIST = ["华为", "小米", "红米", "OPPO", "一加", "vivo", "iQOO", "荣耀", "苹果"]
 
@@ -109,6 +125,7 @@ ON CONFLICT (code) DO UPDATE SET spec_schema = EXCLUDED.spec_schema;""",
         brands_seen[brand] = brands_seen.get(brand, 0) + 1
 
         display = {k: v for k, v in (p.get("specs") or {}).items() if v}
+        image = local_image(p)
         specs = {
             "display": display,
             "metrics": p.get("metrics", {}),
@@ -116,8 +133,8 @@ ON CONFLICT (code) DO UPDATE SET spec_schema = EXCLUDED.spec_schema;""",
             "source_id": p.get("source_id"),
             "url": p.get("url"),
         }
-        if p.get("image_thumb"):
-            specs["image_thumb"] = p["image_thumb"]
+        if image:
+            specs["image_thumb"] = image
         launch = parse_date(p.get("launch_date"))
         price = p.get("price_ref") if p.get("price_ref") is not None else "NULL"
 
@@ -131,7 +148,7 @@ SELECT b.id, c.id, {q(model)}, {q(p.get("title") or model)},
        {("DATE " + q(launch)) if launch else "NULL"},
        {price},
        {q(p.get("price_source") or "参考价")}, now(),
-       {q(p.get("image_url"))},
+       {q(image)},
        {dollar(specs)}::jsonb, 'zol', 'ON_SALE'
 FROM biz.brand b, biz.category c
 WHERE b.name = {q(brand)} AND c.code = {q(category)}
