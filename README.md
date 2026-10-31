@@ -70,7 +70,7 @@ backend/   Spring Boot 单体：业务 + Agent（com.digitalguide.ai）
   ai/trace     链路埋点 + /admin/trace
   ai/eval      进程内评测 runner（不走 HTTP）
   ai/web       POST /v1/chat（SSE）、GET /healthz、POST /v1/kb/ingest
-db/        建表脚本（含 5 个 migration）+ 商品种子数据
+db/        建表脚本（schema.sql 已是全量结构）+ 历史 migration + 商品种子数据
 data/      数据管道产物（raw 抓取缓存 / normalized 清单 / reference 参考分表）
 tools/     抓取 → 清洗 → 参考分 → 导出 SQL 的脚本链
 eval/      58 条评测 case（6 类断言）
@@ -79,31 +79,28 @@ web-vite/  Vue 3 + TypeScript + Element Plus（Vite 工程，npm run dev）
 
 ## 快速开始
 
-### 方式一：Docker 起依赖（推荐，干净机器也能跑）
+依赖：PostgreSQL 15+（要 pgvector、pg_trgm）、Redis、Ollama（`ollama pull bge-m3`）。
+没有 compose 文件，按下面四步直接连本机。
 
 ```bash
-docker compose up -d                    # pg(pgvector) + redis + ollama
-docker compose exec ollama ollama pull bge-m3   # 向量模型，必需
-export DEEPSEEK_API_KEY=sk-...          # Windows: $env:DEEPSEEK_API_KEY="sk-..."
-export REDIS_PASSWORD=123456            # 本机 Redis 带密码；没有密码就别设
-cd backend && mvn spring-boot:run        # :8080
-cd web-vite && npm install && npm run dev   # :5174（代理 /api /v1 /healthz）
-curl -X POST http://127.0.0.1:8080/v1/kb/ingest   # 灌知识库
-```
-
-表结构由 `docker-entrypoint-initdb.d` 自动执行（schema + 三个 migration），不用手工跑 psql。
-
-### 方式二：本机已有 PostgreSQL / Redis / Ollama
-
-```bash
+# 1. 建库（schema.sql 是当前全量结构，可重复执行；表字段注释也在这里）
 psql -U postgres -d digital_guide -f db/schema.sql
-psql -U postgres -d digital_guide -f db/migration_rag.sql
-psql -U postgres -d digital_guide -f db/migration_trace.sql
-psql -U postgres -d digital_guide -f db/migration_memory.sql
-psql -U postgres -d digital_guide -f db/seed_products.sql   # 可选：商品数据
+psql -U postgres -d digital_guide -f db/seed_products.sql   # 138 款商品
+psql -U postgres -d digital_guide -f db/seed_stock.sql      # 每款 100 件库存
+
+# 2. 环境变量（Windows 用 $env:NAME="..."）
+export DEEPSEEK_API_KEY=sk-...
+export REDIS_PASSWORD=123456      # 本机 Redis 带密码；没密码就别设
+
+# 3. 起后端 / 前端
+cd backend  && mvn spring-boot:run            # :8080
+cd web-vite && npm install && npm run dev     # :5174（代理 /api /v1 /healthz）
+
+# 4. 灌知识库（9 篇选购指南 → pgvector）
+curl -X POST http://127.0.0.1:8080/v1/kb/ingest
 ```
 
-其它步骤同上。有 `make` 的话，`make help` 能看到全部命令。
+旧库升级只需补跑对应的 `db/migration_*.sql`；`db/migration_cleanup_legacy.sql` 用来删早期遗留的空表。
 
 健康检查：`curl http://127.0.0.1:8080/healthz`
 → `{"status":"ok","db":true,"llm":true,"provider":"deepseek","chatModel":"deepseek-chat"}`
@@ -137,11 +134,10 @@ psql -U postgres -d digital_guide -f db/seed_products.sql   # 可选：商品数
 > 措辞完全不同（"没有可靠的资料" / "查不了天气预报"）。所以 `refuse` 的判据收敛成
 > **候选为空 + 有说明**，不再匹配措辞——这条要验的其实只有"不许编造型号价格"。
 
-```bash
-# IDEA 里直接运行 com.digitalguide.ai.eval.EvalMain，或：
-make eval
-# 只跑某一类 / 只跑几条 / 重复 3 次看稳定性
---only prefer   --limit 3   --repeat 3
+```text
+# IDEA 里直接运行 com.digitalguide.ai.eval.EvalMain，程序参数：
+--only prefer   --limit 3   --repeat 3    # 只跑某一类 / 只跑几条 / 重复 3 次看稳定性
+--no-rag                                  # 关掉 RAG 做消融对照
 ```
 
 产出 `eval/report.md`（汇总 + 失败清单）和 `eval/report.json`（完整轨迹）。
@@ -155,7 +151,7 @@ make eval
 - [x] 记忆：滑动窗口 + 滚动摘要 + 槽位锚点（只说"再便宜点"也能继承上下文）
 - [x] 可观测：`ai.trace` 记录节点耗时 / 检索命中 / 护栏拦截
 - [x] 程序化评测（四类断言）+ 81 条单测
-- [x] docker-compose 一键起依赖 + GitHub Actions
+- [x] 商品图本地化：138 张主图入仓（480px webp，约 0.8 MB），不再依赖 ZOL 图床
 - [ ] 评测接入知识型 case 与 RAG 消融对比
 
 ## 数据来源与声明

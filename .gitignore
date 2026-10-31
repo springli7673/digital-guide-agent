@@ -27,3 +27,6 @@ data/reference/dxo_paste.txt
 web-vite/node_modules/
 web-vite/dist/
 web-vite/.vite/
+
+# 交接文档不进仓库（含个人求职/简历内容，只在本机维护）
+HANDOFF.md
