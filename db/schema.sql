@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS biz.product (
 );
 CREATE INDEX IF NOT EXISTS idx_product_cate ON biz.product(category_id, price_ref);
 
-COMMENT ON TABLE biz.product IS '商品主表：138 款手机，seed 由 data/normalized/products.json 经 tools/export_sql.py 生成';
+COMMENT ON TABLE biz.product IS '商品主表：138 款手机，初始数据来自 db/seed_products.sql（数据管道脚本不随仓库发布）';
 COMMENT ON COLUMN biz.product.id IS '主键；seed 会 DELETE 重建，所以自增 id 不稳定，对外用 source_id 或 (brand_id, model)';
 COMMENT ON COLUMN biz.product.brand_id IS '品牌 FK；与 model 组成唯一约束，重复机型插不进来';
 COMMENT ON COLUMN biz.product.category_id IS '类目 FK';

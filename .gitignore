@@ -30,3 +30,7 @@ web-vite/.vite/
 
 # 交接文档不进仓库（含个人求职/简历内容，只在本机维护）
 HANDOFF.md
+
+# 评测产物（跑 EvalMain 自动生成）
+eval/report.md
+eval/report.json

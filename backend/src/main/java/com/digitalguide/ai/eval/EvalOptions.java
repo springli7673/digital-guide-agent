@@ -74,7 +74,7 @@ public record EvalOptions(
                 Math.max(limit, 0),
                 repeat,
                 locate(cases, projectRoot, "eval/cases.json"),
-                locate(products, projectRoot, "data/normalized/products.json"),
+                locate(products, projectRoot, "eval/products.json"),
                 out != null ? Path.of(out) : locate(null, projectRoot, "eval"));
     }
 

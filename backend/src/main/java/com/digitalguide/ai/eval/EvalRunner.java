@@ -167,7 +167,7 @@ public class EvalRunner {
         md.append("# 评测报告\n\n");
         md.append("- 生成时间：").append(payload.get("generated_at")).append('\n');
         md.append("- 执行方式：进程内调用 `ChatGraph`（不走 HTTP）\n");
-        md.append("- 判定基准：`data/normalized/products.json` ")
+        md.append("- 判定基准：`eval/products.json` ")
                 .append(thresholds.productCount()).append(" 款\n");
         md.append("- 总览：**").append(passed).append('/').append(total).append("** 通过（")
                 .append(summary.get("pass_rate")).append("%），P50 延迟 ")

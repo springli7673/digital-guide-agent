@@ -19,7 +19,7 @@ import java.util.Map;
  * 要求"top3 里 2 个 ≥ 最大值"永远不可能达成（旧版实测误判了 6 条）。
  * 预算条件存在时改用预算内的分布，否则"5000 以内拍照好"会拿全库旗舰当基准。
  *
- * <p>数据源是 {@code data/normalized/products.json}（和旧版 Python 一致），
+ * <p>数据源是 {@code eval/products.json}（全库 138 款的快照，跟 seed 同源），
  * 不是数据库——评测基准应该独立于被测服务，服务挂了也要能算线。
  */
 @Slf4j

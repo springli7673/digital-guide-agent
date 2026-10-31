@@ -71,9 +71,7 @@ backend/   Spring Boot 单体：业务 + Agent（com.digitalguide.ai）
   ai/eval      进程内评测 runner（不走 HTTP）
   ai/web       POST /v1/chat（SSE）、GET /healthz、POST /v1/kb/ingest
 db/        建表脚本（schema.sql 已是全量结构）+ 历史 migration + 商品种子数据
-data/      数据管道产物（raw 抓取缓存 / normalized 清单 / reference 参考分表）
-tools/     抓取 → 清洗 → 参考分 → 导出 SQL 的脚本链
-eval/      58 条评测 case（6 类断言）
+eval/      评测夹具：cases.json（58 条用例）+ products.json（判定基准快照）
 web-vite/  Vue 3 + TypeScript + Element Plus（Vite 工程，npm run dev）
 ```
 
@@ -158,6 +156,8 @@ curl -X POST http://127.0.0.1:8080/v1/kb/ingest
 
 商品参数参考 ZOL 中关村在线等公开参数页整理，抓取后人工抽查；价格为电商参考价（非实时），
 以 `price_ref` + `price_source` + `price_updated_at` 记录来源与时间。
-商品主图已从 ZOL 图床抓回本地（`web-vite/public/img/products/*.webp`，138 张共约 0.8 MB），
-前端只引用 `/img/products/{source_id}.webp`，不依赖任何外部图床；重新抓图用 `python tools/fetch_images.py`。
-本项目仅用于技术学习，与所涉品牌及数据站点无关；如需完整数据集请自行运行 `tools/` 下的脚本。
+商品主图已落本地（`web-vite/public/img/products/*.webp`，138 张共约 0.8 MB），
+前端只引用 `/img/products/{source_id}.webp`，不依赖任何外部图床。
+抓取 / 清洗 / 参考分合并 / 导出 SQL 那套一次性脚本没有随仓库发布，仓库里只保留成品数据
+（`db/seed_products.sql`、本地主图、`eval/products.json`）。
+本项目仅用于技术学习，与所涉品牌及数据站点无关。
