@@ -1,0 +1,9 @@
+# 这些是导出的数据，不是手写代码：标成 generated 后
+#   1) GitHub 的语言统计会跳过它们（否则 266 KB 的 seed 会把仓库刷成「PLpgSQL 项目」）
+#   2) 改动它们在 PR 里折叠显示，不撑爆 diff
+db/seed_products.sql     linguist-generated=true
+db/seed_stock.sql        linguist-generated=true
+db/fix_prices.sql        linguist-generated=true
+db/merge_duplicates.sql  linguist-generated=true
+
+# schema.sql 和 migration_*.sql 是手写的（含表字段注释），照常统计
