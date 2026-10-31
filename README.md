@@ -62,17 +62,19 @@ backend/   Spring Boot 单体：业务 + Agent（com.digitalguide.ai）
   ai/scoring   参数打分：候选集内 min-max 归一化 + 类目权重 + 偏好聚焦
   ai/graph     parse / retrieve / score / knowledge / answer 节点 + 编排
   ai/rag       分块、入库、双路召回、RRF、精排、证据闸门
-  ai/tool      3 个 @Tool（检索 / 详情 / 对比）+ ToolAgent
+  ai/tool      3 个只读 @Tool（检索 / 详情 / 对比）+ 4 个购物车工具 + ToolAgent
+  ai/mcp       手写 MCP Server（stdio + JSON-RPC），与 @Tool 共用同一份实现
+  ai/cache     候选集缓存 / 入口限流 / 会话锁（Redis，全部 fail-open）
   ai/guard     幻觉护栏（与评测判定同源）
-  ai/memory    滑动窗口 + 滚动摘要 + 槽位锚点
+  ai/memory    滑动窗口 + 滚动摘要 + 槽位锚点（Redis 热存 + PG 权威）
   ai/trace     链路埋点 + /admin/trace
   ai/eval      进程内评测 runner（不走 HTTP）
   ai/web       POST /v1/chat（SSE）、GET /healthz、POST /v1/kb/ingest
-db/        建表脚本（含 3 个 migration）+ 商品种子数据
+db/        建表脚本（含 5 个 migration）+ 商品种子数据
 data/      数据管道产物（raw 抓取缓存 / normalized 清单 / reference 参考分表）
 tools/     抓取 → 清洗 → 参考分 → 导出 SQL 的脚本链
 eval/      58 条评测 case（6 类断言）
-web/       TypeScript + Vue 3（`src/*.ts` → `node build.mjs` → `public/*.js`）
+web-vite/  Vue 3 + TypeScript + Element Plus（Vite 工程，npm run dev）
 ```
 
 ## 快速开始
@@ -83,8 +85,9 @@ web/       TypeScript + Vue 3（`src/*.ts` → `node build.mjs` → `public/*.js
 docker compose up -d                    # pg(pgvector) + redis + ollama
 docker compose exec ollama ollama pull bge-m3   # 向量模型，必需
 export DEEPSEEK_API_KEY=sk-...          # Windows: $env:DEEPSEEK_API_KEY="sk-..."
+export REDIS_PASSWORD=123456            # 本机 Redis 带密码；没有密码就别设
 cd backend && mvn spring-boot:run        # :8080
-cd web && node server.mjs                # :5173
+cd web-vite && npm install && npm run dev   # :5174（代理 /api /v1 /healthz）
 curl -X POST http://127.0.0.1:8080/v1/kb/ingest   # 灌知识库
 ```
 

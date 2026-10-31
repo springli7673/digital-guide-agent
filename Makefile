@@ -1,6 +1,9 @@
-# 常用操作。Windows 上没有 make 的话，把下面的命令直接抄进 PowerShell 执行。
+# 常用命令速查。
 #
-# 注意：Makefile 的文件名必须是这个名字，recipe 行首必须是 TAB。
+# ⚠️ 这个文件在 Windows 上大概率跑不起来：
+#    - 需要 make（Git Bash / WSL 里才有），本机没装
+#    - 仓库里没有 mvnw，MVN 会退回系统 mvn，本机也没装
+# 所以它现在的定位是「命令清单」——把 recipe 抄进 PowerShell 执行即可。
 
 .DEFAULT_GOAL := help
 SHELL := /bin/bash
@@ -43,7 +46,7 @@ build: ## 编译（跳过测试）
 	cd $(BACKEND) && $(MVN) -B -q -DskipTests compile
 
 .PHONY: test
-test: ## 跑单测（60 条，纯逻辑，不连库不连模型）
+test: ## 跑单测（81 条，纯逻辑，不连库不连模型）
 	cd $(BACKEND) && $(MVN) -B -q test
 
 .PHONY: run
@@ -61,13 +64,20 @@ health: ## 健康检查
 	@echo
 
 .PHONY: eval
-eval: ## 跑评测（全量 40 条；需要服务和 key 都在）
+eval: ## 跑评测（全量 58 条；需要服务和 key 都在）
 	cd $(BACKEND) && $(MVN) -q exec:java -Dexec.mainClass=com.digitalguide.ai.eval.EvalMain
 
+# ---------------------------------------------------------------- 前端（Vite）
+# 旧的零依赖前端（web/）已删除，现在只有 web-vite。
 .PHONY: web
-web: ## 起前端（先构建 TS，再起 :5173）
-	cd web && node build.mjs && node server.mjs
+web: ## 起前端开发服务器（:5174，代理 /api /v1 /healthz → :8080）
+	cd web-vite && npm run dev
 
 .PHONY: web-build
-web-build: ## 只构建前端（src/*.ts → public/）
-	cd web && node build.mjs
+web-build: ## 构建前端（先 vue-tsc 类型检查，再 vite build → dist/）
+	cd web-vite && npm run build
+
+.PHONY: web-install
+web-install: ## 安装前端依赖（首次需要联网）
+	cd web-vite && npm install
+
